@@ -20,7 +20,7 @@ export default function Footer() {
               <p>SSAFY 8기 2학기 특화 프로젝트</p>
               <p>김동연 | 김정수 | 박금원 | 박서영 | 윤호산 | 조웅희</p>
             </div>
-            <p>Copyright©MARATHON All Rights Reserved.</p>
+            <p>Copyright©VOICESCOUT All Rights Reserved.</p>
           </div>
           <div className={style.right_div}>
             <div className={style.ground}>
