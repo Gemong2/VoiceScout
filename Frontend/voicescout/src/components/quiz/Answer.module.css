@@ -1,0 +1,68 @@
+.top_text {
+  background-color: #ffffff;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.2em;
+  width: 300px;
+  padding: 10px;
+  position: relative;
+  top: 20px;
+  transform: sKewX(-20deg) rotate(-0.6deg);
+  box-shadow: 6px 6px 0px #bc830d;
+  font-family: "Pretendard-ExtraBold";
+}
+
+.contents_title {
+  position: relative;
+  top: 40px;
+  left: 7%;
+  font-family: "The_Jamsil_5_Bold";
+  font-size: 4em;
+  font-style: italic;
+  color: #f7b52c;
+  text-shadow: -4px -4px 0 #ffffff, 4px -4px 0 #ffffff, -4px 4px 0 #ffffff,
+    4px 4px 0 #ffffff, 6px 6px 6px gray;
+}
+
+.contents_box {
+  width: 1000px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0px #bc830d;
+  padding-top: 60px;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.question_number {
+  text-align: end;
+  font-family: "Pretendard-SemiBold";
+  font-size: 1.5em;
+  text-shadow: 1px 2px 4px #a9a8a8;
+}
+
+.quetion_text {
+  margin-top: 40px;
+  font-family: "Pretendard-ExtraBold";
+  font-size: 2.5em;
+  text-align: center;
+  text-shadow: 1px 2px 5px #a9a8a8;
+}
+
+.true_false {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.option {
+  font-size: 10em;
+  font-family: "Pretendard-Bold";
+  color: #e8e8e8;
+  cursor: pointer;
+}
+
+.option:hover {
+  color: #f7b52c;
+}
