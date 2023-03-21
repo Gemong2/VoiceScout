@@ -1,0 +1,31 @@
+.top_text {
+  background-color: #ffffff;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.2em;
+  width: 300px;
+  padding: 10px;
+  position: relative;
+  top: 20px;
+  transform: sKewX(-20deg) rotate(-0.6deg);
+  box-shadow: 6px 6px 0px #bc830d;
+  font-family: "Pretendard-ExtraBold";
+}
+
+.contents_title {
+  position: relative;
+  top: 40px;
+  left: 7%;
+  font-family: "The_Jamsil_5_Bold";
+  font-size: 4em;
+  font-style: italic;
+  color: #f7b52c;
+  text-shadow: -4px -4px 0 #ffffff, 4px -4px 0 #ffffff, -4px 4px 0 #ffffff,
+    4px 4px 0 #ffffff, 6px 6px 6px gray;
+}
+
+.contents_box {
+  width: 1000px;
+  height: 600px;
+  background-color: #ffffff;
+}

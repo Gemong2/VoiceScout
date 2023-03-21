@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route element={<HeaderFooterPage />}>
           <Route path="/" element={<Main />} />
-          <Route path="/crime-type*" element={<CrimeType />} />
+          <Route path="/crime-type/*" element={<CrimeType />} />
           <Route path="/call-room" element={<CallRoom />} />
         </Route>
         <Route element={<HeaderPage />}>
