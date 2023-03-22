@@ -12,6 +12,10 @@ export default function CrimeType() {
   return (
     <>
       <div className={style.container}>
+        <div className={style.imgfolder}></div>
+          <div className="buttonsquare"></div>
+      </div> 
+      {/* <div className={style.container}>
         <ul>
           <li><div 
             className= { toggleState === 1 ? style.tabs + " " + style.active_tabs : style.tabs}
@@ -82,7 +86,7 @@ export default function CrimeType() {
               </p>
             </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
