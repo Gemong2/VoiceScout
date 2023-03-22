@@ -1,27 +1,13 @@
-.top_text {
-  background-color: #ffffff;
-  justify-content: center;
-  text-align: center;
-  font-size: 1.2em;
-  width: 300px;
-  padding: 10px;
-  position: relative;
-  top: 20px;
-  transform: sKewX(-20deg) rotate(-0.6deg);
-  box-shadow: 6px 6px 0px #bc830d;
-  font-family: "Pretendard-ExtraBold";
-}
-
 .contents_title {
+  padding-top: 47px;
   position: relative;
-  top: 40px;
-  left: 7%;
+  top: 90px;
+  left: 46.5%;
   font-family: "The_Jamsil_5_Bold";
-  font-size: 4em;
-  font-style: italic;
-  color: #f7b52c;
+  font-size: 3.5em;
+  color: #000000;
   text-shadow: -4px -4px 0 #ffffff, 4px -4px 0 #ffffff, -4px 4px 0 #ffffff,
-    4px 4px 0 #ffffff, 6px 6px 6px gray;
+    4px 4px 0 #ffffff;
 }
 
 .contents_box {
@@ -30,39 +16,60 @@
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 6px 6px 0px #bc830d;
-  padding-top: 60px;
+  padding-top: 20px;
   padding-left: 150px;
   padding-right: 150px;
 }
 
-.question_number {
-  text-align: end;
-  font-family: "Pretendard-SemiBold";
-  font-size: 1.5em;
-  text-shadow: 1px 2px 4px #a9a8a8;
+.answer_box_grid {
+  display: flex;
+  grid-template-columns: 30% 40% 30%;
 }
 
-.quetion_text {
+.blank {
+  width: 195px;
+}
+
+.answer_box {
+  width: 300px;
+  height: 150px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  box-shadow: 6px 6px 0px #bc830d;
+}
+
+.answer_text {
   margin-top: 40px;
-  font-family: "Pretendard-ExtraBold";
+  font-family: "Pretendard-Regular";
   font-size: 2.5em;
   text-align: center;
-  text-shadow: 1px 2px 5px #a9a8a8;
-}
-
-.true_false {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
 }
 
 .option {
-  font-size: 10em;
-  font-family: "Pretendard-Bold";
-  color: #e8e8e8;
-  cursor: pointer;
+  font-size: 8em;
+  font-family: "Pretendard-regular";
+  color: #f7b52c;
+  text-align: center;
 }
 
-.option:hover {
-  color: #f7b52c;
+.btn_div {
+  text-align: center;
+}
+
+.start_btn {
+  margin-top: 40px;
+  background-color: #f7b52c;
+  width: 150px;
+  height: 50px;
+  border: 0;
+  box-shadow: 1px 3px 5px #808080;
+  border-bottom-color: #d1900e;
+  border-radius: 9px;
+  font-size: 2.2em;
+  font-family: "Pretendard-SemiBold";
+  font-style: normal;
+  font-weight: normal;
+  color: #ffffff;
+  cursor: pointer;
 }

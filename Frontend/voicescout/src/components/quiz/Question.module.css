@@ -6,7 +6,7 @@
   width: 300px;
   padding: 10px;
   position: relative;
-  top: 20px;
+  top: 10px;
   transform: sKewX(-20deg) rotate(-0.6deg);
   box-shadow: 6px 6px 0px #bc830d;
   font-family: "Pretendard-ExtraBold";
@@ -26,11 +26,11 @@
 
 .contents_box {
   width: 1000px;
-  height: 500px;
+  height: 450px;
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 6px 6px 0px #bc830d;
-  padding-top: 60px;
+  padding-top: 40px;
   padding-left: 150px;
   padding-right: 150px;
 }
