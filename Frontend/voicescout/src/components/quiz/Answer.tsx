@@ -1,20 +1,33 @@
 import React from "react";
 import style from "./Answer.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Answer() {
+  const navigate = useNavigate();
   return (
     <>
-      <div className={style.top_text}>나는 보이스 피싱에 얼마나 취약할까?</div>
-      <div className={style.contents_title}>보이스 피싱 자가진단 O/X 퀴즈</div>
+      <div className={style.contents_title}>정답</div>
       <div className={style.contents_box}>
-        <div className={style.question_number}>1/10</div>
-        <div className={style.quetion_text}>
-          Q. 나는 검찰에게 전화가 오면, <br />
-          모든 정보를 넘겨준다?
+        <div className={style.answer_box_grid}>
+          <div className={style.blank} />
+          <div className={style.answer_box}>
+            <div className={style.option}>O</div>
+          </div>
+          <div className={style.blank} />
         </div>
-        <div className={style.true_false}>
-          <div className={style.option}>O</div>
-          <div className={style.option}>X</div>
+        <div className={style.answer_text}>
+          검찰은 010으로 전화하지 않습니다. <br />
+          사칭 전화에 주의해주세요.
+        </div>
+        <div className={style.btn_div}>
+          <button
+            className={style.start_btn}
+            onClick={() => {
+              navigate("/quiz/question");
+            }}
+          >
+            다음
+          </button>
         </div>
       </div>
     </>
