@@ -1,9 +1,40 @@
-*, ::before, ::after {
+*, :before, :after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+.container{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
 
+.imgfolder {
+  background-image: url(img/desktop_folders.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  rotate: 90deg;
+  padding: 0;
+  margin-top: 200px;
+  height: 60vh;
+  width: 70vw;
+}
+
+.buttonsquare {
+  position: relative;
+  width:300px;
+  height:100px;
+  margin-bottom: 100px;
+  border-radius:10px 0 0 0;
+  background:black;
+  transform:
+    skew(-20deg)
+    translate(30px, 0px);
+}
+
+/* 
 body {
   background: #fff;
 }
@@ -77,9 +108,6 @@ body {
   top: -10%;
   background: rgb(255, 91, 91);
   border: 5px solid #616161;
-  /* border-left: 5px solid #616161;
-  border-right: 5px solid #616161;
-  border-bottom: 5px solid #616161; */
   box-shadow: 10px 10px #8a8a8a;
   z-index: 10;
 }
@@ -134,7 +162,6 @@ ul li div{
   border-right: 5px solid #616161;
   border-bottom: 5px solid #616161;
   border-radius: 10px;
-  /* background: rgba(255,255,255,0.1); */
   backdrop-filter: blur(4px);
   z-index: 1;
   box-shadow: 0 5px 45px rgba(0,0,0,0.1);
@@ -165,4 +192,4 @@ ul li div:before {
 
 ul li div:hover:before {
   transform: skewX(45deg) translateX(-150px);
-}
+} */
