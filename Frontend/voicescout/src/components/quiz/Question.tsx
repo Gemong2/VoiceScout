@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./Question.module.css";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ const Gauge = styled.div`
 
 export default function Question() {
   const navigate = useNavigate();
+  const [number, setNumber] = useState();
   return (
     <>
       <div className={style.top_text}>나는 보이스 피싱에 얼마나 취약할까?</div>
