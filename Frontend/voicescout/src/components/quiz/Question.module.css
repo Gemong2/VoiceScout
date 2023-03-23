@@ -1,3 +1,27 @@
+.end_contents_top {
+  padding-top: 110px;
+}
+
+.end_contents_box {
+  width: 1000px;
+  height: 450px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0px #bc830d;
+  padding-top: 25px;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.end_text {
+  margin-top: 40px;
+  padding-top: 40px;
+  font-family: "Pretendard-ExtraBold";
+  font-size: 2.5em;
+  text-align: center;
+  white-space: pre-line;
+}
+
 .top_text {
   background-color: #ffffff;
   justify-content: center;
@@ -6,7 +30,7 @@
   width: 300px;
   padding: 10px;
   position: relative;
-  top: 10px;
+  top: 25px;
   transform: sKewX(-20deg) rotate(-0.6deg);
   box-shadow: 6px 6px 0px #bc830d;
   font-family: "Pretendard-ExtraBold";
@@ -24,7 +48,7 @@
     4px 4px 0 #ffffff, 6px 6px 6px gray;
 }
 
-.contents_box {
+.question_box {
   width: 1000px;
   height: 450px;
   background-color: #ffffff;
@@ -39,15 +63,14 @@
   text-align: end;
   font-family: "Pretendard-SemiBold";
   font-size: 1.5em;
-  text-shadow: 1px 2px 4px #a9a8a8;
 }
 
 .quetion_text {
   margin-top: 40px;
   font-family: "Pretendard-ExtraBold";
-  font-size: 2.5em;
+  font-size: 1.4em;
   text-align: center;
-  text-shadow: 1px 2px 5px #a9a8a8;
+  white-space: pre-line;
 }
 
 .true_false {
@@ -61,8 +84,92 @@
   font-family: "Pretendard-Bold";
   color: #e8e8e8;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .option:hover {
   color: #f7b52c;
+  transition: 0.3s;
+}
+
+/* 정답 페이지 css 
+*/
+.answer_contents_title {
+  padding-top: 50px;
+  position: relative;
+  top: 10vh;
+  left: 58vh;
+  font-family: "The_Jamsil_5_Bold";
+  font-size: 3.5em;
+  width: 120px;
+  color: #000000;
+  text-shadow: -4px -4px 0 #ffffff, 4px -4px 0 #ffffff, -4px 4px 0 #ffffff,
+    4px 4px 0 #ffffff;
+}
+
+.answer_contents_box {
+  width: 1000px;
+  height: 450px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0px #bc830d;
+  padding-top: 25px;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.answer_box_grid {
+  display: flex;
+  grid-template-columns: 30% 40% 30%;
+}
+
+.blank {
+  width: 195px;
+}
+
+.answer_box {
+  width: 300px;
+  height: 150px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  box-shadow: 6px 6px 0px #bc830d;
+  margin-top: 15px;
+  padding-top: 5px;
+}
+
+.answer_text {
+  margin-top: 40px;
+  font-family: "Pretendard-Regular";
+  font-size: 1.4em;
+  text-align: center;
+  white-space: pre-line;
+}
+
+.answer_option {
+  font-size: 8em;
+  font-family: "Pretendard-regular";
+  color: #f7b52c;
+  text-align: center;
+}
+
+.btn_div {
+  text-align: center;
+}
+
+.start_btn {
+  margin-top: 40px;
+  background-color: #f7b52c;
+  width: 150px;
+  height: 50px;
+  border: 0;
+  box-shadow: 1px 3px 5px #808080;
+  border-bottom-color: #d1900e;
+  border-radius: 9px;
+  font-size: 2.2em;
+  font-family: "Pretendard-SemiBold";
+  font-style: normal;
+  font-weight: normal;
+  color: #ffffff;
+  cursor: pointer;
 }

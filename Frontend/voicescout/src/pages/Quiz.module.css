@@ -1,6 +1,6 @@
 .container {
   max-width: 1600px;
-  height: 620px;
+  height: 86.8vh;
   margin-left: auto;
   margin-right: auto;
   font-size: 1em;
@@ -8,9 +8,8 @@
 }
 
 .inner_container {
-  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: auto;
-  width: 90%;
+  max-width: 960px;
+  height: 8vh;
 }
