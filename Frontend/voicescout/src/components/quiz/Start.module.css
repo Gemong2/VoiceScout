@@ -1,5 +1,5 @@
 .top_blank {
-  height: 40px;
+  height: 5vh;
 }
 
 .main_contents {
@@ -8,18 +8,16 @@
   background-size: contain;
   margin-left: auto;
   margin-right: auto;
-  height: 660px;
-  width: 1000px;
+  height: 80vh;
+  width: 120vh;
   display: grid;
-  grid-template-columns: 30% 40% 30%;
+  grid-template-columns: 32vh 57vh 30vh;
   grid-template-rows: 20% 40% 30%;
 }
 
 .main_text_grid {
   grid-row-start: 2;
   grid-column-start: 2;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   font-family: "The_Jamsil_5_Bold";
   font-size: 4em;
