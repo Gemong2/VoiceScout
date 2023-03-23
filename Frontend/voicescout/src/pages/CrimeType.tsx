@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function CrimeType() {
 
-  const [toggleState, setToggleState] = useState(1);
+  const [toggleState, setToggleState] = useState(0);
     
     const toggleTab = (index:number) => {
       setToggleState(index);
@@ -12,32 +12,37 @@ export default function CrimeType() {
   return (
     <>
       <div className={style.container}>
-        <div className={style.imgfolder}></div>
-          <div className="buttonsquare"></div>
-      </div> 
-      {/* <div className={style.container}>
-        <ul>
-          <li><div 
-            className= { toggleState === 1 ? style.tabs + " " + style.active_tabs : style.tabs}
-            onClick={() => toggleTab(1)}>수법 소개</div></li>
-          <li>  
-            <div 
-            className={ toggleState === 2 ? style.tabs + " " + style.active_tabs : style.tabs}
-            onClick={() => toggleTab(2)}>피해 문자</div></li>
-          <li>
-            <div 
-            className={ toggleState === 3 ? style.tabs + " " + style.active_tabs : style.tabs}
-            onClick={() => toggleTab(3)}>예방법</div></li>
-          <li>
-            <div 
-            className={ toggleState === 4 ? style.tabs + " " + style.active_tabs : style.tabs}
-            onClick={() => toggleTab(4)}>구제방법</div></li>
-      </ul>
-        <div 
-            className={style.content_tabs}>
+        <div className={style.button_container}>
+          <button className={toggleState === 1 ? style.button_on  + " " + style.button + " " + style.button_size_s : 
+          style.button + " " + style.button_size_s}
+          onClick={() => toggleTab(1)}>
+            수법소개
+          </button>
+
+          <button className= {toggleState === 2 ? style.button_on  + " " + style.button + " " + style.button_size_s : 
+          style.button + " "+ style.button_size_s}
+          onClick={() => toggleTab(2)}>
+            범인발송문자
+          </button>
+      
+          <button className={toggleState === 3 ? style.button_on  + " " +style.button + " " + style.button_size_s : 
+          style.button + " "+ style.button_size_s}
+          onClick={() => toggleTab(3)}>
+            예방법
+          </button>
+
+          <button className={toggleState === 4 ? style.button_on  + " " +style.button + " " + style.button_size_s : 
+          style.button + " "+ style.button_size_s}
+          onClick={() => toggleTab(4)}>
+            구제방법
+          </button>
+
+        </div>
+        <div className={style.square}>
+          <div className={style.context_square}>
 
             <div className={ toggleState === 1 ? style.content + " " + style.active_content : style.content }>
-              <h2>Content 1</h2>
+              <h2>수법소개</h2>
               <hr />
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
@@ -49,7 +54,7 @@ export default function CrimeType() {
 
 
             <div className={ toggleState === 2 ? style.content + " " + style.active_content : style.content }>
-              <h2>Content 2</h2>
+              <h2>범인발송문자</h2>
               <hr />
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
@@ -62,7 +67,7 @@ export default function CrimeType() {
 
 
             <div className={ toggleState === 3 ? style.content + " " + style.active_content : style.content }>
-              <h2>Content 3</h2>
+              <h2>예방법</h2>
               <hr />
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
@@ -75,7 +80,7 @@ export default function CrimeType() {
 
 
             <div className={ toggleState === 4 ? style.content + " " + style.active_content : style.content }>
-              <h2>Content 4</h2>
+              <h2>구제방법</h2>
               <hr />
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
@@ -85,8 +90,10 @@ export default function CrimeType() {
                 fuga sapiente illum accusantium quibusdam!
               </p>
             </div>
+          </div>
         </div>
-      </div> */}
+      </div> 
+        
     </>
   );
 }
