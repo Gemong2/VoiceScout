@@ -15,10 +15,10 @@ function App() {
         <Route element={<HeaderFooterPage />}>
           <Route path="/" element={<Main />} />
           <Route path="/crime-type/*" element={<CrimeType />} />
-          <Route path="/simulation" element={<Simulation />} />
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/" element={<Main />} />
+          <Route path="/simulation" element={<Simulation />} />
           <Route path="/quiz/*" element={<Quiz />} />
         </Route>
       </Routes>
