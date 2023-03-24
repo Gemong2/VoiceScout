@@ -5,7 +5,7 @@ import HeaderFooterPage from "./pages/HeaderFooterePage";
 import HeaderPage from "./pages/HeaderPage";
 import Main from "pages/Main";
 import CrimeType from "pages/CrimeType";
-import CallRoom from "pages/CallRoom";
+import Simulation from "pages/Simulation";
 import Quiz from "pages/Quiz";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Route element={<HeaderFooterPage />}>
           <Route path="/" element={<Main />} />
           <Route path="/crime-type/*" element={<CrimeType />} />
-          <Route path="/call-room" element={<CallRoom />} />
+          <Route path="/simulation" element={<Simulation />} />
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/" element={<Main />} />
