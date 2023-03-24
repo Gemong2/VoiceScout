@@ -1,7 +1,7 @@
 import React from "react";
-import style from "./CallRoom.module.css";
+import style from "./Simulation.module.css";
 
-export default function CallRoom() {
+export default function Simulation() {
   return (
     <>
       <div className={style.container}>
