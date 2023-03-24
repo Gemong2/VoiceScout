@@ -28,7 +28,7 @@ export default function Header({}: Props) {
           </div>
           <div
             onClick={() => {
-              navigate("/call-room");
+              navigate("/simulation");
             }}
           >
             <span className={style.menu}>통화 체험실</span>
