@@ -5,8 +5,9 @@ import HeaderFooterPage from "./pages/HeaderFooterePage";
 import HeaderPage from "./pages/HeaderPage";
 import Main from "pages/Main";
 import CrimeType from "pages/CrimeType";
-import Simulation from "pages/Simulation";
+import SimulationList from "pages/SimulationList";
 import Quiz from "pages/Quiz";
+import SimulationRoom from "pages/SimulationRoom";
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/" element={<Main />} />
-          <Route path="/simulation" element={<Simulation />} />
+          <Route path="/simulation-list" element={<SimulationList />} />
           <Route path="/quiz/*" element={<Quiz />} />
         </Route>
+        <Route path="/simulation-room/*" element={<SimulationRoom />} />
       </Routes>
     </>
   );

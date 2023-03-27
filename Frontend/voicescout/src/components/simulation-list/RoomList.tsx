@@ -3,9 +3,11 @@ import style from "./RoomList.module.css";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
+import CreateModal from "./CreateModal";
 
 export default function RoomList() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModal, setIsModal] = useState(false);
   // 고유번호, 방제, 방유형, 유형설명, 방이미지, 인원수, 잠금유무, 비밀번호(null 허용)
   interface data_type {
     seq: number;
@@ -140,6 +142,16 @@ export default function RoomList() {
                 );
               })}
           </div>
+          <div className={style.btn}>
+            <button
+              onClick={() => {
+                setIsModal(true);
+              }}
+            >
+              방 만들기
+            </button>
+          </div>
+          {isModal && <CreateModal setIsModal={setIsModal} />}
         </div>
       </div>
     </>
