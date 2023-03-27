@@ -66,3 +66,16 @@
 .main_contents {
   white-space: pre-line;
 }
+
+.btn {
+  text-align: center;
+}
+
+.btn button {
+  width: 100px;
+  height: 30px;
+  background-color: #ffe134;
+  border-radius: 10px;
+  font-family: "Pretendard-Bold";
+  font-size: 1.1em;
+}
