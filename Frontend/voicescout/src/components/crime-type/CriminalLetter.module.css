@@ -1,0 +1,128 @@
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap .chat {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+  
+  }
+  
+  .wrap .chat .textbox {
+    position: relative;
+    display: inline-block;
+    max-width: calc(100% - 70px);
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 13px;
+    color: white;
+    border-radius: 10px;
+    font-family: "Pretendard-Regular";
+    font-size: 1rem;
+  }
+  
+  .wrap .chat .textbox::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    font-size: 2rem;
+  }
+  
+  .wrap .ch1 .textbox {
+    margin-left: 60%;
+    background-color: #F9EB54;
+  }
+  
+  .wrap .ch1 .textbox::before {
+    top: 47px;
+    left: -15px;
+    rotate: -20deg;
+    content: "◀";
+    color: #F9EB54;
+  }
+
+  .guide {
+    background-image: url(img/guide.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .square{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    height: 40%;
+    width: 70%;
+    margin: 0 auto;
+    background-color: #EAEAEA;
+    box-shadow: 10px 10px #302F2F;
+    border: 5px solid #616161;
+  }
+
+  
+.button_tap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 10px;
+  }
+  
+  .tabbutton {
+    font-family: "Pretendard-Regular";
+    float: left;
+    min-width: 150px;
+    max-width: 250px;
+    display: block;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 1rem;
+    background: white;
+    color: #616161;
+    border: 5px solid #616161;
+    text-align: center;
+    position: relative;
+    font-size: 1em;
+    box-shadow: 0 4px 4px 0 #a6a6a6;
+    border-radius: .3em;
+    cursor: pointer;
+  }
+  
+  .tabbutton_on {
+    background-color: #F5B614;
+  }
+  
+  .tabcontent {
+    display: none;
+    justify-content: center;
+    overflow-y: auto;
+    max-height: 55vh; /* 원하는 높이로 설정 */
+    overflow-x: hidden;
+    padding: 0 auto;
+    /* padding-right: 10px; */
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .tabcontent_on {
+    display: block;
+    text-align: justify;
+    justify-content: center;
+    width: 90%;
+    height: 80vh;
+    font-family: "Pretendard-Regular";
+    font-size: 2rem;
+    margin: 0 auto;
+    margin-top: 5%;
+    padding: 10px;
+  }
+  
+  .tapcontent p {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }

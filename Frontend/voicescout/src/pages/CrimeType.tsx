@@ -1,14 +1,20 @@
 import React from "react";
 import style from "./CrimeType.module.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import CrimeMethods from "components/crime-type/CrimeMethods";
+import CriminalLetter from "components/crime-type/CriminalLetter";
+import CrimePrevention from "components/crime-type/CrimePrevention";
+import Remedy from "components/crime-type/Remedy";
+
 
 export default function CrimeType() {
-
+  
   const [toggleState, setToggleState] = useState(0);
-    
-    const toggleTab = (index:number) => {
-      setToggleState(index);
-    }
+  
+  const toggleTab = (index:number) => {
+    setToggleState(index);
+  }
+
   return (
     <>
       <div className={style.container}>
@@ -40,55 +46,19 @@ export default function CrimeType() {
         </div>
         <div className={style.square}>
           <div className={style.context_square}>
-
             <div className={ toggleState === 1 ? style.content + " " + style.active_content : style.content }>
-              <h2>수법소개</h2>
-              <hr />
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                Nesciunt optio debitis ipsa quo at. Rerum tempore libero maiores quae, 
-                laboriosam adipisci. Pariatur, 
-                cumque! Sit quas quia ab magnam veritatis! Nobis.
-              </p>
+              <CrimeMethods />
             </div>
-
 
             <div className={ toggleState === 2 ? style.content + " " + style.active_content : style.content }>
-              <h2>범인발송문자</h2>
-              <hr />
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Odio quasi soluta quibusdam, nam molestias veritatis reiciendis. 
-                Natus asperiores, 
-                officiis aliquid dolor commodi voluptates incidunt itaque 
-                fuga sapiente illum accusantium quibusdam!
-              </p>
+              <CriminalLetter />
             </div>
-
 
             <div className={ toggleState === 3 ? style.content + " " + style.active_content : style.content }>
-              <h2>예방법</h2>
-              <hr />
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Odio quasi soluta quibusdam, nam molestias veritatis reiciendis. 
-                Natus asperiores, 
-                officiis aliquid dolor commodi voluptates incidunt itaque 
-                fuga sapiente illum accusantium quibusdam!
-              </p>
+              <CrimePrevention />
             </div>
-
-
             <div className={ toggleState === 4 ? style.content + " " + style.active_content : style.content }>
-              <h2>구제방법</h2>
-              <hr />
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                Odio quasi soluta quibusdam, nam molestias veritatis reiciendis. 
-                Natus asperiores, 
-                officiis aliquid dolor commodi voluptates incidunt itaque 
-                fuga sapiente illum accusantium quibusdam!
-              </p>
+              <Remedy />
             </div>
           </div>
         </div>
