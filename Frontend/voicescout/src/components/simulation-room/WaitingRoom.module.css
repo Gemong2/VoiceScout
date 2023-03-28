@@ -1,0 +1,107 @@
+.header {
+  padding-top: 5vh;
+  font-family: "Pretendard-SemiBold";
+  font-size: 2em;
+  font-style: italic;
+  color: #000000;
+}
+
+.header_guide {
+  font-family: "Pretendard-Regular";
+  font-size: 1.3em;
+  color: #959595;
+}
+
+.contents {
+  margin-top: 4vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #787878;
+  white-space: pre-line;
+  width: 100%;
+}
+.contents_first {
+  width: 150px;
+}
+
+.contents_second {
+  align-items: center;
+}
+
+.contents_second p {
+  font-family: "Pretendard-SemiBold";
+  font-size: 2em;
+  color: #ffffff;
+}
+
+.locked {
+  background-color: #f7b52c;
+  font-size: 1.4em;
+  height: 4vh;
+  color: #ffffff;
+  margin-top: 0.5vh;
+  padding-left: 1.5vh;
+}
+
+.contents_third {
+  font-family: "Pretendard-Regular";
+  color: #ffffffc6;
+  font-size: 1.2em;
+}
+
+.information {
+  display: flex;
+  margin-top: 5vh;
+}
+
+.blank {
+  width: 30vh;
+}
+
+.information img {
+  width: 200px;
+  border-radius: 20px;
+  margin-left: 3vh;
+  margin-right: 3vh;
+}
+
+.main_img {
+  background-color: #f7b52c;
+}
+
+.sub_img {
+  background-color: #787878;
+}
+
+.roles {
+  position: relative;
+}
+
+.settings img {
+  width: 50px;
+  height: 50px;
+}
+
+.main_role {
+  position: absolute;
+  width: 100px;
+  z-index: 1;
+  font-family: "Pretendard-ExtraBold";
+  font-size: 2em;
+  font-style: italic;
+  color: #000000;
+  transition: 0.5s;
+}
+
+.sub_role {
+  position: absolute;
+  left: 2vh;
+  top: 3vh;
+  width: 100px;
+  font-family: "Pretendard-ExtraBold";
+  font-size: 2em;
+  font-style: italic;
+  color: #d9d9d9;
+  transition: 0.5s;
+}

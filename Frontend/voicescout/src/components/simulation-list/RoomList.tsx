@@ -15,6 +15,9 @@ export default function RoomList() {
     type: string;
     describe: string;
     img: string;
+    count: number;
+    locked: boolean;
+    password: string | null;
   }
 
   const datas: data_type[] = [
@@ -25,6 +28,9 @@ export default function RoomList() {
       describe: `수사기관을 사칭하여 피해자를 기망하여
        금전 편취하는 사기 수법`,
       img: Agency,
+      count: 1,
+      locked: false,
+      password: null,
     },
     {
       seq: 1,
@@ -33,6 +39,9 @@ export default function RoomList() {
       describe: `지인을 사칭해 문자나 전화로 돈을 요구하는
       사기 수법`,
       img: Acquaintance,
+      count: 2,
+      locked: true,
+      password: "1234",
     },
     {
       seq: 2,
@@ -41,6 +50,9 @@ export default function RoomList() {
       describe: `금융기관을 사칭, 피싱사이트로 유인하여
        피해자 명의로 대출 편취하는 사기 수법`,
       img: Loans,
+      count: 1,
+      locked: false,
+      password: null,
     },
     {
       seq: 3,
@@ -49,6 +61,9 @@ export default function RoomList() {
       describe: `수사기관을 사칭하여 피해자를 기망하여
        금전 편취하는 사기 수법`,
       img: Agency,
+      count: 2,
+      locked: false,
+      password: null,
     },
     {
       seq: 4,
@@ -57,6 +72,9 @@ export default function RoomList() {
       describe: `지인을 사칭해 문자나 전화로 돈을 요구하는
       사기 수법`,
       img: Acquaintance,
+      count: 1,
+      locked: false,
+      password: null,
     },
     {
       seq: 5,
@@ -65,6 +83,9 @@ export default function RoomList() {
       describe: `금융기관을 사칭, 피싱사이트로 유인하여
        피해자 명의로 대출 편취하는 사기 수법`,
       img: Loans,
+      count: 2,
+      locked: true,
+      password: "1234",
     },
     {
       seq: 6,
@@ -73,6 +94,9 @@ export default function RoomList() {
       describe: `수사기관을 사칭하여 피해자를 기망하여
        금전 편취하는 사기 수법`,
       img: Agency,
+      count: 1,
+      locked: true,
+      password: "1234",
     },
     {
       seq: 7,
@@ -81,6 +105,9 @@ export default function RoomList() {
       describe: `지인을 사칭해 문자나 전화로 돈을 요구하는
       사기 수법`,
       img: Acquaintance,
+      count: 1,
+      locked: false,
+      password: null,
     },
     {
       seq: 8,
@@ -89,6 +116,9 @@ export default function RoomList() {
       describe: `금융기관을 사칭, 피싱사이트로 유인하여
        피해자 명의로 대출 편취하는 사기 수법`,
       img: Loans,
+      count: 1,
+      locked: true,
+      password: "1234",
     },
     {
       seq: 9,
@@ -97,6 +127,9 @@ export default function RoomList() {
       describe: `수사기관을 사칭하여 피해자를 기망하여
        금전 편취하는 사기 수법`,
       img: Agency,
+      count: 2,
+      locked: false,
+      password: null,
     },
     {
       seq: 10,
@@ -105,6 +138,9 @@ export default function RoomList() {
       describe: `지인을 사칭해 문자나 전화로 돈을 요구하는
       사기 수법`,
       img: Acquaintance,
+      count: 1,
+      locked: false,
+      password: null,
     },
     {
       seq: 11,
@@ -113,6 +149,9 @@ export default function RoomList() {
       describe: `금융기관을 사칭, 피싱사이트로 유인하여
        피해자 명의로 대출 편취하는 사기 수법`,
       img: Loans,
+      count: 2,
+      locked: true,
+      password: "1234",
     },
   ];
   return (

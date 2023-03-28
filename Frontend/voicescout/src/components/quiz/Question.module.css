@@ -37,8 +37,8 @@
 }
 
 .contents_title {
-  position: relative;
-  top: 40px;
+  position: absolute;
+  top: 11vh;
   left: 7%;
   font-family: "The_Jamsil_5_Bold";
   font-size: 4em;
@@ -54,6 +54,7 @@
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 6px 6px 0px #bc830d;
+  margin-top: 10vh;
   padding-top: 40px;
   padding-left: 150px;
   padding-right: 150px;
