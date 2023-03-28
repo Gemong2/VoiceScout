@@ -4,10 +4,66 @@ import style from "./CriminalLetter.module.css";
 
 export default function CriminalLetter() {
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContents, setModalContents] = useState(<></>)
+
+  // const openModal = (children: ReactNode) =>
+
   const [buttonState, setButtonState] = useState(0);
   const buttonTab = (index:number) => {
     setButtonState(index);
   }
+  const Button_One = () => {
+    return (
+      <div>
+        <div className={style.modalsize + " " + style.button_one}></div>
+      </div>
+    )
+  }
+  const Button_Two = () => {
+    return (
+      <div>
+        <div className={style.modalsize + " " + style.button_two}></div>
+      </div>
+    )
+  }
+  const Button_Three = () => {
+    return (
+      <div>
+        <div className={style.modalsize + " " + style.button_three}></div>
+      </div>
+    )
+  }
+  const Button_Four = () => {
+    return (
+      <div>
+        <div className={style.modalsize + " " + style.button_four}></div>
+      </div>
+    )
+  }
+  const Button_Five = () => {
+    return (
+      <div>
+        <div className={style.modalsize + " " + style.button_five}></div>
+      </div>
+    )
+  }
+  const Button_Six = () => {
+    return (
+      <div>
+        <div className={style.modalsize + " " + style.button_six}></div>
+      </div>
+    )
+  }
+  let content;
+
+  if (buttonState === 1 ) content = <Button_One />
+  else if (buttonState === 2) content = <Button_Two />
+  else if (buttonState === 3) content = <Button_Three />
+  else if (buttonState === 4) content = <Button_Four />
+  else if (buttonState === 5) content = <Button_Five />
+  else content = <Button_Six />
+
   return (
     <div className={style.content}>
       <div className={style.wrap}>
@@ -28,6 +84,7 @@ export default function CriminalLetter() {
           </div>
         </div>
       </div>
+      <div>{content}</div>
     </div>
   )
 }
