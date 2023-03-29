@@ -19,7 +19,7 @@ function App() {
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/" element={<Main />} />
-          <Route path="/simulation-list" element={<SimulationList />} />
+          <Route path="/simulation-list/*" element={<SimulationList />} />
           <Route path="/quiz/*" element={<Quiz />} />
         </Route>
         <Route path="/simulation-room/*" element={<SimulationRoom />} />

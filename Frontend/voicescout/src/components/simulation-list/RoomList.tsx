@@ -3,7 +3,7 @@ import style from "./RoomList.module.css";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
-import CreateModal from "./CreateModal";
+import CreateModal from "components/common/CreateModal";
 
 export default function RoomList() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -179,7 +179,15 @@ export default function RoomList() {
               방 만들기
             </button>
           </div>
-          {isModal && <CreateModal setIsModal={setIsModal} />}
+          {isModal && (
+            <CreateModal
+              setIsModal={setIsModal}
+              titleInput=""
+              lockedInput={false}
+              passwordInput=""
+              typeInput={0}
+            />
+          )}
         </div>
       </div>
     </>
