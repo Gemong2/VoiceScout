@@ -52,11 +52,7 @@
   margin-top: 3vh;
 }
 
-.passwd_grid p {
-  font-family: "Pretendard-Bold";
-}
-
-.passwd_grid input[type="password"] {
+.locked {
   width: 100%;
   height: 35px;
   border: 1px solid #f8d99b;
@@ -65,6 +61,21 @@
   font-family: "Pretendard-Bold";
   font-size: 1.1em;
   padding-left: 20px;
+}
+
+.unlocked {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #f8d99b;
+  border-radius: 10px;
+  background-color: #ffda00;
+  font-family: "Pretendard-Bold";
+  font-size: 1.1em;
+  padding-left: 20px;
+}
+
+.passwd_grid p {
+  font-family: "Pretendard-Bold";
 }
 
 input[type="password"]::placeholder {
@@ -77,7 +88,17 @@ input[type="password"]::placeholder {
   margin-top: 5vh;
 }
 
-.room_type img {
+.img_selected {
+  width: 250px;
+  height: 170px;
+  border: 0.5px solid #000000;
+  border-radius: 10px;
+  background-color: #ffe600;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.img {
   width: 250px;
   height: 170px;
   border: 0.5px solid #000000;
