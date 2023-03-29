@@ -8,6 +8,7 @@
   height: 100vh;
   padding: 10px 0;
   margin: 10px auto;
+  margin-top: 5%;
   display: flex;
   position: relative;
   justify-content: center;
@@ -17,7 +18,7 @@
   position: relative; /* 추가 */
 }
 .square{
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -25,17 +26,16 @@
   flex-direction: column;
   align-items: center;
   width: 60vw;
-  height: 90vh;
-  padding: 10px;
+  height: 100vh;
   background-color: #62A0D9;
   box-shadow: 10px 10px #302F2F;
   border: 5px solid #616161;
-  position: relative;
+
   z-index: 1;
 }
 
 .context_square{
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -49,27 +49,23 @@
   border: 5px solid #616161;
 }
 
-.context {
-  position: relative;
-}
-
 .button_container{
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 60vh;
+  
+  /* width: 100vh; */
   /* margin-left: 30% ; */
 }
 
 .button_container button {
-  /* position: absolute;
-  padding: .3em 1em 0; */
 
   position: relative;
-  margin: 0 10px;
+  margin: 0;
   cursor: pointer;
   z-index: 1;
+  
 }
 
 .button_container button::before {
@@ -83,6 +79,7 @@
   border-radius: .5em .5em 0 0;
   transform:perspective(.5em) rotateX(5deg);
   transform-origin: bottom;
+  
 }
 
 /* Button */
@@ -90,54 +87,33 @@
 .button {
   font-family: "Pretendard-Regular";
   float: left;
-  min-width: 150px;
+  min-width: 130px;
   max-width: 250px;
-  display: block;
+  min-height: 60px;
   background: none;
   color: white;
+  position: absolute;
   border: none;
   text-align: center;
-  display: block;
+  
 }
 
 .button_size_s {
+  text-align: center;
   font-size: 1.2em;
   margin: 10px;
+  padding-top: 20px;
 }
 
 
 /* content */
 
-.content {
-  display: none;
-  flex-direction: column;
-  width: 100%;
-}
-
-
 .active_content {
   position: relative;
-  display: block;
-  text-align: center;
+  align-items: center;
   justify-content: center;
   font-family: "Pretendard-Regular";
   font-size: 2em;
   padding: 0;
   width: 100%;
-}
-
-.content h2 {
-  padding: 0px 0 5px 0px;
-}
-
-.content hr {
-  width: 100px;
-  height: 2px;
-  background: #222;
-  margin-bottom: 5px;
-}
-
-.content p {
-  width: 100%;
-  height: 100%;
 }

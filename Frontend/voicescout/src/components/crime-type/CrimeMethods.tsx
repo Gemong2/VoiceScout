@@ -35,10 +35,11 @@ export default function CrimeMethods() {
       }, [scrollRef]);
   return (
     <div className={style.content_scroll}>
-        <h2>수법소개</h2>
-        <div className={style.button_tap}>
-            <button className={buttonState === 1 ? style.tabbutton_on + " " + style.tabbutton: style.tabbutton} onClick={() => buttonTab(1)}>기관사칭형</button>
-            <button className={buttonState === 2 ? style.tabbutton_on + " " + style.tabbutton: style.tabbutton} onClick={() => buttonTab(2)}>대출사기형</button>
+        <div className={style.content_box}>
+            <div className={style.button_tap}>
+                <button className={buttonState === 1 ? style.tabbutton_on + " " + style.tabbutton: style.tabbutton} onClick={() => buttonTab(1)}>기관사칭형</button>
+                <button className={buttonState === 2 ? style.tabbutton_on + " " + style.tabbutton: style.tabbutton} onClick={() => buttonTab(2)}>대출사기형</button>
+            </div>
         </div>
         <div className={buttonState === 1 ? style.tabcontent_on + " " + style.tabcontent : style.tabcontent}>
             <div ref={scrollRef} className={style.wrap}>
