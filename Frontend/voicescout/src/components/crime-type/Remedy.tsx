@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useRef, useEffect } from "react";
+import style from "./Remedy.module.css";
 
 export default function Remedy() {
   return (
