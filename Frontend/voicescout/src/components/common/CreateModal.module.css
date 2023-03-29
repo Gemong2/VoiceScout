@@ -28,8 +28,13 @@
   text-align: center;
 }
 
+.title {
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
 .title input {
-  width: 70%;
+  width: 100%;
   height: 50px;
   border: 2px solid #ffac00;
   border-radius: 10px;
@@ -44,12 +49,26 @@
   color: #ffffffa6;
 }
 
+.title_check {
+  color: #000000;
+  text-align: left;
+  font-family: "Pretendard-Light";
+  font-size: 0.8em;
+}
+
 .passwd_grid {
   display: grid;
   grid-template-columns: 47% 3% 10% 25%;
   text-align: left;
   align-items: center;
-  margin-top: 3vh;
+  margin-top: 1vh;
+}
+
+.passwd_check {
+  color: #000000;
+  text-align: left;
+  font-family: "Pretendard-Light";
+  font-size: 0.8em;
 }
 
 .locked {
@@ -85,7 +104,7 @@ input[type="password"]::placeholder {
 .room_type {
   display: flex;
   justify-content: center;
-  margin-top: 5vh;
+  margin-top: 2vh;
 }
 
 .img_selected {

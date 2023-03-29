@@ -23,6 +23,7 @@
 }
 .contents_first {
   width: 150px;
+  height: 120px;
 }
 
 .contents_second {
@@ -56,7 +57,7 @@
 }
 
 .blank {
-  width: 30vh;
+  width: 34vh;
 }
 
 .information img {
@@ -76,11 +77,6 @@
 
 .roles {
   position: relative;
-}
-
-.settings img {
-  width: 50px;
-  height: 50px;
 }
 
 .main_role {
@@ -104,4 +100,51 @@
   font-style: italic;
   color: #d9d9d9;
   transition: 0.5s;
+}
+
+.settings {
+  margin-top: 10vh;
+  width: 30px;
+}
+
+.settings img {
+  width: 30px;
+  height: 30px;
+  margin-top: 1vh;
+  margin-left: 0;
+}
+
+.btn_div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.setting_btn {
+  width: 100px;
+  height: 40px;
+  background-color: #2ccbf7;
+  border-radius: 15px;
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
+}
+
+.start_btn {
+  width: 150px;
+  height: 50px;
+  background-color: #f7b52c;
+  border-radius: 15px;
+  font-family: "Pretendard-Bold";
+  font-size: 1.5em;
+}
+
+.out_btn {
+  width: 100px;
+  height: 40px;
+  background-color: #787878;
+  border-radius: 15px;
+  color: #ffffff;
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
 }
