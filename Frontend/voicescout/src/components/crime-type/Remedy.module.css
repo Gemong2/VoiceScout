@@ -4,4 +4,27 @@
     box-sizing: border-box;
   }
 
-  
+.container {
+  position: relative;
+  width: 60vw;
+  height: 60vh;
+  margin-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container h2 {
+  font-size: 1em;
+}
+
+.remedy_img {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  background-image: url(img/vp_save_process.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+}

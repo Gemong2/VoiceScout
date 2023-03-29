@@ -29,7 +29,7 @@ export default function CrimePrevention() {
     };
   }, [scrollRef]);
   return (
-    <div>
+    <div className={style.container}>
         <h2>십계명</h2>
         <div className={style.content_scroll}>
           <div ref={scrollRef} className={style.square_rule}>

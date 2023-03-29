@@ -28,7 +28,7 @@ export default function CrimeType() {
           <button className= {toggleState === 2 ? style.button_on  + " " + style.button + " " + style.button_size_s : 
           style.button + " "+ style.button_size_s}
           onClick={() => toggleTab(2)}>
-            범인발송문자
+            범인문자
           </button>
       
           <button className={toggleState === 3 ? style.button_on  + " " +style.button + " " + style.button_size_s : 
@@ -47,20 +47,18 @@ export default function CrimeType() {
         <div className={style.square}>
           <div className={style.context_square}>
             <div className={style.context}>
-              <div className={ toggleState === 1 ? style.content + " " + style.active_content : style.content }>
-                <CrimeMethods />
-              </div>
-
-              <div className={ toggleState === 2 ? style.content + " " + style.active_content : style.content }>
-                <CriminalLetter />
-              </div>
-
-              <div className={ toggleState === 3 ? style.content + " " + style.active_content : style.content }>
-                <CrimePrevention />
-              </div>
-              <div className={ toggleState === 4 ? style.content + " " + style.active_content : style.content }>
-                <Remedy />
-              </div>
+              {(toggleState === 1 && (
+                <div className={style.active_content}>
+                <CrimeMethods /></div> 
+              )) || (toggleState === 2 && (
+                <div className={style.active_content}>
+                <CriminalLetter /></div> 
+              )) || (toggleState === 3 && (
+                <div className={style.active_content}>
+                <CrimePrevention /></div> 
+              )) || (toggleState === 4 && (
+                <div className={style.active_content}>
+                <Remedy /></div> ))}
             </div>
           </div>
         </div>

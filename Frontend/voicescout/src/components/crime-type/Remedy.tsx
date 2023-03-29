@@ -4,16 +4,10 @@ import style from "./Remedy.module.css";
 
 export default function Remedy() {
   return (
-    <div>
+    <div className={style.container}>
         <h2>구제방법</h2>
-        <hr />
-        <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-        Odio quasi soluta quibusdam, nam molestias veritatis reiciendis. 
-        Natus asperiores, 
-        officiis aliquid dolor commodi voluptates incidunt itaque 
-        fuga sapiente illum accusantium quibusdam!
-        </p>
+        <br />
+        <div className={style.remedy_img}></div>
     </div>
   )
 }
