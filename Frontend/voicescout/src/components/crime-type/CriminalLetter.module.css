@@ -4,31 +4,44 @@
   box-sizing: border-box;
 }
 
-.wrap .chat {
+.container{
+  position: relative;
+  width: 60vw;
+  height: 60vh;
+  margin-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* wrap */
+.wrap {
     display: flex;
-    align-items: flex-start;
-    padding: 20px;
-  
+    flex-direction: row;
+    justify-content: center;
+    /* padding-bottom: 10px; */
+    margin: 0;
   }
   
   .wrap .chat .textbox {
     position: relative;
-    /* display: inline-block; */
-    max-width: calc(100% - 70px);
-    padding: 10px;
-    margin-top: 7px;
+    display: inline-block;
+    /* max-width: calc(100% - 70px); */
+    min-width: 100px;
+    padding: 0 10px 10px 10px;
+    margin: 0 auto;
     font-size: 13px;
     color: white;
     border-radius: 10px;
+    text-align: center;
+    align-items: center;
     font-family: "Pretendard-Regular";
     font-size: 1rem;
   }
   
   .wrap .chat .textbox::before {
     position: relative;
-    display: block;
-    top: 0;
-    font-size: 2rem;
   }
   
   .wrap .ch1 .textbox {
@@ -37,27 +50,38 @@
   }
   
   .wrap .ch1 .textbox::before {
-    top: 47px;
-    left: -15px;
+    top: 60px;
+    left: -25px;
     rotate: -20deg;
     content: "◀";
     color: #F9EB54;
   }
 
   .guide {
+    position: relative;
+    width: 200px;
+    margin: 0;
+    padding: 0;
     background-image: url(img/guide.png);
     background-repeat: no-repeat;
     background-size: contain;
+    transform:rotate(90deg);
+    -moz-transform: scaleX(-1); 
+      -o-transform: scaleX(-1); 
+ -webkit-transform: scaleX(-1); 
+         transform: scaleX(-1);   
+        filter: FlipH;
+   -ms-filter: "FlipH";
   }
 
   .square{
-    position: relative;
+    position: absolute;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 0 ;
-    height: 40%;
+    padding: 0 auto;
+    height: 90%;
     width: 70%;
     margin: 0 auto;
     background-color: #EAEAEA;
@@ -66,29 +90,28 @@
   }
 
   
-.button_tap {
+.button_tab {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 10px;
   }
   
   .tabbutton {
     font-family: "Pretendard-Regular";
     float: left;
-    min-width: 150px;
-    max-width: 250px;
-    display: block;
-    justify-content: space-between;
+    min-width: 180px;
+    max-width: 400px;
+    min-height: 80px;
     margin: 10px;
-    padding: 1rem;
+    padding: 8%;
+    display: in;
     background: white;
     color: #616161;
     border: 5px solid #616161;
     text-align: center;
-    position: relative;
-    font-size: 1em;
+    font-size: 1.2rem;
     box-shadow: 0 4px 4px 0 #a6a6a6;
-    border-radius: .3em;
+    border-radius: .4em;
     cursor: pointer;
   }
   
@@ -129,36 +152,51 @@
   }
 
   .button_one {
+    position: absolute;
     background-image: url(img/button_one.jpg);
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 4;
   }
   .button_two {
     background-image: url(img/button_two.jpg);
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 4;
   }
   .button_three {
     background-image: url(img/button_three.jpg);
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 4;
   }
   .button_four {
     background-image: url(img/button_four.jpg);
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 4;
   }
   .button_five {
     background-image: url(img/button_five.jpg);
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 4;
   }
   .button_six {
     background-image: url(img/button_six.jpg);
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 4;
   }
   .modalsize {
     width: 500px;
     height: 500px;
+    background: #fff;
+    border:5px solid #000;
+    z-index: 2;
+  }
+
+  .button_index {
+    /* position: absolute; */
+    /* z-index: 3; */
   }
