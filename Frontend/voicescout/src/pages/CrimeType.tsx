@@ -46,19 +46,21 @@ export default function CrimeType() {
         </div>
         <div className={style.square}>
           <div className={style.context_square}>
-            <div className={ toggleState === 1 ? style.content + " " + style.active_content : style.content }>
-              <CrimeMethods />
-            </div>
+            <div className={style.context}>
+              <div className={ toggleState === 1 ? style.content + " " + style.active_content : style.content }>
+                <CrimeMethods />
+              </div>
 
-            <div className={ toggleState === 2 ? style.content + " " + style.active_content : style.content }>
-              <CriminalLetter />
-            </div>
+              <div className={ toggleState === 2 ? style.content + " " + style.active_content : style.content }>
+                <CriminalLetter />
+              </div>
 
-            <div className={ toggleState === 3 ? style.content + " " + style.active_content : style.content }>
-              <CrimePrevention />
-            </div>
-            <div className={ toggleState === 4 ? style.content + " " + style.active_content : style.content }>
-              <Remedy />
+              <div className={ toggleState === 3 ? style.content + " " + style.active_content : style.content }>
+                <CrimePrevention />
+              </div>
+              <div className={ toggleState === 4 ? style.content + " " + style.active_content : style.content }>
+                <Remedy />
+              </div>
             </div>
           </div>
         </div>

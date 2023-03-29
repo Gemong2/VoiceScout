@@ -12,6 +12,7 @@
 }
 
 .square_rule {
+    position: absolute;
     display: flex;
     flex-direction: column;
 }

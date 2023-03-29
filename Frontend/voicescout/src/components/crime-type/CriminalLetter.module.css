@@ -1,6 +1,7 @@
-.content {
-    display: flex;
-    flex-direction: column;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .wrap .chat {
@@ -12,7 +13,7 @@
   
   .wrap .chat .textbox {
     position: relative;
-    display: inline-block;
+    /* display: inline-block; */
     max-width: calc(100% - 70px);
     padding: 10px;
     margin-top: 7px;
@@ -24,7 +25,7 @@
   }
   
   .wrap .chat .textbox::before {
-    position: absolute;
+    position: relative;
     display: block;
     top: 0;
     font-size: 2rem;
@@ -55,7 +56,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding: 0 ;
     height: 40%;
     width: 70%;
     margin: 0 auto;
