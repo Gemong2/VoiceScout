@@ -8,7 +8,7 @@ export default function SimulationRoom() {
     <div className={style.container}>
       <div className={style.inner_container}>
         <Routes>
-          <Route path="/" element={<WaitingRoom />} />
+          <Route path="/:roomId" element={<WaitingRoom />} />
         </Routes>
       </div>
     </div>
