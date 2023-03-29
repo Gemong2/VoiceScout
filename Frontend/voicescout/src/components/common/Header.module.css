@@ -21,6 +21,7 @@
 
 .logo {
   height: 60px;
+  cursor: pointer;
 }
 
 .menu_list {
@@ -31,4 +32,5 @@
 .menu {
   margin-left: 100px;
   margin-right: 100px;
+  cursor: pointer;
 }
