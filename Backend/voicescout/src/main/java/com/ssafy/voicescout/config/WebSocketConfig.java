@@ -12,6 +12,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   //첫 웹소켓 핸드쉐이크를 위한 설정
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
+    System.out.println("오나,,");
     registry.addEndpoint("/webSocket")
         .setAllowedOriginPatterns("*")
         .withSockJS();
@@ -21,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   public void configureMessageBroker(MessageBrokerRegistry registry) {
 //메시지브로커가 바로 구독자들에게 보냄
 // 통상적으로 queue는 일대일 topic은 브로드캐스트
-    registry.enableSimpleBroker("/call");
+    registry.enableSimpleBroker("/topic");
 //메시지 핸들러로 라우팅됨
     registry.setApplicationDestinationPrefixes("/");
   }

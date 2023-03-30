@@ -28,9 +28,8 @@ public class CategoryInit {
         .genre("지인 사칭형")
         .discription("지인이나 기관 등을 사칭해 문자나 전화로 돈을 요구하는 사기 수법")
         .build();
-    categoryRepository.save(category1);
-    categoryRepository.save(category2);
-    categoryRepository.save(category3);
+      categoryRepository.save(category1);
+      categoryRepository.save(category2);
+      categoryRepository.save(category3);
   }
-
 }

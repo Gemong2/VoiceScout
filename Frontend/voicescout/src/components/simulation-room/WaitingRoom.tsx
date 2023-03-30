@@ -63,13 +63,11 @@ export default function WaitingRoom() {
   ];
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:80800/websocket");
+    const socket = new SockJS("http://localhost:4433/webSocket");
     const stompClient = Stomp.over(socket);
-
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
     });
-
     const recognition = new (window.SpeechRecognition ||
       window.webkitSpeechRecognition)();
 
@@ -83,10 +81,10 @@ export default function WaitingRoom() {
         let transcript = e.results[i][0].transcript;
         if (e.results[i].isFinal) {
           setSpeechToText(() => {
-            const newSpeechToText = transcript;
-            console.log(`Sending "${newSpeechToText}" to server via WebSocket`);
-            stompClient.send("/app/transcript", {}, newSpeechToText);
-            return newSpeechToText;
+            const message = transcript;
+            console.log(`Sending "${message}" to server via WebSocket`);
+            stompClient.send("/ai", {}, message);
+            return message;
           });
         }
       }
