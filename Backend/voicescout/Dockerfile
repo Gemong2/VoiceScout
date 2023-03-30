@@ -7,7 +7,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # 빌드된 jar 파일 복사
-COPY build/libs/*.jar /app/back.jar
+COPY build/libs/*.jar /app/
 
 # 실행 명령어
 CMD ["java", "-jar", "/app/build/libs/back.jar"]
