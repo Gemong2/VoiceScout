@@ -8,8 +8,8 @@
   position: relative;
   width: 60vw;
   height: 60vh;
-  margin-top: 20%;
   display: flex;
+  padding: 10px auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -20,24 +20,24 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* padding-bottom: 10px; */
-    margin: 0;
+    margin-bottom: 1%;
+    height: 20vh;
+    margin-top: -5%;
   }
   
-  .wrap .chat .textbox {
+  .textbox {
     position: relative;
     display: inline-block;
-    /* max-width: calc(100% - 70px); */
-    min-width: 100px;
-    padding: 0 10px 10px 10px;
+    max-width: 25vw;
+    min-height: 13vh;
+    padding: 20px 12px 10px 10px;
     margin: 0 auto;
-    font-size: 13px;
     color: white;
     border-radius: 10px;
-    text-align: center;
-    align-items: center;
     font-family: "Pretendard-Regular";
+    text-align: left;
     font-size: 1rem;
+
   }
   
   .wrap .chat .textbox::before {
@@ -45,26 +45,24 @@
   }
   
   .wrap .ch1 .textbox {
-    margin-left: 60%;
+    margin-left: 10%;
+    margin-bottom: 10%;
     background-color: #F9EB54;
   }
   
   .wrap .ch1 .textbox::before {
-    top: 60px;
-    left: -25px;
+    top: 10%;
+    left: -15%;
     rotate: -20deg;
     content: "◀";
     color: #F9EB54;
   }
 
-  .guide {
+  .img_size {
     position: relative;
-    width: 200px;
-    margin: 0;
+    height: 15vh;
+    max-width: 20vw;
     padding: 0;
-    background-image: url(img/guide.png);
-    background-repeat: no-repeat;
-    background-size: contain;
     transform:rotate(90deg);
     -moz-transform: scaleX(-1); 
       -o-transform: scaleX(-1); 
@@ -75,14 +73,14 @@
   }
 
   .square{
-    position: absolute;
+    position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 0 auto;
-    height: 90%;
-    width: 70%;
+    padding: 10px auto;
+    height: 200vh;
+    max-width: 60vw;
     margin: 0 auto;
     background-color: #EAEAEA;
     box-shadow: 10px 10px #302F2F;
@@ -94,109 +92,98 @@
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-  }
+}
   
-  .tabbutton {
-    font-family: "Pretendard-Regular";
-    float: left;
-    min-width: 180px;
-    max-width: 400px;
-    min-height: 80px;
-    margin: 10px;
-    padding: 8%;
-    display: in;
-    background: white;
-    color: #616161;
-    border: 5px solid #616161;
-    text-align: center;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 4px 0 #a6a6a6;
-    border-radius: .4em;
-    cursor: pointer;
-  }
-  
-  .tabbutton_on {
-    background-color: #F5B614;
-  }
-  
-  .tabcontent {
-    display: none;
-    justify-content: center;
-    overflow-y: auto;
-    max-height: 55vh; /* 원하는 높이로 설정 */
-    overflow-x: hidden;
-    padding: 0 auto;
-    /* padding-right: 10px; */
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .tabcontent_on {
-    display: block;
-    text-align: justify;
-    justify-content: center;
-    width: 90%;
-    height: 80vh;
-    font-family: "Pretendard-Regular";
-    font-size: 2rem;
-    margin: 0 auto;
-    margin-top: 5%;
-    padding: 10px;
-  }
-  
-  .tapcontent p {
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-  }
+.tabbutton {
+  font-family: "Pretendard-Regular";
+  float: left;
+  min-width: 180px;
+  max-width: 400px;
+  min-height: 80px;
+  margin: 10px;
+  padding: 8%;
+  display: in;
+  background: white;
+  color: #616161;
+  border: 5px solid #616161;
+  text-align: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 4px 0 #a6a6a6;
+  border-radius: .4em;
+  cursor: pointer;
+}
 
-  .button_one {
-    position: absolute;
-    background-image: url(img/button_one.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 4;
-  }
-  .button_two {
-    background-image: url(img/button_two.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 4;
-  }
-  .button_three {
-    background-image: url(img/button_three.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 4;
-  }
-  .button_four {
-    background-image: url(img/button_four.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 4;
-  }
-  .button_five {
-    background-image: url(img/button_five.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 4;
-  }
-  .button_six {
-    background-image: url(img/button_six.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    z-index: 4;
-  }
-  .modalsize {
-    width: 500px;
-    height: 500px;
-    background: #fff;
-    border:5px solid #000;
-    z-index: 2;
-  }
+.tabbutton_on {
+  background-color: #F5B614;
+}
 
-  .button_index {
-    /* position: absolute; */
-    /* z-index: 3; */
-  }
+.tabcontent {
+  display: none;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 55vh; /* 원하는 높이로 설정 */
+  overflow-x: hidden;
+  padding: 0 auto;
+  /* padding-right: 10px; */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tabcontent_on {
+  display: block;
+  text-align: justify;
+  justify-content: center;
+  width: 90%;
+  height: 80vh;
+  font-family: "Pretendard-Regular";
+  font-size: 2rem;
+  margin: 0 auto;
+  margin-top: 5%;
+  padding: 10px;
+}
+
+.tapcontent p {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.modal_square {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 40vw;
+  max-height: 80vh;
+  margin-left: -32%;
+  margin-top: -60%;
+  background: #F7B52C;
+  border:3px solid #F7B52C;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+.modal_text {
+  margin-bottom: 10px;
+  font-size: 0.8em;
+  font-family: "Pretendard-Regular";
+}
+.modalsize {
+  height: 60vh;
+  overflow-y: auto;
+}
+
+.modal_img {
+  position: relative;
+  max-width: 38vw;
+  display: flex;
+  justify-content: center;
+}
+.square_rule {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+  

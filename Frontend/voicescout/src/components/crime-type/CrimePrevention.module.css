@@ -11,14 +11,16 @@
     width: 90%;
     height: 80vh;
     font-family: "Pretendard-Regular";
-    font-size: 2rem;
     padding: 30px auto;
 }
 
-.container h2 {
-    text-align: center;
-    margin: 20px;
-    font-size: 1.5em;
+
+
+.container p {
+    text-align: left;
+    margin: 30px 10px 20px 10px;
+    font-size: 1em;
+    font-family: "Pretendard-Bold";
 }
 
 .content_scroll {
@@ -45,16 +47,29 @@
     display: flex;
     margin: 0 auto;
     margin-top: 30px;
-    justify-content: center;
     width: 90%;
     height: 10vh;
     background: #EAEAEA;
     border-radius: 10px;
-    padding: 10px;
-    font-size: 1.5rem;
+    padding: 20px;
+    font-family: "Pretendard-Regular";
+    font-size: 1rem;
     align-items: center;
 }
 
+.rule_num {
+  margin: 10px;
+}
+
+.rule_text {
+  border-left : thin dotted #595959;
+  height : 50px;
+  padding-left: 20px;
+  margin: 10px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
 
 .wrap .chat {
     display: flex;
@@ -124,3 +139,33 @@
     content: "▶";
     color: #F9EB54;
   }
+
+  
+table {
+  border-collapse: collapse;
+  margin-left: 10px;
+  width: 95%;
+  font-size: 0.8rem;
+  margin-top: 30px;
+}
+
+th, td {
+padding: 8px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+
+th {
+background-color: #f2f2f2;
+}
+
+td:nth-child(1), th:nth-child(1),
+tr:first-of-type th {
+font-weight: bold;
+background-color: #ccc;
+}
+
+td:nth-child(2), td:nth-child(3), td:nth-child(4), th:nth-child(2), th:nth-child(3), th:nth-child(4) {
+font-weight: normal;
+font-style: italic;
+}
