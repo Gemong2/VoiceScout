@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import style from "./WaitingRoom.module.css";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
@@ -11,6 +13,7 @@ import Headset from "img/headset.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
+  const [speechToText, setSpeechToText] = useState("");
   const location = useLocation();
   const [isModal, setIsModal] = useState(false);
 
@@ -58,6 +61,55 @@ export default function WaitingRoom() {
       password: location.state.password,
     },
   ];
+
+  useEffect(() => {
+    const socket = new SockJS("http://localhost:8080/websocket");
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, () => {
+      console.log("Connected to WebSocket server");
+    });
+
+    const recognition = new (window.SpeechRecognition ||
+      window.webkitSpeechRecognition)();
+
+    recognition.interimResults = true;
+    recognition.lang = "ko-KR";
+    recognition.continuous = true;
+    recognition.maxAlternatives = 10000;
+
+    recognition.addEventListener("result", (e) => {
+      let interimTranscript = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        let transcript = e.results[i][0].transcript;
+        if (e.results[i].isFinal) {
+          setSpeechToText((prevSpeechToText) => {
+            const newSpeechToText = prevSpeechToText + transcript;
+            console.log(`Sending "${transcript}" to server via WebSocket`);
+            stompClient.send("/app/transcript", {}, newSpeechToText);
+            return newSpeechToText;
+          });
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+      setSpeechToText(
+        (prevSpeechToText) => prevSpeechToText + interimTranscript
+      );
+    });
+
+    recognition.addEventListener("end", recognition.start);
+
+    recognition.start();
+
+    return () => {
+      recognition.stop();
+      stompClient.disconnect(() => {
+        console.log("Disconnected from WebSocket server");
+      });
+    };
+  }, []);
+
   return (
     <>
       <div className={style.header}>{data[0].title}</div>
