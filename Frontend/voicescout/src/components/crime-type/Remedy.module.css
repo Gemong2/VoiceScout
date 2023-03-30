@@ -5,6 +5,65 @@
   }
 
 .container {
+  width: 90%;
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.notice {
+  display: flex;
+  background-color: #E9F3FF;
+  height: 10vh;
+  font-family: "Pretendard-Regular";
+  font-size: 0.8rem;
+  margin: 10px;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.remedy_box {
+  height: 60vh;
+  overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td:nth-child(1), th:nth-child(1),
+tr:first-of-type th {
+  font-weight: bold;
+  background-color: #ccc;
+}
+
+td:nth-child(2), td:nth-child(3), td:nth-child(4), th:nth-child(2), th:nth-child(3), th:nth-child(4) {
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* tr:first-of-type th {
+  font-weight: bold;
+  background-color: #ccc;
+} */
+
+/* .container {
   position: relative;
   width: 60vw;
   height: 60vh;
@@ -13,18 +72,15 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
+} */
 
 .container h2 {
   font-size: 1em;
 }
 
-.remedy_img {
-  position: absolute;
+.img_size {
   display: flex;
   justify-content: center;
-  background-image: url(img/vp_save_process.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  z-index: 1;
+  width: 100%;
+  margin: 10px auto;
 }
