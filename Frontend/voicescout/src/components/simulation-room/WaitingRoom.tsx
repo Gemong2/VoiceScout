@@ -63,7 +63,7 @@ export default function WaitingRoom() {
   ];
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/websocket");
+    const socket = new SockJS("http://localhost:80800/websocket");
     const stompClient = Stomp.over(socket);
 
     stompClient.connect({}, () => {
@@ -79,23 +79,17 @@ export default function WaitingRoom() {
     recognition.maxAlternatives = 10000;
 
     recognition.addEventListener("result", (e) => {
-      let interimTranscript = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
         let transcript = e.results[i][0].transcript;
         if (e.results[i].isFinal) {
-          setSpeechToText((prevSpeechToText) => {
-            const newSpeechToText = prevSpeechToText + transcript;
-            console.log(`Sending "${transcript}" to server via WebSocket`);
+          setSpeechToText(() => {
+            const newSpeechToText = transcript;
+            console.log(`Sending "${newSpeechToText}" to server via WebSocket`);
             stompClient.send("/app/transcript", {}, newSpeechToText);
             return newSpeechToText;
           });
-        } else {
-          interimTranscript += transcript;
         }
       }
-      setSpeechToText(
-        (prevSpeechToText) => prevSpeechToText + interimTranscript
-      );
     });
 
     recognition.addEventListener("end", recognition.start);
