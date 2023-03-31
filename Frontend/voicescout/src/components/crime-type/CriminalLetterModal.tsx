@@ -2,42 +2,29 @@ import React from 'react'
 import style from './CriminalLetterModal.module.css';
 
 
-// interface ModalProps {
-//     isOpen: boolean;
-//     onClose: () => void;
-//     onRequestClose?: () => void; // onRequestClose 프로퍼티 추가
-//     children: React.ReactNode;
-//   }
-
-// export default function CriminalLetterModal(props: ModalProps) {
-//   return (
-//     <div className={style.modal_overlay}>
-//       <div className={style.modal_content}>
-//         <button className={style.close_btn} onClick={onClose || onRequestClose}>
-//           <img src="/img/icon_close.png" alt="close-button" />
-//         </button>
-//         {children}
-//       </div>
-//     </div>
-//   );
-// }
-interface PropsType {
-    setModalOpen: (open: boolean) => void;
-    content?: React.ReactNode;
-
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    // onRequestClose?: () => void; // onRequestClose 프로퍼티 추가
+    children: React.ReactNode;
   }
 
-  export default function CriminalLetterModal({ setModalOpen, content }: PropsType) {
-    const closeModal = () => {
-        setModalOpen(false);
-    };
-
-    return (
-        <div className={style.container}>
-            <button className={style.close} onClick={closeModal}>
-                X
-            </button>
-            <p>모달창입니다.</p>
+export default function CriminalLetterModal({
+    isOpen,
+    onClose,
+    children,
+}: ModalProps) {
+  return (
+    <div className={style.modal_square} style={{ display: isOpen ? 'block' : 'none' }}>
+            <div className={style.modal_line}>
+              <div className={style.modal_text}>상세 내용</div>
+              <button className={style.close} onClick={onClose}>
+              X
+              </button>
+            </div>
+        <div className={style.modalsize}>
+            <div className={style.modal_img}>{children}</div>
         </div>
-    );
+    </div>
+  );
 }
