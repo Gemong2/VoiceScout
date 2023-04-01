@@ -16,7 +16,14 @@ services:
                 ports:
                         - 9443:9443
                 volumes:
-                        # - /home/ubuntu/proxy/front/nginx.conf:/etc/nginx/nginx.conf
+                        - nginx_certs:/etc/letsencrypt
+                        - /home/ubuntu/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+        nginx_certs:
+                external: true
+
+
 networks:
         default:
                 name: voicescout
