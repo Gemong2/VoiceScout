@@ -10,4 +10,4 @@ WORKDIR /app
 COPY build/libs/*.jar /app/
 
 # 실행 명령어
-CMD ["java", "-jar", "/app/build/libs/back.jar"]
+CMD ["java", "-jar", "/app/back.jar"]
