@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -13,8 +13,11 @@ import Headset from "img/headset.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
-  const [speechToText, setSpeechToText] = useState("");
+  const navigate = useNavigate();
   const location = useLocation();
+  const [speechToText, setSpeechToText] = useState("");
+  const [userType, setUserType] = useState(0);
+  const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
   const info = [
@@ -104,49 +107,75 @@ export default function WaitingRoom() {
 
   return (
     <>
-      <div className={style.header}>{data[0].title}</div>
-      <div className={style.header_guide}>역할을 선택하십시오</div>
-      <div className={style.contents}>
-        <img
-          className={style.contents_first}
-          src={info[location.state.type].img}
-          alt=""
-        />
-        <div className={style.contents_second}>
-          <p>{info[location.state.type].type}</p>
-          <div className={style.locked}>
-            {data[0].locked ? <span>비공개</span> : <span>공개</span>}
+      {!getReady && (
+        <>
+          <div className={style.header}>{data[0].title}</div>
+          <div className={style.header_guide}>역할을 선택하십시오</div>
+          <div className={style.contents}>
+            <img
+              className={style.contents_first}
+              src={info[location.state.type].img}
+              alt=""
+            />
+            <div className={style.contents_second}>
+              <p>{info[location.state.type].type}</p>
+              <div className={style.locked}>
+                {data[0].locked ? <span>비공개</span> : <span>공개</span>}
+              </div>
+            </div>
+            <div className={style.contents_third}>
+              {info[location.state.type].describe}
+            </div>
           </div>
-        </div>
-        <div className={style.contents_third}>
-          {info[location.state.type].describe}
-        </div>
-      </div>
-      <div className={style.information}>
-        <div className={style.blank}></div>
-        <img className={style.main_img} src={Victim} alt="" />
-        <img className={style.sub_img} src={Criminal} alt="" />
-        <div className={style.roles}>
-          <div className={style.main_role}>피해자</div>
-          <div className={style.sub_role}>피싱범</div>
-        </div>
-        <div className={style.settings}>
-          <img src={Mike} alt="" />
-          <img src={Headset} alt="" />
-        </div>
-      </div>
-      <div className={style.btn_div}>
-        <button
-          className={style.setting_btn}
-          onClick={() => {
-            setIsModal(true);
-          }}
-        >
-          설정
-        </button>
-        <button className={style.start_btn}>시작</button>
-        <button className={style.out_btn}>나가기</button>
-      </div>
+          <div className={style.information}>
+            <div className={style.blank}></div>
+            <img className={style.my_img} src={Victim} alt="" />
+            <img className={style.your_img} src={Criminal} alt="" />
+            <div className={style.roles}>
+              <div className={style.main_role}>피해자</div>
+              <div className={style.sub_role}>피싱범</div>
+            </div>
+            <div className={style.settings}>
+              <img src={Mike} alt="" />
+              <img src={Headset} alt="" />
+            </div>
+          </div>
+          <div className={style.btn_div}>
+            <button
+              className={style.setting_btn}
+              onClick={() => {
+                setIsModal(true);
+              }}
+            >
+              설정
+            </button>
+            <button
+              className={style.start_btn}
+              onClick={() => {
+                setGetReady(true);
+              }}
+            >
+              시작
+            </button>
+            <button
+              className={style.out_btn}
+              onClick={() => {
+                navigate(`/simulation-list/`);
+              }}
+            >
+              나가기
+            </button>
+          </div>
+        </>
+      )}
+      {getReady && (
+        <>
+          <div className={style.role}>
+            <img className={style.my_role} src={Victim} alt="" />
+            <img className={style.your_role} src={Criminal} alt="" />
+          </div>
+        </>
+      )}
       {isModal && (
         <CreateModal
           setIsModal={setIsModal}

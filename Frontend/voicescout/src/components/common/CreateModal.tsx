@@ -27,6 +27,13 @@ export default function CreateModal({
   const [password, setPassword] = useState<string>(passwordInput);
   const [type, setType] = useState<number>(typeInput);
 
+  const newData = {
+    title: title,
+    locked: locked,
+    password: password,
+    type: type,
+  };
+
   const onTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
