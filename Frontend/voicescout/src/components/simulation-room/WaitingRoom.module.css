@@ -1,3 +1,5 @@
+/** 통화 시작 전 레이아웃 css*/
+
 .header {
   padding-top: 5vh;
   font-family: "Pretendard-SemiBold";
@@ -57,7 +59,7 @@
 }
 
 .blank {
-  width: 34vh;
+  width: 25vh;
 }
 
 .information img {
@@ -67,11 +69,11 @@
   margin-right: 3vh;
 }
 
-.main_img {
+.my_img {
   background-color: #f7b52c;
 }
 
-.sub_img {
+.your_img {
   background-color: #787878;
 }
 
@@ -147,4 +149,25 @@
   color: #ffffff;
   font-family: "Pretendard-Bold";
   font-size: 1.2em;
+}
+
+/** 통화 시작 시 레이아웃 css*/
+
+.role {
+  display: flex;
+}
+
+.role img {
+  width: 400px;
+  border-radius: 20px;
+  margin-left: 3vh;
+  margin-right: 3vh;
+}
+
+.my_role {
+  background-color: #f7b52c;
+}
+
+.your_role {
+  background-color: #787878;
 }
