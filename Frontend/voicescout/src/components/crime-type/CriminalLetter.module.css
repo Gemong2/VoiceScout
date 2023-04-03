@@ -46,14 +46,18 @@
   }
   
   .wrap .ch1 .textbox {
-    margin-left: 10%;
-    margin-bottom: 10%;
+    padding: auto;
+    margin-left: 20px;
+    width: 100%;
+    height: 80%;
     background-color: #F9EB54;
+    font-family: "Pretendard-Bold";
+    text-align: center;
   }
   
   .wrap .ch1 .textbox::before {
     top: 10%;
-    left: -10%;
+    left: -30%;
     rotate: -20deg;
     content: "◀";
     color: #F9EB54;

@@ -155,19 +155,39 @@
 
 .role {
   display: flex;
+  flex-direction: column;
 }
 
-.role img {
-  width: 400px;
-  border-radius: 20px;
-  margin-left: 3vh;
-  margin-right: 3vh;
+.simul_call {
+  font-family: "Pretendard-Regular";
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
 }
 
-.my_role {
+.simul_timer {
+  font-family: "Pretendard-Light";
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+}
+
+.simul_profile img {
+  width: 100px;
+  border-radius: 1000px;
+}
+
+.simul_role {
   background-color: #f7b52c;
 }
 
-.your_role {
-  background-color: #787878;
+.simul_calloff img {
+  width: 100px;
+  border-radius: 1000px;
+}
+
+.simul_callimg {
+  background-color: #F94646;
 }
