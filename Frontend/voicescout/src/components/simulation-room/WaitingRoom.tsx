@@ -10,6 +10,7 @@ import Victim from "img/victim.png";
 import Criminal from "img/criminal.png";
 import Mike from "img/mike.png";
 import Headset from "img/headset.png";
+import Calloff from "img/calloff2.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
@@ -170,30 +171,25 @@ export default function WaitingRoom() {
       )}
       {getReady && (
         <>
-          <div className={style.role}>
-            <div className={style.simul_type}>
-              <img
-                className={style.contents_first}
-                src={info[location.state.type].img}
-                alt=""
-              />
-              <p>{info[location.state.type].type}</p>
-            </div>
-            <div className={style.simul_call}>
-              {info[location.state.type].type === "대출 사칭형"
-                ? "1301"
-                : info[location.state.type].type === "기관 사칭형"
-                ? "1599-9999"
-                : "지인"}
-            </div>
-            <div className={style.simul_timer}>00:21</div>
-            <div className={style.simul_profile}>
-              <img className={style.simul_role} src={Criminal} alt="" />
-            </div>
-            <div className={style.simul_calloff}>
-              <img className={style.simul_callimg} src={Criminal} alt="" />
-            </div>
-          </div>
+        <div className={style.role}>
+        <div className={style.simul_type}>
+          <img
+            className={style.contents_first}
+            src={info[location.state.type].img}
+            alt=""
+          />
+            <p>{info[location.state.type].type}</p>
+        </div>
+        <div className={style.simul_call}>{info[location.state.type].type === '대출 사칭형'? '1301' : 
+        info[location.state.type].type === '기관 사칭형' ? '1599-9999' : '지인' }</div>
+        <div className={style.simul_timer}>00:21</div>
+        <div className={style.simul_profile}>
+        <img className={style.simul_role} src={Criminal} alt="" /></div>
+        <div className={style.simul_calloff}>
+        <img className={style.simul_callimg} src={Calloff} alt="" /></div>
+        </div>
+        
+
         </>
       )}
       {isModal && (

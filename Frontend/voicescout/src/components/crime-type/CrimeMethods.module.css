@@ -55,7 +55,6 @@
     display: inline-block;
     text-align: justify;
     justify-content: center;
-    width: 90%;
     height: 80vh;
     font-family: "Pretendard-Regular";
     font-size: 2rem;
@@ -71,6 +70,26 @@
 
 
 /* chat */
+
+.chat_box {
+  font-size: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+  border: 2px solid #000;
+  background: #d4d4d4;
+  align-items: center;
+  padding: 14px;
+}
+
+.border_box {
+  font-size: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+  border: 2px dotted #b9b9b9;
+  align-items: center;
+  padding: 14px;
+}
+
 
 
 .wrap .chat {
@@ -158,4 +177,23 @@
   background-image: url(img/criminal_profile.png);
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+/* scroll */
+
+.tabcontent_on::-webkit-scrollbar{
+  width: 20px;
+}
+
+/* 스크롤바 막대 설정*/
+.tabcontent_on::-webkit-scrollbar-thumb{
+  background-color: #e8e8e8;
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px; 
+  border: 5px solid #ffffff;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.tabcontent_on::-webkit-scrollbar-track{
+  background-color: #ffffff;
 }
