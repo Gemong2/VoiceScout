@@ -170,10 +170,25 @@ export default function WaitingRoom() {
       )}
       {getReady && (
         <>
-          <div className={style.role}>
-            <img className={style.my_role} src={Victim} alt="" />
-            <img className={style.your_role} src={Criminal} alt="" />
-          </div>
+        <div className={style.role}>
+        <div className={style.simul_type}>
+          <img
+            className={style.contents_first}
+            src={info[location.state.type].img}
+            alt=""
+          />
+            <p>{info[location.state.type].type}</p>
+        </div>
+        <div className={style.simul_call}>{info[location.state.type].type === '대출 사칭형'? '1301' : 
+        info[location.state.type].type === '기관 사칭형' ? '1599-9999' : '지인' }</div>
+        <div className={style.simul_timer}>00:21</div>
+        <div className={style.simul_profile}>
+        <img className={style.simul_role} src={Criminal} alt="" /></div>
+        <div className={style.simul_calloff}>
+        <img className={style.simul_callimg} src={Criminal} alt="" /></div>
+        </div>
+        
+
         </>
       )}
       {isModal && (

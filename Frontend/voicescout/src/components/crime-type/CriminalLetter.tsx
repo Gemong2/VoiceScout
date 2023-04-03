@@ -62,7 +62,7 @@ export default function CriminalLetter() {
       <div className={style.wrap}>
         <img className={style.img_size} src={guide} alt="guide" />
         <div className={style.chat +" "+ style.ch1}>
-          <div className={style.textbox}>아래 항목을 클릭해서 상세 문자내용을 확인해보세요</div>
+          <div className={style.textbox}>아래 항목을 <br /> 클릭해서<br />문자 내용을<br />확인해보세요</div>
           </div>
         </div>
         <div className={style.square}>
