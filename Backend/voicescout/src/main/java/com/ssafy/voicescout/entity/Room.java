@@ -35,11 +35,15 @@ public class Room {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime registDate;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "category_seq")
-  private Category category;
-  public void updateRoom(RoomDto RoomDto) {
-    this.title = RoomDto.getTitle();
+  private int typeId;
+
+  public void updateRoom(RoomDto roomDto) {
+    this.title = roomDto.getTitle();
+    this.participant = roomDto.getParticipant();
+    this.link = roomDto.getLink();
+    this.password = roomDto.getPassword();
+    this.locked = roomDto.isLocked();
+    this.typeId = roomDto.getTypeId();
   }
 
 
