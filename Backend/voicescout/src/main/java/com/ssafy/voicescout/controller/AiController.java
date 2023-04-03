@@ -1,10 +1,7 @@
 package com.ssafy.voicescout.controller;
 
-import com.ssafy.voicescout.dto.InteractionReqDto;
+import com.ssafy.voicescout.dto.InteractionDto;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,11 +20,11 @@ public class AiController {
   //    채팅
   @MessageMapping("/ai")
   //@SendTo("topic") 구독자들에게 보내기
-  public void sendAi(@Payload byte[] message, @RequestBody InteractionReqDto interactionReqDto, SimpMessageHeaderAccessor accessor) {
+  public void sendAi(@Payload byte[] message, @RequestBody InteractionDto interactionDto, SimpMessageHeaderAccessor accessor) {
     String content = new String(message, StandardCharsets.UTF_8);
     log.info("[sendAi] : 메세시 수신, message : {}", message );
-    log.info("[sendAi] : 채널아이디 수신, ChannelId : {}", interactionReqDto.getChannelId() );
-    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
+    log.info("[sendAi] : 채널아이디 수신, ChannelId : {}", interactionDto.getLink() );
+    simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), interactionDto);
 //    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
 //    simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
   }

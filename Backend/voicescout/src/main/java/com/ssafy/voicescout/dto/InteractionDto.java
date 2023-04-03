@@ -13,8 +13,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-public class InteractionReqDto {
-    private String channelId;
+public class InteractionDto {
+    private String link;
 
     private String check;
 }
