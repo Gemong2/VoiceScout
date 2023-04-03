@@ -49,8 +49,8 @@ export default function CreateModal({
     title: string;
     password: string;
     typeId: number;
-    participant: number;
     link: string | undefined;
+    participant: number;
     locked: boolean;
   }
 
@@ -98,7 +98,7 @@ export default function CreateModal({
 
   // 방 수정 시 사용되는 API 함수
   const res_put = () => {
-    return $.put(`URL`, updateData);
+    return $.put(`/rooms`, updateData);
   };
 
   const { mutate: onChange } = useMutation(res_put, {
@@ -121,7 +121,7 @@ export default function CreateModal({
   });
 
   // 방 생성 시 사용되는 API 함수
-  const res_post = () => $.post(`/api/rooms`, newData);
+  const res_post = () => $.post(`/rooms`, newData);
   const { mutate: onCreate } = useMutation(res_post, {
     onSuccess: (data) => {
       // 방 생성관련 API 통신 성공 시 해당 방에 대한 데이터를 불러와서
@@ -146,6 +146,7 @@ export default function CreateModal({
         text: "실패했습니다.",
         confirmButtonText: "닫기",
       });
+      console.log(err);
     },
   });
 
