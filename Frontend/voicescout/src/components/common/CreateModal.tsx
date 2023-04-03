@@ -1,5 +1,9 @@
 import React, { Dispatch, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import { $ } from "util/axios";
+import { v4 as uuidv4 } from "uuid";
 import style from "./CreateModal.module.css";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
@@ -21,6 +25,7 @@ export default function CreateModal({
   typeInput,
 }: modal_type) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [title, setTitle] = useState<string>(titleInput);
   const [locked, setLocked] = useState<boolean>(lockedInput);
@@ -31,7 +36,8 @@ export default function CreateModal({
     title: title,
     locked: locked,
     password: password,
-    type: type,
+    category_seq: type,
+    link: uuidv4(),
   };
 
   const onTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +47,28 @@ export default function CreateModal({
     setPassword(e.target.value);
   };
 
-  const onCreate = () => {
+  // 방 생성 클릭 시 고유값 부여해서 링크 생성 및 해당 방으로 이동
+  const res_post = () => $.post(`URL`, newData);
+  const { mutate: onCreate } = useMutation(res_post, {
+    onSuccess: () => {
+      Swal.fire({
+        icon: "success",
+        text: "방이 생성되었습니다..",
+      });
+      navigate(`/simulation-room/${0}`);
+    },
+
+    onError: (err) => {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "실패했습니다.",
+        confirmButtonText: "닫기",
+      });
+    },
+  });
+
+  const isValid = () => {
     // 유효성 검사
     if (
       !(typeof title === "string" && title.length >= 2 && title.length <= 15)
@@ -64,14 +91,8 @@ export default function CreateModal({
       alert("방의 유형을 선택해야 합니다.");
       return;
     }
-    navigate(`/simulation-room/${0}`, {
-      state: {
-        title: title,
-        locked: locked,
-        password: password,
-        type: type,
-      },
-    });
+    let room_id = uuidv4();
+    onCreate();
   };
 
   return (
@@ -149,7 +170,7 @@ export default function CreateModal({
         <div className={style.btn_div}>
           <button
             onClick={() => {
-              onCreate();
+              isValid();
               setIsModal(false);
             }}
           >
