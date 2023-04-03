@@ -5,19 +5,27 @@ import Logo from "img/logo.png";
 
 export default function Main() {
   return (
-    <div className={style.main_theme}>
-      <div className={style.main_contents}>
-        <div>
-          <img className={style.phone_img} src={Phone} alt="" />
-        </div>
-        <div>
+    <div className={style.main_container}>
+      <div className={style.main_theme}>
+        <div className={style.main_contents}>
           <div>
-            <img className={style.logo_img} src={Logo} alt="" />
+            <img className={style.phone_img} src={Phone} alt="" />
           </div>
-          <div className={style.main_text}>
-            <span className={style.keyword}>보이스피싱</span>
-            <br />
-            <span>아는 만큼 예방할 수 있습니다.</span>
+          <div>
+            <div>
+              <img className={style.logo_img} src={Logo} alt="" />
+            </div>
+            <div className={style.main_text}>
+              <span className={style.keyword}>보이스피싱</span>
+              <br />
+              <span>아는 만큼 예방할 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+        <div className={style.main_second + " " + style.main_column}>
+          <div className={style.guy_img}>
+            <div className={style.guy_text}>모의 체험을 통해<br />
+            실제 상황에서도<br />대처할 수 있습니다.</div>
           </div>
         </div>
       </div>
