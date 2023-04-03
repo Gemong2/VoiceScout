@@ -24,7 +24,6 @@ public class RoomServiceImpl implements RoomService {
         .title(roomReqDto.getTitle())
         .link(roomReqDto.getLink())
         .password(roomReqDto.getPassword())
-        .registDate(LocalDateTime.now())
         .participant(roomReqDto.getParticipant())
         .typeId(roomReqDto.getTypeId())
         .build();
@@ -62,11 +61,11 @@ public class RoomServiceImpl implements RoomService {
           .participant(room.getParticipant())
           .link(room.getLink())
           .locked(room.isLocked())
-          .registDate(room.getRegistDate())
           .typeId(room.getTypeId())
           .build();
       roomsDto.add(roomDto);
     }
+    log.info("[getRooms] : 방 목록 조회성공, 방 개수 : {}", roomsDto.size());
     return roomsDto;
   }
 }

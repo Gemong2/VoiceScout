@@ -17,13 +17,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ToString
 public class RoomDto {
   private long seq;
+  private int typeId;
   private String title;
   private String password;
-  private int typeId;
-  private String link;
   private int participant;
   private boolean locked;
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-  private LocalDateTime registDate;
+  private String link;
 
 }

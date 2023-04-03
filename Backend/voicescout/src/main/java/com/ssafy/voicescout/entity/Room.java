@@ -32,8 +32,6 @@ public class Room {
   private String password;
   private int participant;
   private String link; //세션 아이디
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-  private LocalDateTime registDate;
 
   private int typeId;
 
