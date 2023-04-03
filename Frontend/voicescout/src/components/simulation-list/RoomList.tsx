@@ -75,7 +75,7 @@ export default function RoomList() {
   };
 
   const { isLoading, data, refetch } = useQuery(["RoomList"], () =>
-    $.get(`/api/rooms`)
+    $.get(`/rooms`)
   );
 
   return (
