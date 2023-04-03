@@ -11,34 +11,83 @@ import Loans from "img/type_loans.png";
 
 interface modal_type {
   setIsModal: Dispatch<boolean>;
+  seqInput: number;
   titleInput: string;
   lockedInput: boolean;
   passwordInput: string;
-  typeInput: number;
+  typeIdInput: number;
+  createInput: boolean;
+  participantInput: number;
+  linkInput: string;
 }
 
 export default function CreateModal({
   setIsModal,
+  seqInput,
   titleInput,
   lockedInput,
   passwordInput,
-  typeInput,
+  typeIdInput,
+  participantInput,
+  linkInput,
+  createInput,
 }: modal_type) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const [seq, setSeq] = useState<number>(seqInput);
   const [title, setTitle] = useState<string>(titleInput);
-  const [locked, setLocked] = useState<boolean>(lockedInput);
   const [password, setPassword] = useState<string>(passwordInput);
-  const [type, setType] = useState<number>(typeInput);
+  const [typeId, setType] = useState<number>(typeIdInput);
+  const [link, setLink] = useState<string>(linkInput);
+  const [participant, setParticipant] = useState<number>(participantInput);
+  const [locked, setLocked] = useState<boolean>(lockedInput);
 
-  const newData = {
-    title: title,
-    locked: locked,
-    password: password,
-    category_seq: type,
-    link: uuidv4(),
-  };
+  // 방 생성시 사용하는 데이터 타입
+
+  interface newData_type {
+    title: string;
+    password: string;
+    typeId: number;
+    participant: number;
+    link: string | undefined;
+    locked: boolean;
+  }
+
+  const newData: newData_type[] = [
+    {
+      title: title,
+      password: password,
+      typeId: typeId,
+      link: link,
+      participant: 1,
+      locked: locked,
+    },
+  ];
+
+  // 방 수정 시 사용하는 데이터 타입
+
+  interface updateData_type {
+    seq: number;
+    title: string;
+    password: string;
+    typeId: number;
+    participant: number;
+    link: string | undefined;
+    locked: boolean;
+  }
+
+  const updateData: updateData_type[] = [
+    {
+      seq: seq,
+      title: title,
+      password: password,
+      typeId: typeId,
+      participant: participant,
+      link: link,
+      locked: locked,
+    },
+  ];
 
   const onTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -47,15 +96,47 @@ export default function CreateModal({
     setPassword(e.target.value);
   };
 
-  // 방 생성 클릭 시 고유값 부여해서 링크 생성 및 해당 방으로 이동
-  const res_post = () => $.post(`URL`, newData);
-  const { mutate: onCreate } = useMutation(res_post, {
+  // 방 수정 시 사용되는 API 함수
+  const res_put = () => {
+    return $.put(`URL`, updateData);
+  };
+
+  const { mutate: onChange } = useMutation(res_put, {
     onSuccess: () => {
       Swal.fire({
         icon: "success",
-        text: "방이 생성되었습니다..",
+        title: "",
+        text: "수정되었습니다.",
+        confirmButtonText: "닫기",
       });
-      navigate(`/simulation-room/${0}`);
+    },
+    onError: () => {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "실패했습니다.",
+        confirmButtonText: "닫기",
+      });
+    },
+  });
+
+  // 방 생성 시 사용되는 API 함수
+  const res_post = () => $.post(`/api/rooms`, newData);
+  const { mutate: onCreate } = useMutation(res_post, {
+    onSuccess: (data) => {
+      // 방 생성관련 API 통신 성공 시 해당 방에 대한 데이터를 불러와서
+      //navigate를 통해 state 데이터 전송하는 코드
+      navigate(`/simulation-room/${data.data.content.link}`, {
+        state: {
+          seq: data.data.content.seq,
+          title: data.data.content.title,
+          password: data.data.content.password,
+          typeId: data.data.content.typeId,
+          link: data.data.content.link,
+          participant: data.data.content.participant,
+          locked: data.data.content.locked,
+        },
+      });
     },
 
     onError: (err) => {
@@ -87,12 +168,16 @@ export default function CreateModal({
       alert("비밀번호는 2자 이상 10자 이하로 작성해야 합니다.");
       return;
     }
-    if (typeof type !== "number") {
+    if (typeof typeId !== "number") {
       alert("방의 유형을 선택해야 합니다.");
       return;
     }
-    let room_id = uuidv4();
-    onCreate();
+    if (createInput) {
+      setLink(uuidv4());
+      onCreate();
+    } else {
+      onChange();
+    }
   };
 
   return (
@@ -141,7 +226,7 @@ export default function CreateModal({
         <div className={style.room_type}>
           <div>
             <img
-              className={type === 0 ? style.img_selected : style.img}
+              className={typeId === 0 ? style.img_selected : style.img}
               src={Loans}
               alt=""
               onClick={() => setType(0)}
@@ -150,7 +235,7 @@ export default function CreateModal({
           </div>
           <div>
             <img
-              className={type === 1 ? style.img_selected : style.img}
+              className={typeId === 1 ? style.img_selected : style.img}
               src={Agency}
               alt=""
               onClick={() => setType(1)}
@@ -159,7 +244,7 @@ export default function CreateModal({
           </div>
           <div>
             <img
-              className={type === 2 ? style.img_selected : style.img}
+              className={typeId === 2 ? style.img_selected : style.img}
               src={Acquaintance}
               alt=""
               onClick={() => setType(2)}
