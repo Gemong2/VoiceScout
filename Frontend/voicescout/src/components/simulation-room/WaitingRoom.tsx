@@ -10,6 +10,7 @@ import Victim from "img/victim.png";
 import Criminal from "img/criminal.png";
 import Mike from "img/mike.png";
 import Headset from "img/headset.png";
+import Calloff from "img/calloff2.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
@@ -185,7 +186,7 @@ export default function WaitingRoom() {
         <div className={style.simul_profile}>
         <img className={style.simul_role} src={Criminal} alt="" /></div>
         <div className={style.simul_calloff}>
-        <img className={style.simul_callimg} src={Criminal} alt="" /></div>
+        <img className={style.simul_callimg} src={Calloff} alt="" /></div>
         </div>
         
 
