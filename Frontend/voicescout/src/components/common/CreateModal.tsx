@@ -42,6 +42,7 @@ export default function CreateModal({
   const [link, setLink] = useState<string>(linkInput);
   const [participant, setParticipant] = useState<number>(participantInput);
   const [locked, setLocked] = useState<boolean>(lockedInput);
+  const roomId = uuidv4();
 
   // 방 생성시 사용하는 데이터 타입
 
@@ -54,16 +55,14 @@ export default function CreateModal({
     locked: boolean;
   }
 
-  const newData: newData_type[] = [
-    {
-      title: title,
-      password: password,
-      typeId: typeId,
-      link: link,
-      participant: 1,
-      locked: locked,
-    },
-  ];
+  const newData: newData_type = {
+    title: title,
+    password: password,
+    typeId: typeId,
+    link: roomId,
+    participant: 1,
+    locked: locked,
+  };
 
   // 방 수정 시 사용하는 데이터 타입
 
@@ -77,17 +76,15 @@ export default function CreateModal({
     locked: boolean;
   }
 
-  const updateData: updateData_type[] = [
-    {
-      seq: seq,
-      title: title,
-      password: password,
-      typeId: typeId,
-      participant: participant,
-      link: link,
-      locked: locked,
-    },
-  ];
+  const updateData: updateData_type = {
+    seq: seq,
+    title: title,
+    password: password,
+    typeId: typeId,
+    participant: participant,
+    link: link,
+    locked: locked,
+  };
 
   const onTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -120,23 +117,25 @@ export default function CreateModal({
     },
   });
 
-  // 방 생성 시 사용되는 API 함수
   const res_post = () => $.post(`/rooms`, newData);
   const { mutate: onCreate } = useMutation(res_post, {
     onSuccess: (data) => {
       // 방 생성관련 API 통신 성공 시 해당 방에 대한 데이터를 불러와서
       //navigate를 통해 state 데이터 전송하는 코드
-      navigate(`/simulation-room/${data.data.content.link}`, {
+      navigate(`/simulation-room/${data.data.link}`, {
         state: {
-          seq: data.data.content.seq,
-          title: data.data.content.title,
-          password: data.data.content.password,
-          typeId: data.data.content.typeId,
-          link: data.data.content.link,
-          participant: data.data.content.participant,
-          locked: data.data.content.locked,
+          seq: data.data.seq,
+          title: data.data.title,
+          password: data.data.password,
+          typeId: data.data.typeId,
+          link: data.data.link,
+          participant: data.data.participant,
+          locked: data.data.locked,
         },
       });
+    },
+    onSettled: () => {
+      console.log(newData);
     },
 
     onError: (err) => {
@@ -174,7 +173,6 @@ export default function CreateModal({
       return;
     }
     if (createInput) {
-      setLink(uuidv4());
       onCreate();
     } else {
       onChange();

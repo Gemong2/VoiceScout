@@ -52,17 +52,15 @@ export default function WaitingRoom() {
     locked: boolean;
   }
 
-  const data: data_type[] = [
-    {
-      seq: location.state.seq,
-      title: location.state.title,
-      password: location.state.password,
-      typeId: location.state.typeId,
-      link: location.state.link,
-      participant: location.state.participant,
-      locked: location.state.locked,
-    },
-  ];
+  const data: data_type = {
+    seq: location.state.seq,
+    title: location.state.title,
+    password: location.state.password,
+    typeId: location.state.typeId,
+    link: location.state.link,
+    participant: location.state.participant,
+    locked: location.state.locked,
+  };
 
   useEffect(() => {
     const socket = new SockJS("http://localhost:4433/webSocket");
@@ -104,11 +102,15 @@ export default function WaitingRoom() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
   return (
     <>
       {!getReady && (
         <>
-          <div className={style.header}>{data[0].title}</div>
+          <div className={style.header}>{data.title}</div>
           <div className={style.header_guide}>역할을 선택하십시오</div>
           <div className={style.contents}>
             <img
@@ -119,7 +121,7 @@ export default function WaitingRoom() {
             <div className={style.contents_second}>
               <p>{info[location.state.typeId].type}</p>
               <div className={style.locked}>
-                {data[0].locked ? <span>비공개</span> : <span>공개</span>}
+                {data.locked ? <span>비공개</span> : <span>공개</span>}
               </div>
             </div>
             <div className={style.contents_third}>
