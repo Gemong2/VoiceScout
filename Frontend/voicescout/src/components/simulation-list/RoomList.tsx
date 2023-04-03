@@ -1,20 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import style from "./RoomList.module.css";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import { $ } from "util/axios";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function RoomList() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const info = [
-    {
-      type: `수사기관 사칭형`,
-      describe: `수사기관을 사칭하여 피해자를 기망하여
-       금전 편취하는 사기 수법`,
-      img: Agency,
-    },
     {
       type: `수사기관 사칭형`,
       describe: `수사기관을 사칭하여 피해자를 기망하여
@@ -39,130 +38,74 @@ export default function RoomList() {
   interface data_type {
     seq: number;
     title: string;
-    type: number;
-    count: number;
-    locked: boolean;
     password: string | null;
+    typeId: number;
+    link: string;
+    participant: number;
+    locked: boolean;
   }
 
-  const datas: data_type[] = [
-    {
-      seq: 0,
-      title: `1번 체험방`,
-      type: 0,
-      count: 1,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 1,
-      title: `2번 체험방`,
-      type: 1,
-      count: 2,
-      locked: true,
-      password: "1234",
-    },
-    {
-      seq: 2,
-      title: `3번 체험방`,
-      type: 2,
-      count: 1,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 3,
-      title: `4번 체험방`,
-      type: 0,
-      count: 2,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 4,
-      title: `5번 체험방`,
-      type: 1,
-      count: 1,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 5,
-      title: `6번 체험방`,
-      type: 2,
-      count: 2,
-      locked: true,
-      password: "1234",
-    },
-    {
-      seq: 6,
-      title: `7번 체험방`,
-      type: 0,
-      count: 1,
-      locked: true,
-      password: "1234",
-    },
-    {
-      seq: 7,
-      title: `8번 체험방`,
-      type: 1,
-      count: 1,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 8,
-      title: `9번 체험방`,
-      type: 2,
-      count: 1,
-      locked: true,
-      password: "1234",
-    },
-    {
-      seq: 9,
-      title: `10번 체험방`,
-      type: 0,
-      count: 2,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 10,
-      title: `11번 체험방`,
-      type: 1,
-      count: 1,
-      locked: false,
-      password: null,
-    },
-    {
-      seq: 11,
-      title: `12번 체험방`,
-      type: 2,
-      count: 2,
-      locked: true,
-      password: "1234",
-    },
-  ];
+  const roomChk = (e: data_type) => {
+    if (e.participant === 2) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "인원이 가득찼습니다.",
+        confirmButtonText: "닫기",
+      });
+    }
+    if (e.locked) {
+      Swal.fire({
+        title: "암호를 입력하세요.",
+        input: "password",
+        inputPlaceholder: "비밀번호입력",
+      }).then((res) => {
+        if (typeof res.value === "string" && res.value === e.password) {
+          navigate(`/simulation-room/${e.link}`);
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "비밀번호가 일치하지 않습니다.",
+            confirmButtonText: "닫기",
+          });
+        }
+      });
+    }
+  };
+
+  const { isLoading, data, refetch } = useQuery(["RoomList"], () =>
+    $.get(`/api/rooms`)
+  );
+
   return (
     <>
       <div className={style.container}>
         <div className={style.inner_container}>
           <div className={style.room_list}>
             {!isLoading &&
-              datas.map((data) => {
+              data &&
+              data.data &&
+              data.data.content &&
+              data.data.content.map((content: data_type) => {
                 return (
-                  <div key={data.seq}>
-                    <div className={style.room_container}>
-                      <div className={style.room_title}>{data.title}</div>
+                  <div key={content.seq}>
+                    <div
+                      className={style.room_container}
+                      onClick={() => {
+                        roomChk(content);
+                      }}
+                    >
+                      <div className={style.room_title}>{content.title}</div>
                       <div className={style.room_main}>
                         <img
                           className={style.main_img}
-                          src={info[data.type].img}
+                          src={info[content.typeId].img}
                           alt=""
                         ></img>
                         <div className={style.main_contents}>
-                          <h2>{info[data.type].type}</h2>
-                          <span>{info[data.type].describe}</span>
+                          <h2>{info[content.typeId].type}</h2>
+                          <span>{info[content.typeId].describe}</span>
                         </div>
                       </div>
                     </div>
@@ -181,11 +124,15 @@ export default function RoomList() {
           </div>
           {isModal && (
             <CreateModal
+              seqInput={-1}
               setIsModal={setIsModal}
               titleInput=""
               lockedInput={false}
               passwordInput=""
-              typeInput={0}
+              typeIdInput={0}
+              participantInput={1}
+              linkInput={""}
+              createInput={true}
             />
           )}
         </div>

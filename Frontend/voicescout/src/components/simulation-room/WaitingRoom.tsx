@@ -10,6 +10,7 @@ import Victim from "img/victim.png";
 import Criminal from "img/criminal.png";
 import Mike from "img/mike.png";
 import Headset from "img/headset.png";
+import Calloff from "img/calloff2.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
@@ -57,9 +58,9 @@ export default function WaitingRoom() {
 
   const data: data_type[] = [
     {
-      seq: 0,
+      seq: location.state.seq,
       title: location.state.title,
-      count: 1,
+      count: location.state.participant,
       locked: location.state.locked,
       password: location.state.password,
     },
@@ -185,7 +186,7 @@ export default function WaitingRoom() {
         <div className={style.simul_profile}>
         <img className={style.simul_role} src={Criminal} alt="" /></div>
         <div className={style.simul_calloff}>
-        <img className={style.simul_callimg} src={Criminal} alt="" /></div>
+        <img className={style.simul_callimg} src={Calloff} alt="" /></div>
         </div>
         
 
@@ -194,10 +195,14 @@ export default function WaitingRoom() {
       {isModal && (
         <CreateModal
           setIsModal={setIsModal}
+          seqInput={location.state.seq}
           titleInput={location.state.title}
-          lockedInput={location.state.locked}
           passwordInput={location.state.password}
-          typeInput={location.state.type}
+          typeIdInput={location.state.type}
+          linkInput={location.state.link}
+          participantInput={location.state.participant}
+          lockedInput={location.state.locked}
+          createInput={false}
         />
       )}
     </>

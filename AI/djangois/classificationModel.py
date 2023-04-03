@@ -3,11 +3,14 @@ from django.http import JsonResponse
 from tensorflow import keras
 from django.views.decorators.csrf import csrf_exempt
 import json
+import h5py
 
 @csrf_exempt
 def classification(request):
     # Load the saved model
-    model = keras.models.load_model('cer01.h5')
+    # model = keras.models.load_model('cer01.h5')
+    with h5py.File('cer01.h5', 'r') as f:
+        model = keras.models.load_model(f)
     # print('-------------------------------------------------pass 01')
 
     # Load the saved tokenizer configuration from the JSON file
