@@ -21,12 +21,6 @@ export default function RoomList() {
       img: Agency,
     },
     {
-      type: `수사기관 사칭형`,
-      describe: `수사기관을 사칭하여 피해자를 기망하여
-       금전 편취하는 사기 수법`,
-      img: Agency,
-    },
-    {
       type: `지인 사칭형`,
       describe: `지인을 사칭해 문자나 전화로 돈을 요구하는
       사기 수법`,
@@ -50,105 +44,6 @@ export default function RoomList() {
     participant: number;
     locked: boolean;
   }
-
-  // const datas: data_type[] = [
-  //   {
-  //     seq: 0,
-  //     title: `1번 체험방`,
-  //     type: 0,
-  //     count: 1,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 1,
-  //     title: `2번 체험방`,
-  //     type: 1,
-  //     count: 2,
-  //     locked: true,
-  //     password: "1234",
-  //   },
-  //   {
-  //     seq: 2,
-  //     title: `3번 체험방`,
-  //     type: 2,
-  //     count: 1,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 3,
-  //     title: `4번 체험방`,
-  //     type: 0,
-  //     count: 2,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 4,
-  //     title: `5번 체험방`,
-  //     type: 1,
-  //     count: 1,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 5,
-  //     title: `6번 체험방`,
-  //     type: 2,
-  //     count: 2,
-  //     locked: true,
-  //     password: "1234",
-  //   },
-  //   {
-  //     seq: 6,
-  //     title: `7번 체험방`,
-  //     type: 0,
-  //     count: 1,
-  //     locked: true,
-  //     password: "1234",
-  //   },
-  //   {
-  //     seq: 7,
-  //     title: `8번 체험방`,
-  //     type: 1,
-  //     count: 1,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 8,
-  //     title: `9번 체험방`,
-  //     type: 2,
-  //     count: 1,
-  //     locked: true,
-  //     password: "1234",
-  //   },
-  //   {
-  //     seq: 9,
-  //     title: `10번 체험방`,
-  //     type: 0,
-  //     count: 2,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 10,
-  //     title: `11번 체험방`,
-  //     type: 1,
-  //     count: 1,
-  //     locked: false,
-  //     password: null,
-  //   },
-  //   {
-  //     seq: 11,
-  //     title: `12번 체험방`,
-  //     type: 2,
-  //     count: 2,
-  //     locked: true,
-  //     password: "1234",
-  //   },
-  // ];
 
   const roomChk = (e: data_type) => {
     if (e.participant === 2) {
