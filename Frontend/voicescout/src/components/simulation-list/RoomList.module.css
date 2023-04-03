@@ -1,0 +1,81 @@
+.container {
+  max-width: 1600px;
+  height: 70vh;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+  height: 70vh;
+}
+
+.room_list {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
+  margin-top: 70px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.room_list::-webkit-scrollbar {
+  display: none;
+}
+
+.room_container {
+  width: 450px;
+  height: 130px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+.room_title {
+  font-family: "Pretendard-Bold";
+  width: 400px;
+  background-color: #ffe134;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+
+.room_main {
+  display: flex;
+}
+
+.main_img {
+  width: 100px;
+  height: 70px;
+  border: 0.5px solid #000000;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.main_contents {
+  white-space: pre-line;
+}
+
+.btn {
+  text-align: center;
+}
+
+.btn button {
+  width: 100px;
+  height: 30px;
+  background-color: #ffe134;
+  border-radius: 10px;
+  font-family: "Pretendard-Bold";
+  font-size: 1.1em;
+}

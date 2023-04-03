@@ -1,0 +1,193 @@
+/** 통화 시작 전 레이아웃 css*/
+
+.header {
+  padding-top: 5vh;
+  font-family: "Pretendard-SemiBold";
+  font-size: 2em;
+  font-style: italic;
+  color: #000000;
+}
+
+.header_guide {
+  font-family: "Pretendard-Regular";
+  font-size: 1.3em;
+  color: #959595;
+}
+
+.contents {
+  margin-top: 4vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #787878;
+  white-space: pre-line;
+  width: 100%;
+}
+.contents_first {
+  width: 150px;
+  height: 120px;
+}
+
+.contents_second {
+  align-items: center;
+}
+
+.contents_second p {
+  font-family: "Pretendard-SemiBold";
+  font-size: 2em;
+  color: #ffffff;
+}
+
+.locked {
+  background-color: #f7b52c;
+  font-size: 1.4em;
+  height: 4vh;
+  color: #ffffff;
+  margin-top: 0.5vh;
+  padding-left: 1.5vh;
+}
+
+.contents_third {
+  font-family: "Pretendard-Regular";
+  color: #ffffffc6;
+  font-size: 1.2em;
+}
+
+.information {
+  display: flex;
+  margin-top: 5vh;
+}
+
+.blank {
+  width: 25vh;
+}
+
+.information img {
+  width: 200px;
+  border-radius: 20px;
+  margin-left: 3vh;
+  margin-right: 3vh;
+}
+
+.my_img {
+  background-color: #f7b52c;
+}
+
+.your_img {
+  background-color: #787878;
+}
+
+.roles {
+  position: relative;
+}
+
+.main_role {
+  position: absolute;
+  width: 100px;
+  z-index: 1;
+  font-family: "Pretendard-ExtraBold";
+  font-size: 2em;
+  font-style: italic;
+  color: #000000;
+  transition: 0.5s;
+}
+
+.sub_role {
+  position: absolute;
+  left: 2vh;
+  top: 3vh;
+  width: 100px;
+  font-family: "Pretendard-ExtraBold";
+  font-size: 2em;
+  font-style: italic;
+  color: #d9d9d9;
+  transition: 0.5s;
+}
+
+.settings {
+  margin-top: 10vh;
+  width: 30px;
+}
+
+.settings img {
+  width: 30px;
+  height: 30px;
+  margin-top: 1vh;
+  margin-left: 0;
+}
+
+.btn_div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.setting_btn {
+  width: 100px;
+  height: 40px;
+  background-color: #2ccbf7;
+  border-radius: 15px;
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
+}
+
+.start_btn {
+  width: 150px;
+  height: 50px;
+  background-color: #f7b52c;
+  border-radius: 15px;
+  font-family: "Pretendard-Bold";
+  font-size: 1.5em;
+}
+
+.out_btn {
+  width: 100px;
+  height: 40px;
+  background-color: #787878;
+  border-radius: 15px;
+  color: #ffffff;
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
+}
+
+/** 통화 시작 시 레이아웃 css*/
+
+.role {
+  display: flex;
+  flex-direction: column;
+}
+
+.simul_call {
+  font-family: "Pretendard-Regular";
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+}
+
+.simul_timer {
+  font-family: "Pretendard-Light";
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+}
+
+.simul_profile img {
+  width: 100px;
+  border-radius: 1000px;
+}
+
+.simul_role {
+  background-color: #f7b52c;
+}
+
+.simul_calloff img {
+  width: 100px;
+  border-radius: 1000px;
+}
+
+.simul_callimg {
+  background-color: #F94646;
+}

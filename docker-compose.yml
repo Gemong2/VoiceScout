@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+        back-app:
+                image: back
+                container_name: back-app
+                environment:
+                        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/voicescout
+                        TZ: "Asia/Seoul"
+                restart: always
+                ports:
+                        - 4433:4433
+        front-app:
+                image: front
+                container_name: front-app
+                ports:
+                        - 9443:9443
+                volumes:
+                        - nginx_certs:/etc/letsencrypt
+                        - /home/ubuntu/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+        nginx_certs:
+                external: true
+
+
+networks:
+        default:
+                name: voicescout
+                external: true

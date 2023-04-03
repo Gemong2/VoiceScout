@@ -1,17 +1,28 @@
-import { Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import HeaderFooterPage from "./pages/HeaderFooterePage";
 import HeaderPage from "./pages/HeaderPage";
 import Main from "pages/Main";
+import CrimeType from "pages/CrimeType";
+import SimulationList from "pages/SimulationList";
+import Quiz from "pages/Quiz";
+import SimulationRoom from "pages/SimulationRoom";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route element={<HeaderFooterPage />}>
+          <Route path="/" element={<Main />} />
+          <Route path="/crime-type/*" element={<CrimeType />} />
+        </Route>
         <Route element={<HeaderPage />}>
           <Route path="/" element={<Main />} />
+          <Route path="/simulation-list/*" element={<SimulationList />} />
+          <Route path="/quiz/*" element={<Quiz />} />
         </Route>
+        <Route path="/simulation-room/*" element={<SimulationRoom />} />
       </Routes>
     </>
   );
