@@ -58,9 +58,9 @@ export default function WaitingRoom() {
 
   const data: data_type[] = [
     {
-      seq: 0,
+      seq: location.state.seq,
       title: location.state.title,
-      count: 1,
+      count: location.state.participant,
       locked: location.state.locked,
       password: location.state.password,
     },
@@ -195,10 +195,14 @@ export default function WaitingRoom() {
       {isModal && (
         <CreateModal
           setIsModal={setIsModal}
+          seqInput={location.state.seq}
           titleInput={location.state.title}
-          lockedInput={location.state.locked}
           passwordInput={location.state.password}
-          typeInput={location.state.type}
+          typeIdInput={location.state.type}
+          linkInput={location.state.link}
+          participantInput={location.state.participant}
+          lockedInput={location.state.locked}
+          createInput={false}
         />
       )}
     </>
