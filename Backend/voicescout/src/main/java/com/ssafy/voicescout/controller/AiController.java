@@ -23,13 +23,12 @@ public class AiController {
   //    채팅
   @MessageMapping("/ai")
   //@SendTo("topic") 구독자들에게 보내기
-  public void sendAi(@Payload byte[] message, SimpMessageHeaderAccessor accessor) {
+  public void sendAi(@Payload byte[] message, @RequestBody InteractionReqDto interactionReqDto, SimpMessageHeaderAccessor accessor) {
     String content = new String(message, StandardCharsets.UTF_8);
-    log.info("[sendAi] : 메세시 수신, content : {}", content );
-    simpMessagingTemplate.convertAndSend("/chat/" + interactionReqDto.getChannelId(), interactionReqDto);
-//    System.out.println(interactionReqDto.getContent());
-//    System.out.println("/ai/" + interactionReqDto.getChannelId());
+    log.info("[sendAi] : 메세시 수신, message : {}", message );
+    log.info("[sendAi] : 채널아이디 수신, ChannelId : {}", interactionReqDto.getChannelId() );
+    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
 //    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
-//        simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
+//    simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
   }
 }
