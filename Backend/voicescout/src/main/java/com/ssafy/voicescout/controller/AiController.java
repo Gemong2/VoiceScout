@@ -26,6 +26,7 @@ public class AiController {
   public void sendAi(@Payload byte[] message, SimpMessageHeaderAccessor accessor) {
     String content = new String(message, StandardCharsets.UTF_8);
     log.info("[sendAi] : 메세시 수신, content : {}", content );
+    simpMessagingTemplate.convertAndSend("/chat/" + interactionReqDto.getChannelId(), interactionReqDto);
 //    System.out.println(interactionReqDto.getContent());
 //    System.out.println("/ai/" + interactionReqDto.getChannelId());
 //    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);

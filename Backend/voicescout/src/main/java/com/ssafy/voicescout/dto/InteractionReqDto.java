@@ -14,10 +14,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class InteractionReqDto {
-//    url
     private String channelId;
 
-    private String sender;
-
-    private String content;
+    private String check;
 }

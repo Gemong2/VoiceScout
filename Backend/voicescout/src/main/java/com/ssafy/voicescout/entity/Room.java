@@ -30,6 +30,7 @@ public class Room {
   private String title;
   private boolean locked;
   private String password;
+  private int participant;
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime registDate;
 
