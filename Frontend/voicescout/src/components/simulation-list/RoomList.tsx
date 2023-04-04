@@ -180,7 +180,7 @@ export default function RoomList() {
               lockedInput={false}
               passwordInput=""
               typeIdInput={0}
-              participantInput={1}
+              participantInput={0}
               linkInput={""}
               createInput={true}
             />
