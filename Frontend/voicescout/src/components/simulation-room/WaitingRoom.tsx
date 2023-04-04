@@ -149,14 +149,10 @@ export default function WaitingRoom() {
     recognitionRef.current = recognition;
 
     return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      if (stompClientRef.current) {
-        stompClientRef.current.disconnect(() => {
-          console.log("Disconnected from WebSocket server");
-        });
-      }
+      recognition.stop();
+      stompClient.disconnect(() => {
+        console.log("Disconnected from WebSocket server");
+      });
     };
   }, []);
 
