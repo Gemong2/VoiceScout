@@ -1,11 +1,9 @@
 package com.ssafy.voicescout.controller;
 
 import com.ssafy.voicescout.dto.RoomDto;
-import com.ssafy.voicescout.service.RoomService;
 import com.ssafy.voicescout.service.RoomServiceImpl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -26,12 +23,12 @@ public class RoomController {
   private final RoomServiceImpl roomService;
 
   @PostMapping(value = "")
-  public ResponseEntity<?> createRoom(@RequestBody RoomDto roomReqDto) {
+  public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto roomReqDto) {
     RoomDto roomResDto = roomService.createRoom(roomReqDto);
     return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.CREATED);
   }
   @PutMapping(value = "")
-  public ResponseEntity<?> updateRoom(@RequestBody RoomDto roomReqDto) {
+  public ResponseEntity<RoomDto> updateRoom(@RequestBody RoomDto roomReqDto) {
     RoomDto roomResDto = roomService.updateRoom(roomReqDto);
     return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.CREATED);
   }
@@ -41,8 +38,14 @@ public class RoomController {
   }
 
   @GetMapping("")
-  public List<RoomDto> getRooms() {
-    return roomService.getRooms();
+  public ResponseEntity<List<RoomDto>> getRooms() {
+    List<RoomDto> rooms = roomService.getRooms();
+    return new ResponseEntity<List<RoomDto>>(rooms, HttpStatus.OK);
+  }
+  @GetMapping("/{roomSeq}")
+  public ResponseEntity<RoomDto> getRoom(@PathVariable Long roomSeq) {
+    RoomDto roomResDto = roomService.getRoom(roomSeq);
+    return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.OK);
   }
 }
 

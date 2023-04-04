@@ -24,9 +24,9 @@ public class RoomServiceImpl implements RoomService {
         .title(roomReqDto.getTitle())
         .link(roomReqDto.getLink())
         .password(roomReqDto.getPassword())
-        .registDate(LocalDateTime.now())
         .participant(roomReqDto.getParticipant())
         .typeId(roomReqDto.getTypeId())
+        .locked(roomReqDto.isLocked())
         .build();
     Room createdRoom = roomRepository.save(room);
     roomReqDto.setSeq(createdRoom.getSeq());
@@ -57,16 +57,32 @@ public class RoomServiceImpl implements RoomService {
     for (Room room :  rooms) {
       RoomDto roomDto = RoomDto.builder()
           .seq(room.getSeq())
-          .title(room.getLink())
+          .title(room.getTitle())
           .password(room.getPassword())
           .participant(room.getParticipant())
           .link(room.getLink())
           .locked(room.isLocked())
-          .registDate(room.getRegistDate())
           .typeId(room.getTypeId())
           .build();
       roomsDto.add(roomDto);
     }
+    log.info("[getRooms] : 방 목록 조회성공, 방 개수 : {}", roomsDto.size());
     return roomsDto;
+  }
+
+  @Override
+  public RoomDto getRoom(long roomSeq) {
+    Room room = roomRepository.findById(roomSeq).get();
+    RoomDto roomDto = RoomDto.builder()
+        .seq(room.getSeq())
+        .title(room.getTitle())
+        .password(room.getPassword())
+        .participant(room.getParticipant())
+        .link(room.getLink())
+        .locked(room.isLocked())
+        .typeId(room.getTypeId())
+        .build();
+    log.info("[getRoom] : 방 조회성공, 방제 : {}", roomDto.getTitle());
+    return roomDto;
   }
 }

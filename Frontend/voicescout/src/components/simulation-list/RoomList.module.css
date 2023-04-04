@@ -13,12 +13,23 @@
   height: 70vh;
 }
 
+.guide_refresh_div {
+  display: flex;
+  margin-top: 70px;
+  justify-content: end;
+}
+
+.guide_refresh_div img {
+  width: 30px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 .room_list {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #b7b7b7;
   border-radius: 5px;
-  margin-top: 70px;
   padding-top: 20px;
   padding-bottom: 20px;
   max-height: 460px;
@@ -39,16 +50,29 @@
   padding-top: 10px;
   padding-left: 20px;
   padding-bottom: 10px;
+  cursor: pointer;
 }
 
 .room_title {
-  font-family: "Pretendard-Bold";
   width: 400px;
   background-color: #ffe134;
   border: 1px solid #000000;
   border-radius: 20px;
   padding-left: 10px;
+  padding-bottom: 2px;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.room_title img {
+  width: 20px;
+  margin-top: 5px;
+}
+
+.room_title p {
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
 }
 
 .room_main {
@@ -78,4 +102,5 @@
   border-radius: 10px;
   font-family: "Pretendard-Bold";
   font-size: 1.1em;
+  cursor: pointer;
 }
