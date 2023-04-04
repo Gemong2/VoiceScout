@@ -88,7 +88,7 @@ export default function RoomList() {
         }
       });
     } else {
-      navigate(`/simulation-room/${e.title}`, {
+      navigate(`/simulation-room/${e.link}`, {
         state: {
           seq: e.seq,
           title: e.title,
