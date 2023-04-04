@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
@@ -16,6 +16,8 @@ import CreateModal from "components/common/CreateModal";
 export default function WaitingRoom() {
   const navigate = useNavigate();
   const location = useLocation();
+  const stompClientRef = useRef<Stomp.Client | null>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [speechToText, setSpeechToText] = useState("");
   const [userType, setUserType] = useState(0);
   const [getReady, setGetReady] = useState(false);
@@ -93,17 +95,41 @@ export default function WaitingRoom() {
     recognition.addEventListener("end", recognition.start);
 
     recognition.start();
+    recognitionRef.current = recognition;
 
     return () => {
-      recognition.stop();
-      stompClient.disconnect(() => {
-        console.log("Disconnected from WebSocket server");
-      });
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      if (stompClientRef.current) {
+        stompClientRef.current.disconnect(() => {
+          console.log("Disconnected from WebSocket server");
+        });
+      }
     };
   }, []);
 
   useEffect(() => {
     console.log(data);
+  }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      if (stompClientRef.current) {
+        stompClientRef.current.disconnect(() => {
+          console.log("Disconnected from WebSocket server");
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
 
   return (
@@ -161,6 +187,7 @@ export default function WaitingRoom() {
             <button
               className={style.out_btn}
               onClick={() => {
+                console.log(location.state);
                 navigate(`/simulation-list/`);
               }}
             >
