@@ -19,9 +19,11 @@ export default function WaitingRoom() {
   const stompClientRef = useRef<Stomp.Client | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [speechToText, setSpeechToText] = useState("");
-  const [userType, setUserType] = useState(0);
+  const [userType, setUserType] = useState(location.state.userType);
   const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
+
+  const [title, setTitle] = useState<string>();
 
   const info = [
     {
@@ -63,6 +65,8 @@ export default function WaitingRoom() {
     participant: location.state.participant,
     locked: location.state.locked,
   };
+
+  const init = () => {};
 
   useEffect(() => {
     const socket = new SockJS("http://localhost:4433/api/webSocket");
@@ -108,10 +112,6 @@ export default function WaitingRoom() {
         });
       }
     };
-  }, []);
-
-  useEffect(() => {
-    console.log(data);
   }, []);
 
   useEffect(() => {
@@ -188,7 +188,6 @@ export default function WaitingRoom() {
             <button
               className={style.out_btn}
               onClick={() => {
-                console.log(location.state);
                 navigate(`/simulation-list/`);
               }}
             >

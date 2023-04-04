@@ -120,8 +120,6 @@ export default function CreateModal({
   const res_post = () => $.post(`/rooms`, newData);
   const { mutate: onCreate } = useMutation(res_post, {
     onSuccess: (data) => {
-      console.log(data.data.title);
-      console.log(data.data.link);
       // 방 생성관련 API 통신 성공 시 해당 방에 대한 데이터를 불러와서
       //navigate를 통해 state 데이터 전송하는 코드
       navigate(`/simulation-room/${data.data.link}`, {
@@ -133,6 +131,7 @@ export default function CreateModal({
           link: data.data.link,
           participant: data.data.participant,
           locked: data.data.locked,
+          userType: 0,
         },
       });
     },
