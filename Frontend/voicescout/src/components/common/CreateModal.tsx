@@ -42,7 +42,7 @@ export default function CreateModal({
   const [link, setLink] = useState<string>(linkInput);
   const [participant, setParticipant] = useState<number>(participantInput);
   const [locked, setLocked] = useState<boolean>(lockedInput);
-  const roomId = uuidv4();
+  const roomLink = uuidv4();
 
   // 방 생성시 사용하는 데이터 타입
 
@@ -59,7 +59,7 @@ export default function CreateModal({
     title: title,
     password: password,
     typeId: typeId,
-    link: roomId,
+    link: roomLink,
     participant: 1,
     locked: locked,
   };
@@ -120,6 +120,8 @@ export default function CreateModal({
   const res_post = () => $.post(`/rooms`, newData);
   const { mutate: onCreate } = useMutation(res_post, {
     onSuccess: (data) => {
+      console.log(data.data.title);
+      console.log(data.data.link);
       // 방 생성관련 API 통신 성공 시 해당 방에 대한 데이터를 불러와서
       //navigate를 통해 state 데이터 전송하는 코드
       navigate(`/simulation-room/${data.data.link}`, {
@@ -133,9 +135,6 @@ export default function CreateModal({
           locked: data.data.locked,
         },
       });
-    },
-    onSettled: () => {
-      console.log(newData);
     },
 
     onError: (err) => {

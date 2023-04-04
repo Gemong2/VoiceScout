@@ -53,6 +53,7 @@ export default function RoomList() {
         text: "인원이 가득찼습니다.",
         confirmButtonText: "닫기",
       });
+      return;
     }
     if (e.locked) {
       Swal.fire({
@@ -61,7 +62,7 @@ export default function RoomList() {
         inputPlaceholder: "비밀번호입력",
       }).then((res) => {
         if (typeof res.value === "string" && res.value === e.password) {
-          navigate(`/simulation-room/${e.link}`, {
+          navigate(`/simulation-room/${e.title}`, {
             state: {
               seq: e.seq,
               title: e.title,
@@ -82,7 +83,9 @@ export default function RoomList() {
         }
       });
     } else {
-      navigate(`/simulation-room/${e.link}`, {
+      console.log(e.link);
+      console.log(e.title);
+      navigate(`/simulation-room/${e.title}`, {
         state: {
           seq: e.seq,
           title: e.title,
@@ -99,6 +102,10 @@ export default function RoomList() {
   const { isLoading, data, refetch } = useQuery(["RoomList"], () =>
     $.get(`/rooms`)
   );
+
+  useEffect(() => {
+    console.log(data && data.data);
+  }, [isLoading]);
 
   return (
     <>
