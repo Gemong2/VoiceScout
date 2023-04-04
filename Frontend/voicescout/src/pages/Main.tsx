@@ -28,10 +28,12 @@ export default function Main({ target1, target2, target3, duration }: Props) {
       const progress = timePassed / duration;
 
       if (progress >= 1) {
-        clearInterval(intervalId);
-        setCount1Display(target1);
-        setCount2Display(target2);
-        setCount3Display(target3);
+        count1Ref.current = target1;
+        count2Ref.current = target2;
+        count3Ref.current = target3;
+        setCount1Display(count1Ref.current);
+        setCount2Display(count2Ref.current);
+        setCount3Display(count3Ref.current);
       } else {
         count1Ref.current = Math.floor(target1 * progress);
         count2Ref.current = Math.floor(target2 * progress);
@@ -51,6 +53,7 @@ export default function Main({ target1, target2, target3, duration }: Props) {
     const delay = Math.floor((count / (target1 + target2 + target3)) * duration);
     return `${delay}ms`;
   }
+  
   return (
     <div className={style.main_container}>
       <div className={style.main_theme}>
@@ -80,20 +83,25 @@ export default function Main({ target1, target2, target3, duration }: Props) {
           <div className={style.third_title}>
             통계로 확인하는 보이스 피싱 현황
           </div>
-        <div className={style.numbers}>
-        <div className={style.number} style={{ transitionDelay: getTransitionDelay(count1Display) }}>
-          {count1Display}
-        </div>
-        <div className={style.number} style={{ transitionDelay: getTransitionDelay(count2Display) }}>
-          {count2Display}
-        </div>
-        <div className={style.number} style={{ transitionDelay: getTransitionDelay(count3Display) }}>
-          {count3Display}
-        </div>
-        </div>
+          <div className={style.numbers}>
+            <div className={style.number} style={{ transitionDelay: getTransitionDelay(count1Display) }}>
+              {count1Display.toLocaleString()}억
+            </div>
+            <div className={style.number} style={{ transitionDelay: getTransitionDelay(count2Display) }}>
+              {count2Display.toLocaleString()}건
+            </div>
+            <div className={style.number} style={{ transitionDelay: getTransitionDelay(count3Display) }}>
+              {count3Display.toLocaleString()}명
+            </div>
+          </div>
+          <div className={style.third_textlist}>
+            <div className={style.third_text}>보이스피싱 누적 피해액</div>
+            <div className={style.third_text}>보이스피싱 누적 피해건수</div>
+            <div className={style.third_text}>보이스피싱 누적 피해자수</div>
+          </div>
           <button onClick={() => {
             navigate(`/crime-type/*`);
-          }}>자세한 내용 확인하기</button>
+          }}>보이스 피싱에 대해 더 알고 싶다면</button>
         </div>
     </div>
   );
