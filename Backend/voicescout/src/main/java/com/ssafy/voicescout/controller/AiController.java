@@ -23,7 +23,7 @@ public class AiController {
   //@SendTo("topic") 구독자들에게 보내기
   public void sendAi(@Payload byte[] message, @RequestBody InteractionDto interactionDto, SimpMessageHeaderAccessor accessor) {
     String content = new String(message, StandardCharsets.UTF_8);
-    log.info("[sendAi] : 메세시 수신, message : {}", message );
+    log.info("[sendAi] : 메세시 수신, message : {}", content );
     log.info("[sendAi] : 채널아이디 수신, ChannelId : {}", interactionDto.getLink() );
 //    simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), interactionDto);
 //    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
