@@ -8,6 +8,8 @@ import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
 import CreateModal from "components/common/CreateModal";
+import Refresh from "img/refresh.png";
+import Question from "img/question.png";
 
 export default function RoomList() {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -103,14 +105,20 @@ export default function RoomList() {
     $.get(`/rooms`)
   );
 
-  useEffect(() => {
-    console.log(data && data.data);
-  }, [isLoading]);
-
   return (
     <>
       <div className={style.container}>
         <div className={style.inner_container}>
+          <div className={style.guide_refresh_div}>
+            <img src={Question} alt="" />
+            <img
+              src={Refresh}
+              alt=""
+              onClick={() => {
+                refetch();
+              }}
+            />
+          </div>
           <div className={style.room_list}>
             {!isLoading &&
               data &&
