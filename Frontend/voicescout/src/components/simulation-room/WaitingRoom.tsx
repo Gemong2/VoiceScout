@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -16,6 +18,7 @@ import CreateModal from "components/common/CreateModal";
 export default function WaitingRoom() {
   const navigate = useNavigate();
   const location = useLocation();
+  let { params } = useParams();
   const stompClientRef = useRef<Stomp.Client | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [speechToText, setSpeechToText] = useState("");
@@ -23,7 +26,15 @@ export default function WaitingRoom() {
   const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
-  const [title, setTitle] = useState<string>();
+  const [seq, setSeq] = useState<number>(location.state.seq);
+  const [title, setTitle] = useState<string>(location.state.title);
+  const [password, setPassword] = useState<string>(location.state.password);
+  const [typeId, setType] = useState<number>(location.state.typeId);
+  const [link, setLink] = useState<string>(location.state.link);
+  const [participant, setParticipant] = useState<number>(
+    location.state.participant
+  );
+  const [locked, setLocked] = useState<boolean>(location.state.locked);
 
   const info = [
     {
@@ -57,21 +68,44 @@ export default function WaitingRoom() {
   }
 
   const data: data_type = {
-    seq: location.state.seq,
-    title: location.state.title,
-    password: location.state.password,
-    typeId: location.state.typeId,
-    link: location.state.link,
-    participant: location.state.participant,
-    locked: location.state.locked,
+    seq: seq,
+    title: title,
+    password: password,
+    typeId: typeId,
+    link: link,
+    participant: participant,
+    locked: locked,
   };
 
-  const init = () => {};
+  const res_put = () => {
+    return $.put(`/rooms`, data);
+  };
+
+  const { mutate: onEnter } = useMutation(res_put);
+
+  const res_delete = () => {
+    return $.delete(`/rooms/${location.state.seq}`);
+  };
+  const { mutate: onDelete } = useMutation(res_delete, {
+    onSuccess: () => {
+      navigate(`/simulation-list/`);
+    },
+  });
+
+  const cntCheck = () => {
+    if (userType === 0) {
+      onDelete();
+    } else {
+      setParticipant(participant - 1);
+      navigate(`/simulation-list/`);
+    }
+  };
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:4433/webSocket");
+    const socket = new SockJS(`http://localhost:4433/api/webSocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
+      withCredentials: true as any;
       console.log("Connected to WebSocket server");
     });
     const recognition = new (window.SpeechRecognition ||
@@ -114,22 +148,7 @@ export default function WaitingRoom() {
   }, []);
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      if (stompClientRef.current) {
-        stompClientRef.current.disconnect(() => {
-          console.log("Disconnected from WebSocket server");
-        });
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    onEnter();
   }, []);
 
   return (
@@ -187,7 +206,7 @@ export default function WaitingRoom() {
             <button
               className={style.out_btn}
               onClick={() => {
-                navigate(`/simulation-list/`);
+                cntCheck();
               }}
             >
               나가기
