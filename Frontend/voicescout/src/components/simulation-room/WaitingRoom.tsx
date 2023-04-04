@@ -10,6 +10,7 @@ import Victim from "img/victim.png";
 import Criminal from "img/criminal.png";
 import Mike from "img/mike.png";
 import Headset from "img/headset.png";
+import Calloff from "img/calloff2.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
@@ -39,31 +40,27 @@ export default function WaitingRoom() {
       사기 수법`,
       img: Acquaintance,
     },
-    {
-      type: `대출 사칭형`,
-      describe: `금융기관을 사칭, 피싱사이트로 유인하여
-       피해자 명의로 대출 편취하는 사기 수법`,
-      img: Loans,
-    },
   ];
 
   interface data_type {
     seq: number;
     title: string;
-    count: number;
-    locked: boolean;
     password: string | null;
+    typeId: number;
+    link: string;
+    participant: number;
+    locked: boolean;
   }
 
-  const data: data_type[] = [
-    {
-      seq: 0,
-      title: location.state.title,
-      count: 1,
-      locked: location.state.locked,
-      password: location.state.password,
-    },
-  ];
+  const data: data_type = {
+    seq: location.state.seq,
+    title: location.state.title,
+    password: location.state.password,
+    typeId: location.state.typeId,
+    link: location.state.link,
+    participant: location.state.participant,
+    locked: location.state.locked,
+  };
 
   useEffect(() => {
     const socket = new SockJS("http://localhost:4433/webSocket");
@@ -105,26 +102,30 @@ export default function WaitingRoom() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
   return (
     <>
       {!getReady && (
         <>
-          <div className={style.header}>{data[0].title}</div>
+          <div className={style.header}>{data.title}</div>
           <div className={style.header_guide}>역할을 선택하십시오</div>
           <div className={style.contents}>
             <img
               className={style.contents_first}
-              src={info[location.state.type].img}
+              src={info[location.state.typeId].img}
               alt=""
             />
             <div className={style.contents_second}>
-              <p>{info[location.state.type].type}</p>
+              <p>{info[location.state.typeId].type}</p>
               <div className={style.locked}>
-                {data[0].locked ? <span>비공개</span> : <span>공개</span>}
+                {data.locked ? <span>비공개</span> : <span>공개</span>}
               </div>
             </div>
             <div className={style.contents_third}>
-              {info[location.state.type].describe}
+              {info[location.state.typeId].describe}
             </div>
           </div>
           <div className={style.information}>
@@ -170,34 +171,43 @@ export default function WaitingRoom() {
       )}
       {getReady && (
         <>
-        <div className={style.role}>
-        <div className={style.simul_type}>
-          <img
-            className={style.contents_first}
-            src={info[location.state.type].img}
-            alt=""
-          />
-            <p>{info[location.state.type].type}</p>
-        </div>
-        <div className={style.simul_call}>{info[location.state.type].type === '대출 사칭형'? '1301' : 
-        info[location.state.type].type === '기관 사칭형' ? '1599-9999' : '지인' }</div>
-        <div className={style.simul_timer}>00:21</div>
-        <div className={style.simul_profile}>
-        <img className={style.simul_role} src={Criminal} alt="" /></div>
-        <div className={style.simul_calloff}>
-        <img className={style.simul_callimg} src={Criminal} alt="" /></div>
-        </div>
-        
-
+          <div className={style.role}>
+            <div className={style.simul_type}>
+              <img
+                className={style.contents_first}
+                src={info[location.state.typeId].img}
+                alt=""
+              />
+              <p>{info[location.state.typeId].type}</p>
+            </div>
+            <div className={style.simul_call}>
+              {info[location.state.typeId].type === "대출 사칭형"
+                ? "1301"
+                : info[location.state.typeId].type === "기관 사칭형"
+                ? "1599-9999"
+                : "지인"}
+            </div>
+            <div className={style.simul_timer}>00:21</div>
+            <div className={style.simul_profile}>
+              <img className={style.simul_role} src={Criminal} alt="" />
+            </div>
+            <div className={style.simul_calloff}>
+              <img className={style.simul_callimg} src={Calloff} alt="" />
+            </div>
+          </div>
         </>
       )}
       {isModal && (
         <CreateModal
           setIsModal={setIsModal}
+          seqInput={location.state.seq}
           titleInput={location.state.title}
-          lockedInput={location.state.locked}
           passwordInput={location.state.password}
-          typeInput={location.state.type}
+          typeIdInput={location.state.typeId}
+          linkInput={location.state.link}
+          participantInput={location.state.participant}
+          lockedInput={location.state.locked}
+          createInput={false}
         />
       )}
     </>
