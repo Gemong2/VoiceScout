@@ -25,11 +25,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @WebMvcTest(RoomController.class)
 public class RoomControllerTest {
+
   @Autowired
   private MockMvc mockMvc;
   @MockBean
@@ -57,7 +59,6 @@ public class RoomControllerTest {
         .typeId(1)
         .build();
 
-
     given(roomService.createRoom(roomReqDto)).willReturn(
         roomResDto
     );
@@ -65,14 +66,12 @@ public class RoomControllerTest {
     //when - then
     Gson gson = new Gson();
     String content = gson.toJson(roomReqDto);
-    System.out.println("***********************************************************");
-    System.out.println(content);
 
     mockMvc.perform(
-        post("/rooms")
-            .content(content)
-            .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
+            post("/rooms")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+          .andExpect(status().isCreated())
 //        .andExpect(jsonPath("$.seq").exists()) //$는 json의 루트를 의미
 //        .andExpect(jsonPath("$.title").exists())
 //        .andExpect(jsonPath("$.password").exists())

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/S08P22A404.iml" filepath="$PROJECT_DIR$/.idea/S08P22A404.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/voicescout.main.iml" filepath="$PROJECT_DIR$/.idea/modules/voicescout.main.iml" />
     </modules>
   </component>
 </project>
