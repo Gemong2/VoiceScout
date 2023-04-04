@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
@@ -29,7 +29,7 @@ export default function WaitingRoom() {
   const [seq, setSeq] = useState<number>(location.state.seq);
   const [title, setTitle] = useState<string>(location.state.title);
   const [password, setPassword] = useState<string>(location.state.password);
-  const [typeId, setType] = useState<number>(location.state.typeId);
+  const [typeId, setTypeId] = useState<number>(location.state.typeId);
   const [link, setLink] = useState<string>(location.state.link);
   const [participant, setParticipant] = useState<number>(
     location.state.participant
@@ -57,7 +57,7 @@ export default function WaitingRoom() {
     },
   ];
 
-  interface data_type {
+  interface datas_type {
     seq: number;
     title: string;
     password: string | null;
@@ -67,7 +67,7 @@ export default function WaitingRoom() {
     locked: boolean;
   }
 
-  const data: data_type = {
+  const datas: datas_type = {
     seq: seq,
     title: title,
     password: password,
@@ -76,6 +76,10 @@ export default function WaitingRoom() {
     participant: participant,
     locked: locked,
   };
+
+  const { isLoading, data, refetch } = useQuery(["Room"], () =>
+    $.get(`/rooms/${location.state.seq}`)
+  );
 
   const res_put = () => {
     return $.put(`/rooms`, data);
@@ -105,7 +109,6 @@ export default function WaitingRoom() {
     const socket = new SockJS(`http://localhost:4433/api/webSocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
-      withCredentials: true as any;
       console.log("Connected to WebSocket server");
     });
     const recognition = new (window.SpeechRecognition ||
@@ -151,11 +154,19 @@ export default function WaitingRoom() {
     onEnter();
   }, []);
 
+  useEffect(() => {
+    setTitle(title);
+    setLocked(locked);
+    setParticipant(participant);
+    setPassword(password);
+    setTypeId(typeId);
+  }, [title, locked, participant, password, typeId]);
+
   return (
     <>
       {!getReady && (
         <>
-          <div className={style.header}>{data.title}</div>
+          <div className={style.header}>{datas.title}</div>
           <div className={style.header_guide}>역할을 선택하십시오</div>
           <div className={style.contents}>
             <img
@@ -166,7 +177,7 @@ export default function WaitingRoom() {
             <div className={style.contents_second}>
               <p>{info[location.state.typeId].type}</p>
               <div className={style.locked}>
-                {data.locked ? <span>비공개</span> : <span>공개</span>}
+                {datas.locked ? <span>비공개</span> : <span>공개</span>}
               </div>
             </div>
             <div className={style.contents_third}>
