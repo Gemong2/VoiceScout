@@ -12,4 +12,5 @@ public interface RoomService {
   RoomDto createRoom(RoomDto roomDto);
   void deleteRoom(long roomSeq);
   List<RoomDto> getRooms();
+  RoomDto getRoom(long roomSeq);
 }
