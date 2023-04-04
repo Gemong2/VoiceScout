@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("rooms")
 public class RoomController {
+
   private final RoomServiceImpl roomService;
 
   @PostMapping(value = "")
@@ -27,11 +28,13 @@ public class RoomController {
     RoomDto roomResDto = roomService.createRoom(roomReqDto);
     return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.CREATED);
   }
+
   @PutMapping(value = "")
   public ResponseEntity<RoomDto> updateRoom(@RequestBody RoomDto roomReqDto) {
     RoomDto roomResDto = roomService.updateRoom(roomReqDto);
     return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.CREATED);
   }
+
   @DeleteMapping("/{roomSeq}")
   public void deleteRoom(@PathVariable Long roomSeq) {
     roomService.deleteRoom(roomSeq);
@@ -42,6 +45,7 @@ public class RoomController {
     List<RoomDto> rooms = roomService.getRooms();
     return new ResponseEntity<List<RoomDto>>(rooms, HttpStatus.OK);
   }
+
   @GetMapping("/{roomSeq}")
   public ResponseEntity<RoomDto> getRoom(@PathVariable Long roomSeq) {
     RoomDto roomResDto = roomService.getRoom(roomSeq);

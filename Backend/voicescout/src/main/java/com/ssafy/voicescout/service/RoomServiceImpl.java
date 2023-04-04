@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
+
   private final RoomRepository roomRepository;
 
   @Override
@@ -33,10 +34,11 @@ public class RoomServiceImpl implements RoomService {
     log.info("[createRoom] : 방 생성 완료, RoomSeq : {}", roomReqDto.getSeq());
     return roomReqDto;
   }
+
   @Override
   @Transactional
   public RoomDto updateRoom(RoomDto roomReqDto) {
-    Room room =  roomRepository.getById(roomReqDto.getSeq());
+    Room room = roomRepository.getById(roomReqDto.getSeq());
     room.updateRoom(roomReqDto);
     log.info("[createRoom] : 방 수정 완료, RoomSeq : {}", roomReqDto.getSeq());
     return roomReqDto;
@@ -54,7 +56,7 @@ public class RoomServiceImpl implements RoomService {
   public List<RoomDto> getRooms() {
     List<Room> rooms = roomRepository.findAll();
     List<RoomDto> roomsDto = new ArrayList<>();
-    for (Room room :  rooms) {
+    for (Room room : rooms) {
       RoomDto roomDto = RoomDto.builder()
           .seq(room.getSeq())
           .title(room.getTitle())
