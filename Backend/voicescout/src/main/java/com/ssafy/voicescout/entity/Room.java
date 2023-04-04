@@ -24,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "room")
 public class Room {
+
   @Id
   @GeneratedValue
   private long seq;

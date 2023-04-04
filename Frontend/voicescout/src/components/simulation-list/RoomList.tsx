@@ -88,7 +88,7 @@ export default function RoomList() {
         }
       });
     } else {
-      navigate(`/simulation-room/${e.title}`, {
+      navigate(`/simulation-room/${e.link}`, {
         state: {
           seq: e.seq,
           title: e.title,
@@ -128,11 +128,12 @@ export default function RoomList() {
               data.data.map((content: data_type) => {
                 return (
                   <div key={content.seq}>
-                    <div
+                    <button
                       className={style.room_container}
                       onClick={() => {
                         roomChk(content);
                       }}
+                      disabled={content.participant === 2 ? true : false}
                     >
                       <div className={style.room_title}>
                         <div>
@@ -157,7 +158,7 @@ export default function RoomList() {
                           <span>{info[content.typeId].describe}</span>
                         </div>
                       </div>
-                    </div>
+                    </button>
                   </div>
                 );
               })}

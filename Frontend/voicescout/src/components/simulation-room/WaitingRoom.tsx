@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -16,6 +18,7 @@ import CreateModal from "components/common/CreateModal";
 export default function WaitingRoom() {
   const navigate = useNavigate();
   const location = useLocation();
+  let { params } = useParams();
   const stompClientRef = useRef<Stomp.Client | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [speechToText, setSpeechToText] = useState("");
@@ -23,7 +26,15 @@ export default function WaitingRoom() {
   const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
-  const [title, setTitle] = useState<string>();
+  const [seq, setSeq] = useState<number>(location.state.seq);
+  const [title, setTitle] = useState<string>(location.state.title);
+  const [password, setPassword] = useState<string>(location.state.password);
+  const [typeId, setTypeId] = useState<number>(location.state.typeId);
+  const [link, setLink] = useState<string>(location.state.link);
+  const [participant, setParticipant] = useState<number>(
+    location.state.participant
+  );
+  const [locked, setLocked] = useState<boolean>(location.state.locked);
 
   const info = [
     {
@@ -46,7 +57,7 @@ export default function WaitingRoom() {
     },
   ];
 
-  interface data_type {
+  interface datas_type {
     seq: number;
     title: string;
     password: string | null;
@@ -56,20 +67,46 @@ export default function WaitingRoom() {
     locked: boolean;
   }
 
-  const data: data_type = {
-    seq: location.state.seq,
-    title: location.state.title,
-    password: location.state.password,
-    typeId: location.state.typeId,
-    link: location.state.link,
-    participant: location.state.participant,
-    locked: location.state.locked,
+  const datas: datas_type = {
+    seq: seq,
+    title: title,
+    password: password,
+    typeId: typeId,
+    link: link,
+    participant: participant,
+    locked: locked,
   };
 
-  const init = () => {};
+  const { isLoading, data, refetch } = useQuery(["Room"], () =>
+    $.get(`/rooms/${location.state.seq}`)
+  );
+
+  const res_put = () => {
+    return $.put(`/rooms`, data);
+  };
+
+  const { mutate: onEnter } = useMutation(res_put);
+
+  const res_delete = () => {
+    return $.delete(`/rooms/${location.state.seq}`);
+  };
+  const { mutate: onDelete } = useMutation(res_delete, {
+    onSuccess: () => {
+      navigate(`/simulation-list/`);
+    },
+  });
+
+  const cntCheck = () => {
+    if (userType === 0) {
+      onDelete();
+    } else {
+      setParticipant(participant - 1);
+      navigate(`/simulation-list/`);
+    }
+  };
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:4433/webSocket");
+    const socket = new SockJS(`http://localhost:4433/api/webSocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
@@ -114,29 +151,22 @@ export default function WaitingRoom() {
   }, []);
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      if (stompClientRef.current) {
-        stompClientRef.current.disconnect(() => {
-          console.log("Disconnected from WebSocket server");
-        });
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    onEnter();
   }, []);
+
+  useEffect(() => {
+    setTitle(title);
+    setLocked(locked);
+    setParticipant(participant);
+    setPassword(password);
+    setTypeId(typeId);
+  }, [title, locked, participant, password, typeId]);
 
   return (
     <>
       {!getReady && (
         <>
-          <div className={style.header}>{data.title}</div>
+          <div className={style.header}>{datas.title}</div>
           <div className={style.header_guide}>역할을 선택하십시오</div>
           <div className={style.contents}>
             <img
@@ -147,7 +177,7 @@ export default function WaitingRoom() {
             <div className={style.contents_second}>
               <p>{info[location.state.typeId].type}</p>
               <div className={style.locked}>
-                {data.locked ? <span>비공개</span> : <span>공개</span>}
+                {datas.locked ? <span>비공개</span> : <span>공개</span>}
               </div>
             </div>
             <div className={style.contents_third}>
@@ -187,7 +217,7 @@ export default function WaitingRoom() {
             <button
               className={style.out_btn}
               onClick={() => {
-                navigate(`/simulation-list/`);
+                cntCheck();
               }}
             >
               나가기
