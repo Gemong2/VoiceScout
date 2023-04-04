@@ -54,13 +54,25 @@
 }
 
 .room_title {
-  font-family: "Pretendard-Bold";
   width: 400px;
   background-color: #ffe134;
   border: 1px solid #000000;
   border-radius: 20px;
   padding-left: 10px;
+  padding-bottom: 2px;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.room_title img {
+  width: 20px;
+  margin-top: 5px;
+}
+
+.room_title p {
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
 }
 
 .room_main {

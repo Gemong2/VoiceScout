@@ -131,6 +131,7 @@ export default function CreateModal({
           link: data.data.link,
           participant: data.data.participant,
           locked: data.data.locked,
+          userType: 0,
         },
       });
     },
