@@ -69,4 +69,20 @@ public class RoomServiceImpl implements RoomService {
     log.info("[getRooms] : 방 목록 조회성공, 방 개수 : {}", roomsDto.size());
     return roomsDto;
   }
+
+  @Override
+  public RoomDto getRoom(long roomSeq) {
+    Room room = roomRepository.findById(roomSeq).get();
+    RoomDto roomDto = RoomDto.builder()
+        .seq(room.getSeq())
+        .title(room.getTitle())
+        .password(room.getPassword())
+        .participant(room.getParticipant())
+        .link(room.getLink())
+        .locked(room.isLocked())
+        .typeId(room.getTypeId())
+        .build();
+    log.info("[getRoom] : 방 조회성공, 방제 : {}", roomDto.getTitle());
+    return roomDto;
+  }
 }

@@ -38,8 +38,14 @@ public class RoomController {
   }
 
   @GetMapping("")
-  public List<RoomDto> getRooms() {
-    return roomService.getRooms();
+  public ResponseEntity<List<RoomDto>> getRooms() {
+    List<RoomDto> rooms = roomService.getRooms();
+    return new ResponseEntity<List<RoomDto>>(rooms, HttpStatus.OK);
+  }
+  @GetMapping("/{roomSeq}")
+  public ResponseEntity<RoomDto> getRoom(@PathVariable Long roomSeq) {
+    RoomDto roomResDto = roomService.getRoom(roomSeq);
+    return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.OK);
   }
 }
 

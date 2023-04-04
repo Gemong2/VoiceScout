@@ -65,6 +65,8 @@ public class RoomControllerTest {
     //when - then
     Gson gson = new Gson();
     String content = gson.toJson(roomReqDto);
+    System.out.println("***********************************************************");
+    System.out.println(content);
 
     mockMvc.perform(
         post("/rooms")
