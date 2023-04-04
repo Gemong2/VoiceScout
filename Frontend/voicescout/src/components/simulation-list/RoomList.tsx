@@ -10,6 +10,9 @@ import Loans from "img/type_loans.png";
 import CreateModal from "components/common/CreateModal";
 import Refresh from "img/refresh.png";
 import Question from "img/question.png";
+import Lock from "img/lock.png";
+import UnLock from "img/unlock.png";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 export default function RoomList() {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -85,8 +88,6 @@ export default function RoomList() {
         }
       });
     } else {
-      console.log(e.link);
-      console.log(e.title);
       navigate(`/simulation-room/${e.title}`, {
         state: {
           seq: e.seq,
@@ -96,6 +97,7 @@ export default function RoomList() {
           locked: e.locked,
           typeId: e.typeId,
           participant: e.participant + 1,
+          userType: 1,
         },
       });
     }
@@ -132,7 +134,18 @@ export default function RoomList() {
                         roomChk(content);
                       }}
                     >
-                      <div className={style.room_title}>{content.title}</div>
+                      <div className={style.room_title}>
+                        <div>
+                          {content.locked ? (
+                            <img src={Lock} alt=""></img>
+                          ) : (
+                            <img src={UnLock} alt=""></img>
+                          )}
+                        </div>
+                        <div>
+                          <p>{content.title}</p>
+                        </div>
+                      </div>
                       <div className={style.room_main}>
                         <img
                           className={style.main_img}
