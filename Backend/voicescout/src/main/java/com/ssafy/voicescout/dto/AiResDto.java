@@ -7,6 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class AiDtoRequest {
-    private String msg;
+public class AiResDto {
+    private int prediction;
 }

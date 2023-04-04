@@ -1,7 +1,7 @@
 package com.ssafy.voicescout.service;
 
-import com.ssafy.voicescout.dto.AiDtoRequest;
-import com.ssafy.voicescout.dto.AiDtoResponse;
+import com.ssafy.voicescout.dto.AiReqDto;
+import com.ssafy.voicescout.dto.AiResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -20,13 +20,13 @@ public class AiServiceImpl implements AiService {
 
 
     @Override
-    public AiDtoResponse checkMessage(AiDtoRequest msg) {
+    public AiResDto checkMessage(AiReqDto msg) {
         String apiUrl = "http://localhost:8000/classification/";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = "{\"msg\":\"" + msg + "\"}";
         HttpEntity<String> requestBody = new HttpEntity<>(jsonString, headers);
-        ResponseEntity<AiDtoResponse> response = restTemplate.postForEntity(apiUrl, requestBody, AiDtoResponse.class);
+        ResponseEntity<AiResDto> response = restTemplate.postForEntity(apiUrl, requestBody, AiResDto.class);
         if (response.getStatusCodeValue() == 200){
             return response.getBody();
         }

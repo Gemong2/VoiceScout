@@ -1,12 +1,12 @@
 package com.ssafy.voicescout.service;
 
-import com.ssafy.voicescout.dto.AiDtoRequest;
-import com.ssafy.voicescout.dto.AiDtoResponse;
+import com.ssafy.voicescout.dto.AiReqDto;
+import com.ssafy.voicescout.dto.AiResDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface AiService {
 
-    AiDtoResponse checkMessage(AiDtoRequest msg);
+    AiResDto checkMessage(AiReqDto msg);
 
 }
