@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class AiController {
     String content = new String(message, StandardCharsets.UTF_8);
     log.info("[sendAi] : 메세시 수신, message : {}", message );
     log.info("[sendAi] : 채널아이디 수신, ChannelId : {}", interactionDto.getLink() );
-    simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), interactionDto);
+//    simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), interactionDto);
 //    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
 //    simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
   }

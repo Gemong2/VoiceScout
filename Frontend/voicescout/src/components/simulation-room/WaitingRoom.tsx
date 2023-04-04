@@ -69,9 +69,10 @@ export default function WaitingRoom() {
   const init = () => {};
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:4433/webSocket");
+    const socket = new SockJS("http://localhost:4433/api/webSocket");
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
+      withCredentials: true as any
       console.log("Connected to WebSocket server");
     });
     const recognition = new (window.SpeechRecognition ||
