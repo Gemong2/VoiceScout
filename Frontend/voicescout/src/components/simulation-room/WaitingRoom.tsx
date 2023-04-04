@@ -132,7 +132,11 @@ export default function WaitingRoom() {
           setSpeechToText(() => {
             const message = transcript;
             console.log(`Sending "${message}" to server via WebSocket`);
-            stompClient.send("/ai", {}, message);
+            stompClient.send(
+              "/ai",
+              {},
+              JSON.stringify({ message: message, link: link })
+            );
             return message;
           });
         }
@@ -155,11 +159,6 @@ export default function WaitingRoom() {
       }
     };
   }, []);
-
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = "";
-  };
 
   useEffect(() => {
     if (isLoading) return;
