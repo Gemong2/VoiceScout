@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./RoomList.module.css";
 import Swal from "sweetalert2";
@@ -53,6 +53,7 @@ export default function RoomList() {
         text: "인원이 가득찼습니다.",
         confirmButtonText: "닫기",
       });
+      return;
     }
     if (e.locked) {
       Swal.fire({
@@ -61,7 +62,17 @@ export default function RoomList() {
         inputPlaceholder: "비밀번호입력",
       }).then((res) => {
         if (typeof res.value === "string" && res.value === e.password) {
-          navigate(`/simulation-room/${e.link}`);
+          navigate(`/simulation-room/${e.title}`, {
+            state: {
+              seq: e.seq,
+              title: e.title,
+              password: e.password,
+              link: e.link,
+              locked: e.locked,
+              typeId: e.typeId,
+              participant: e.participant + 1,
+            },
+          });
         } else {
           Swal.fire({
             icon: "error",
@@ -71,12 +82,30 @@ export default function RoomList() {
           });
         }
       });
+    } else {
+      console.log(e.link);
+      console.log(e.title);
+      navigate(`/simulation-room/${e.title}`, {
+        state: {
+          seq: e.seq,
+          title: e.title,
+          password: e.password,
+          link: e.link,
+          locked: e.locked,
+          typeId: e.typeId,
+          participant: e.participant + 1,
+        },
+      });
     }
   };
 
   const { isLoading, data, refetch } = useQuery(["RoomList"], () =>
-    $.get(`/api/rooms`)
+    $.get(`/rooms`)
   );
+
+  useEffect(() => {
+    console.log(data && data.data);
+  }, [isLoading]);
 
   return (
     <>
@@ -86,8 +115,7 @@ export default function RoomList() {
             {!isLoading &&
               data &&
               data.data &&
-              data.data.content &&
-              data.data.content.map((content: data_type) => {
+              data.data.map((content: data_type) => {
                 return (
                   <div key={content.seq}>
                     <div

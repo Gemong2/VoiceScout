@@ -26,6 +26,7 @@ public class RoomServiceImpl implements RoomService {
         .password(roomReqDto.getPassword())
         .participant(roomReqDto.getParticipant())
         .typeId(roomReqDto.getTypeId())
+        .locked(roomReqDto.isLocked())
         .build();
     Room createdRoom = roomRepository.save(room);
     roomReqDto.setSeq(createdRoom.getSeq());
@@ -56,7 +57,7 @@ public class RoomServiceImpl implements RoomService {
     for (Room room :  rooms) {
       RoomDto roomDto = RoomDto.builder()
           .seq(room.getSeq())
-          .title(room.getLink())
+          .title(room.getTitle())
           .password(room.getPassword())
           .participant(room.getParticipant())
           .link(room.getLink())
