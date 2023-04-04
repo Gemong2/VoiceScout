@@ -89,10 +89,15 @@
   font-size: 4rem;
   font-weight: bold;
   margin: 0 1rem;
-  transition: all 0.2s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 
 .numbers {
   display: flex;
   justify-content: center;
+}
+
+.third_title {
+  font-family: "The_Jamsil_5_Bold";
+  font-size: 2em;
 }
