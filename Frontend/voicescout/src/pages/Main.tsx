@@ -77,13 +77,9 @@ export default function Main({ target1, target2, target3, duration }: Props) {
           </div>
         </div>
         <div className={style.third}>
-          <div>
+          <div className={style.third_title}>
             통계로 확인하는 보이스 피싱 현황
           </div>
-          <button onClick={() => {
-                navigate(`/crime-type/*`);
-              }}>자세한 내용 확인하기</button>
-        </div>
         <div className={style.numbers}>
         <div className={style.number} style={{ transitionDelay: getTransitionDelay(count1Display) }}>
           {count1Display}
@@ -94,6 +90,10 @@ export default function Main({ target1, target2, target3, duration }: Props) {
         <div className={style.number} style={{ transitionDelay: getTransitionDelay(count3Display) }}>
           {count3Display}
         </div>
+        </div>
+          <button onClick={() => {
+            navigate(`/crime-type/*`);
+          }}>자세한 내용 확인하기</button>
         </div>
     </div>
   );
