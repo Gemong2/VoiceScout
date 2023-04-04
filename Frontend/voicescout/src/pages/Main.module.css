@@ -94,10 +94,15 @@
 
 .numbers {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .third_title {
   font-family: "The_Jamsil_5_Bold";
   font-size: 2em;
+}
+
+.third_textlist {
+    display: flex;
+    justify-content:space-evenly;
 }
