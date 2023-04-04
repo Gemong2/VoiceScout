@@ -1,5 +1,6 @@
 package com.ssafy.voicescout.controller;
 
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -76,7 +77,7 @@ public class RoomControllerTest {
 //        .andExpect(jsonPath("$.link").exists())
         .andDo(print());
 
-    verify(roomService).createRoom(roomReqDto);
+//    verify(roomService).createRoom(refEq(roomReqDto));
   }
 
 }

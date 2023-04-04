@@ -23,12 +23,12 @@ public class RoomController {
   private final RoomServiceImpl roomService;
 
   @PostMapping(value = "")
-  public ResponseEntity<?> createRoom(@RequestBody RoomDto roomReqDto) {
+  public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto roomReqDto) {
     RoomDto roomResDto = roomService.createRoom(roomReqDto);
     return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.CREATED);
   }
   @PutMapping(value = "")
-  public ResponseEntity<?> updateRoom(@RequestBody RoomDto roomReqDto) {
+  public ResponseEntity<RoomDto> updateRoom(@RequestBody RoomDto roomReqDto) {
     RoomDto roomResDto = roomService.updateRoom(roomReqDto);
     return new ResponseEntity<RoomDto>(roomResDto, HttpStatus.CREATED);
   }
