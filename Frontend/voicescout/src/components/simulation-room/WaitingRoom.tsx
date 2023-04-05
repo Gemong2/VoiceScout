@@ -5,6 +5,7 @@ import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import { OpenVidu } from "openvidu-browser";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
@@ -14,6 +15,10 @@ import Mike from "img/mike.png";
 import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
 import UpdataModal from "components/common/UpdataModal";
+
+const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+// const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
+const stompClient = Stomp.over(socket);
 
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
@@ -43,6 +48,11 @@ export default function WaitingRoom() {
     location.state.participant
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
+  const [update, setUpdate] = useState<number>(0);
+
+  // OpenVIdu용 변수
+  const [session, setSession] = useState<any>(null);
+  const [publisher, setPublisher] = useState<any>(null);
 
   const info = [
     {
@@ -102,25 +112,33 @@ export default function WaitingRoom() {
     },
   });
 
-  const cntCheck = () => {
-    if (userType === 0) {
-      onDelete();
-    } else {
-      setParticipant(participant - 1);
-      navigate(`/simulation-list/`);
-    }
+  const res_put = () => {
+    return $.put(`/rooms`, datas);
   };
 
+  // 방에 남아있는 사람 0명이면 자동으로 방 삭제
+  const { mutate: onChange } = useMutation(res_put);
+
+  // 웹소켓와 음성인식 이벤트
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-    const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
-    const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
+
+      // get-out send하면 모두 페이지에서 나가기
+      stompClient.subscribe(`/ai/${link}`, (data) => {
+        const newMsg = JSON.parse(data.body);
+        if (newMsg.prediction === 2) {
+          if (userType === 1) navigate(`/simulation-list/`);
+          else onDelete();
+        } else if (newMsg.prediction === 3) {
+          window.location.replace(`/simulation-room/${link}`);
+        }
+      });
     });
+
     const recognition = new SpeechRecognition();
 
     recognition.interimResults = true;
@@ -153,13 +171,38 @@ export default function WaitingRoom() {
     recognitionRef.current = recognition;
 
     return () => {
-      recognition.stop();
       stompClient.disconnect(() => {
         console.log("Disconnected from WebSocket server");
       });
     };
   }, []);
 
+  // 방 나갈때 보내는 통신
+  const getOut = () => {
+    stompClient.send(
+      "/ai",
+      {},
+      JSON.stringify({ message: "get-out", link: link })
+    );
+  };
+
+  // 방 정보 변경시 방에있는 사람 모두 새로고침
+  const updateRoom = () => {
+    stompClient.send(
+      "/ai",
+      {},
+      JSON.stringify({ message: "update-room", link: link })
+    );
+  };
+
+  if (update === 1) {
+    updateRoom();
+    setUpdate(0);
+  }
+
+  // OpenVidu 셋팅
+
+  // GET요청 성공 시 데이터 로드
   useEffect(() => {
     if (isLoading) return;
     refetch();
@@ -204,6 +247,7 @@ export default function WaitingRoom() {
               className={style.setting_btn}
               onClick={() => {
                 setIsModal(true);
+                setUpdate(0);
               }}
             >
               설정
@@ -219,7 +263,12 @@ export default function WaitingRoom() {
             <button
               className={style.out_btn}
               onClick={() => {
-                cntCheck();
+                if (userType === 0) getOut();
+                else {
+                  setParticipant(participant - 1);
+                  onChange();
+                  navigate(`/simulation-list/`);
+                }
               }}
             >
               나가기
@@ -250,7 +299,14 @@ export default function WaitingRoom() {
               <img className={style.simul_role} src={Criminal} alt="" />
             </div>
             <div className={style.simul_calloff}>
-              <img className={style.simul_callimg} src={Calloff} alt="" />
+              <img
+                className={style.simul_callimg}
+                src={Calloff}
+                alt=""
+                onClick={() => {
+                  navigate(`/simulation-list/`);
+                }}
+              />
             </div>
           </div>
         </>
@@ -258,6 +314,7 @@ export default function WaitingRoom() {
       {isModal && (
         <UpdataModal
           setIsModal={setIsModal}
+          setUpdate={setUpdate}
           seqInput={seq}
           titleInput={title}
           passwordInput={password}
