@@ -28,7 +28,7 @@ public class AiServiceImpl implements AiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = "{\"msg\":\"" + msg + "\"}";
         HttpEntity<String> requestBody = new HttpEntity<>(jsonString, headers);
-        log.info("[checkMessage] : 값 확인, requestBody : {}", requestBody);
+        log.info("[checkMessage] : 값 확인, requestBody : {}", requestBody.getBody());
         ResponseEntity<AiResDto> response = restTemplate.postForEntity(apiUrl, requestBody, AiResDto.class);
         if (response.getStatusCodeValue() == 200){
             return response.getBody();
