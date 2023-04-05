@@ -21,6 +21,7 @@ public class AiController {
   private final AiServiceImpl aiService;
   private static final String OUT_KEY = "get-out";
   private static final String UPDATE_KEY = "update-room";
+  private static final String START_KEY = "start-call";
 
   @MessageMapping("/ai")
   //@SendTo("topic") 구독자들에게 보내기
@@ -36,7 +37,10 @@ public class AiController {
     } else if(UPDATE_KEY.equals(aiReqDto.getMsg())){
       aiResDto = AiResDto.builder().prediction(3).build();
       log.info("[sendAi] : 방수정 수신, prediction : {}", aiResDto.getPrediction());
-    } else {
+    } else if(START_KEY.equals(aiReqDto.getMsg())) {
+      aiResDto = AiResDto.builder().prediction(4).build();
+      log.info("[sendAi] : 통화시작 수신, prediction : {}", aiResDto.getPrediction());
+    }else {
       aiResDto = aiService.checkMessage(aiReqDto);
       log.info("[sendAi] : prediction 수신 성공, prediction : {}", aiResDto.getPrediction());
     }
