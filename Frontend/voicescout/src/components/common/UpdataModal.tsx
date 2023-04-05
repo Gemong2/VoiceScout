@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useState, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
@@ -11,7 +11,7 @@ import Loans from "img/type_loans.png";
 
 interface modal_type {
   setIsModal: Dispatch<boolean>;
-  setUpdate: Dispatch<React.SetStateAction<number>>;
+  setUpdate: Dispatch<SetStateAction<number>>;
   seqInput: number;
   titleInput: string;
   lockedInput: boolean;
