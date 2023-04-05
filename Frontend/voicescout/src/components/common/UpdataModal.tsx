@@ -11,7 +11,7 @@ import Loans from "img/type_loans.png";
 
 interface modal_type {
   setIsModal: Dispatch<boolean>;
-  setUpdate: Dispatch<boolean>;
+  setUpdate: Dispatch<number>;
   seqInput: number;
   titleInput: string;
   lockedInput: boolean;
@@ -76,7 +76,7 @@ export default function UpdataModal({
 
   const { mutate: onChange } = useMutation(res_put, {
     onSuccess: () => {
-      setUpdate(!setUpdate);
+      setUpdate(1);
     },
     onError: () => {
       Swal.fire({
