@@ -99,6 +99,7 @@ export default function RoomList() {
           userType: 1,
         },
       });
+      window.location.replace(`/simulation-room/${e.link}`);
     }
   };
 

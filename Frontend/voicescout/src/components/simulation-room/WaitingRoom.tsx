@@ -5,14 +5,15 @@ import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { OpenVidu } from "openvidu-browser";
+import { OpenVidu, Publisher, Session, Subscriber } from "openvidu-browser";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
 import Victim from "img/victim.png";
 import Criminal from "img/criminal.png";
-import Mike from "img/mike.png";
-import Mikemute from "img/mic_mute2.png";
+import Mic from "img/mic.png";
+import MicMute from "img/mic.png";
+import Micmute2 from "img/mic_mute2.png";
 import Headphonemute from "img/headphone.png";
 import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
@@ -21,6 +22,8 @@ import UpdataModal from "components/common/UpdataModal";
 // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
 const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
+
+const OV = new OpenVidu();
 
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
@@ -54,8 +57,8 @@ export default function WaitingRoom() {
   const [locked, setLocked] = useState<boolean>(location.state.locked);
 
   // OpenVIdu용 변수
-  const [session, setSession] = useState<any>(null);
-  const [publisher, setPublisher] = useState<any>(null);
+  const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
+  const [mute, setMute] = useState(false);
 
   const info = [
     {
@@ -138,6 +141,8 @@ export default function WaitingRoom() {
           else onDelete();
         } else if (newMsg.prediction === 3) {
           window.location.replace(`/simulation-room/${link}`);
+        } else if (newMsg.prediction === 4) {
+          setGetReady(true);
         }
       });
     });
@@ -198,6 +203,15 @@ export default function WaitingRoom() {
     );
   };
 
+  // 시작 누르면 같이 시작하는 함수
+  const startCall = () => {
+    stompClient.send(
+      "/ai",
+      {},
+      JSON.stringify({ message: "start-call", link: link })
+    );
+  };
+
   if (update === 1) {
     updateRoom();
     setUpdate(0);
@@ -213,6 +227,71 @@ export default function WaitingRoom() {
   };
 
   // OpenVidu 셋팅
+
+  //OpenVidu에서 얻은 세션, 토큰
+  // const { sessionId, token } = await createSessionAndToken();
+
+  //OpenVidu에서 세션 토큰 생성
+  // const createSessionAndToken = async (): Promise<{ sessionId: string, token: string }> => {
+  //   try {
+  //     // Make a POST request to create a new session
+  //     const sessionResponse = await axios.post('https://your.openvidu.server/api/sessions', {}, {
+  //       auth: {
+  //         username: 'YOUR_OPENVIDU_SERVER_SECRET',
+  //         password: ''
+  //       }
+  //     });
+
+  //     // Get the session ID from the response
+  //     const sessionId = sessionResponse.data.id;
+
+  //     // Make a POST request to generate a token for the session
+  //     const tokenResponse = await axios.post(`https://your.openvidu.server/api/sessions/${sessionId}/connection`, {}, {
+  //       auth: {
+  //         username: 'YOUR_OPENVIDU_SERVER_SECRET',
+  //         password: ''
+  //       }
+  //     });
+
+  //     // Get the token from the response
+  //     const token = tokenResponse.data.token;
+
+  //     // Return the session ID and token
+  //     return { sessionId, token };
+  //   } catch (error) {
+  //     console.error(error);
+  //     return { sessionId: '', token: '' };
+  //   }
+  // };
+
+  const handleMute = () => {
+    if (publisher) {
+      const audioTrack = publisher?.stream
+        ?.getMediaStream()
+        .getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = !mute;
+        setMute(!mute);
+      }
+    }
+  };
+
+  // OpenVidu 연결
+  // useEffect(() => {
+  //   const session = OV.initSession();
+  //   session.connect(link).then(() => {
+  //     const publisher = OV.initPublisher("publisher", {
+  //       audioSource: undefined, // set to undefined to allow both mic and screen share audio
+  //       videoSource: false, // set to false to disable video publishing
+  //       publishAudio: true, // enable audio publishing
+  //       publishVideo: false, // disable video publishing
+  //       insertMode: "APPEND", // insert the video into the DOM
+  //     });
+
+  //     session.publish(publisher);
+  //     setPublisher(publisher);
+  //   });
+  // }, []);
 
   // GET요청 성공 시 데이터 로드
   useEffect(() => {
@@ -269,7 +348,7 @@ export default function WaitingRoom() {
                 <div className={style.sub_role}>피싱범</div>
               </div>
               <div className={style.settings}>
-                <img src={Mike} alt="" />
+                <img src={mute ? Mic : MicMute} alt="" onClick={handleMute} />
                 <img src={Headset} alt="" />
               </div>
             </div>
@@ -280,14 +359,16 @@ export default function WaitingRoom() {
                   setIsModal(true);
                   setUpdate(0);
                 }}
+                disabled={userType === 0 ? false : true}
               >
                 설정
               </button>
               <button
                 className={style.start_btn}
                 onClick={() => {
-                  setGetReady(true);
+                  startCall();
                 }}
+                disabled={userType === 0 ? false : true}
               >
                 시작
               </button>
@@ -335,11 +416,11 @@ export default function WaitingRoom() {
           </div>
           <div className={style.mikesetting}>
             <div className={style.setting_div}>
-              <img src={Mikemute} alt="mikemute" />
+              <img src={Micmute2} alt="" />
               <div className={style.setting_text}>소리 끔</div>
             </div>
             <div className={style.setting_div}>
-              <img src={Headphonemute} alt="headphonemute" />
+              <img src={Headphonemute} alt="" />
               <div className={style.setting_text}>
                 상대
                 <br />
