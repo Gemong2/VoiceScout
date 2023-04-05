@@ -23,6 +23,7 @@ interface modal_type {
 
 export default function CreateModal({
   setIsModal,
+
   seqInput,
   titleInput,
   lockedInput,
@@ -100,12 +101,7 @@ export default function CreateModal({
 
   const { mutate: onChange } = useMutation(res_put, {
     onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "",
-        text: "수정되었습니다.",
-        confirmButtonText: "닫기",
-      });
+      window.location.replace(`/simulation-room/${updateData.link}`);
     },
     onError: () => {
       Swal.fire({

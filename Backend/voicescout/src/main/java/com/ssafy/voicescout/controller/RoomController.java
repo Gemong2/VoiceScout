@@ -36,8 +36,9 @@ public class RoomController {
   }
 
   @DeleteMapping("/{roomSeq}")
-  public void deleteRoom(@PathVariable Long roomSeq) {
+  public ResponseEntity<Void> deleteRoom(@PathVariable Long roomSeq) {
     roomService.deleteRoom(roomSeq);
+    return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
   @GetMapping("")
