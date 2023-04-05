@@ -31,10 +31,10 @@ public class AiController {
     AiResDto aiResDto;
     if(OUT_KEY.equals(aiReqDto.getMsg())) {
       aiResDto = AiResDto.builder().prediction(2).build();
-      log.info("[sendAi] : 방삭제 수신, predition : {}", aiResDto.getPrediction());
+      log.info("[sendAi] : 방삭제 수신, prediction : {}", aiResDto.getPrediction());
     } else {
       aiResDto = aiService.checkMessage(aiReqDto);
-      log.info("[sendAi] : predition 수신 성공, predition : {}", aiResDto.getPrediction());
+      log.info("[sendAi] : prediction 수신 성공, prediction : {}", aiResDto.getPrediction());
     }
     simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), aiResDto);
   }
