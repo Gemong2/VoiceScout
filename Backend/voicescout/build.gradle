@@ -28,6 +28,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.25.0'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+	testImplementation group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.7'
+
+
 }
 
 tasks.named('test') {
