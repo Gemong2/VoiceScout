@@ -23,9 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ovx7(oxyu(rfaz73b3v_dr(r90=&+xh*4ee%xgflpm@m)x6%m)"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# SSL SETTING
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+
+ALLOWED_HOSTS = ['j8a404.p.ssafy.io']
 
 
 # Application definition
