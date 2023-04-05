@@ -5,20 +5,17 @@ import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { OpenVidu } from "openvidu-browser";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
 import Victim from "img/victim.png";
 import Criminal from "img/criminal.png";
 import Mike from "img/mike.png";
+import Mikemute from "img/mic_mute2.png"
+import Headphonemute from "img/headphone.png";
 import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
 import UpdataModal from "components/common/UpdataModal";
-
-// const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
-const stompClient = Stomp.over(socket);
 
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
@@ -38,7 +35,7 @@ export default function WaitingRoom() {
   const [userType, setUserType] = useState(location.state.userType);
   const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
-  const [update, setUpdate] = useState(0);
+  const [time, setTime] = useState(0);
 
   const [seq, setSeq] = useState<number>(location.state.seq);
   const [title, setTitle] = useState<string>(location.state.title);
@@ -49,10 +46,6 @@ export default function WaitingRoom() {
     location.state.participant
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
-
-  // OpenVIdu용 변수
-  const [session, setSession] = useState<any>(null);
-  const [publisher, setPublisher] = useState<any>(null);
 
   const info = [
     {
@@ -112,33 +105,34 @@ export default function WaitingRoom() {
     },
   });
 
-  const res_put = () => {
-    return $.put(`/rooms`, datas);
+  const cntCheck = () => {
+    if (userType === 0) {
+      onDelete();
+    } else {
+      setParticipant(participant - 1);
+      navigate(`/simulation-list/`);
+    }
   };
 
-  // 방에 남아있는 사람 0명이면 자동으로 방 삭제
-  const { mutate: onChange } = useMutation(res_put);
+  // 시간을 분:초 형태로 변환하는 함수
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes < 10 ? "0" + minutes : minutes}:${
+      seconds < 10 ? "0" + seconds : seconds
+    }`;
+  };
 
-  // 웹소켓와 음성인식 이벤트
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
+    // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+    const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
+    const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
-
-      // get-out send하면 모두 페이지에서 나가기
-      stompClient.subscribe(`/ai/${link}`, (data) => {
-        const newMsg = JSON.parse(data.body);
-        if (newMsg.prediction === 2) {
-          if (userType === 1) navigate(`/simulation-list/`);
-          else onDelete();
-        } else if (newMsg.prediction === 3) {
-          window.location.replace(`/simulation-room/${link}`);
-        }
-      });
     });
-
     const recognition = new SpeechRecognition();
 
     recognition.interimResults = true;
@@ -171,114 +165,96 @@ export default function WaitingRoom() {
     recognitionRef.current = recognition;
 
     return () => {
+      recognition.stop();
       stompClient.disconnect(() => {
         console.log("Disconnected from WebSocket server");
       });
     };
   }, []);
 
-  // 방 나갈때 보내는 통신
-  const getOut = () => {
-    stompClient.send(
-      "/ai",
-      {},
-      JSON.stringify({ message: "get-out", link: link })
-    );
-  };
-
-  // 방 정보 변경시 방에있는 사람 모두 새로고침
-  const updateRoom = () => {
-    stompClient.send(
-      "/ai",
-      {},
-      JSON.stringify({ message: "update-room", link: link })
-    );
-  };
-
-  if (update === 1) {
-    updateRoom();
-    setUpdate(0);
-  }
-
-  // OpenVidu 셋팅
-
-  // GET요청 성공 시 데이터 로드
   useEffect(() => {
-    if (isLoading) return;
-    refetch();
-    init(data && data.data);
-  }, [isLoading]);
+    let intervalId: NodeJS.Timeout;
+
+    // getReady 값이 1인 경우에만 타이머를 실행
+    if (getReady) {
+      intervalId = setInterval(() => {
+        setTime(prevTime => prevTime + 1);
+      }, 1000);
+    }
+
+    // 컴포넌트가 언마운트되면 타이머를 정리
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [getReady]);
+
+
 
   return (
     <>
       {!getReady && !isLoading && (
-        <>
-          <div className={style.header}>{title}</div>
-          <div className={style.header_guide}>역할을 선택하십시오</div>
-          <div className={style.contents}>
-            <img
-              className={style.contents_first}
-              src={info[typeId].img}
-              alt=""
-            />
-            <div className={style.contents_second}>
-              <p>{info[typeId].type}</p>
-              <div className={style.locked}>
-                {locked ? <span>비공개</span> : <span>공개</span>}
+        <div className={style.container}>
+          <div className={style.inner_container}>
+            <div className={style.header}>{title}</div>
+            <div className={style.header_guide}>역할을 선택하십시오</div>
+            <div className={style.contents}>
+              <img
+                className={style.contents_first}
+                src={info[typeId].img}
+                alt=""
+              />
+              <div className={style.contents_second}>
+                <p>{info[typeId].type}</p>
+                <div className={style.locked}>
+                  {locked ? <span>비공개</span> : <span>공개</span>}
+                </div>
+              </div>
+              <div className={style.contents_third}>{info[typeId].describe}</div>
+            </div>
+            <div className={style.information}>
+              <div className={style.blank}></div>
+              <img className={style.my_img} src={Victim} alt="" />
+              <img className={style.your_img} src={Criminal} alt="" />
+              <div className={style.roles}>
+                <div className={style.main_role}>피해자</div>
+                <div className={style.sub_role}>피싱범</div>
+              </div>
+              <div className={style.settings}>
+                <img src={Mike} alt="" />
+                <img src={Headset} alt="" />
               </div>
             </div>
-            <div className={style.contents_third}>{info[typeId].describe}</div>
-          </div>
-          <div className={style.information}>
-            <div className={style.blank}></div>
-            <img className={style.my_img} src={Victim} alt="" />
-            <img className={style.your_img} src={Criminal} alt="" />
-            <div className={style.roles}>
-              <div className={style.main_role}>피해자</div>
-              <div className={style.sub_role}>피싱범</div>
+            <div className={style.btn_div}>
+              <button
+                className={style.setting_btn}
+                onClick={() => {
+                  setIsModal(true);
+                }}
+              >
+                설정
+              </button>
+              <button
+                className={style.start_btn}
+                onClick={() => {
+                  setGetReady(true);
+                }}
+              >
+                시작
+              </button>
+              <button
+                className={style.out_btn}
+                onClick={() => {
+                  cntCheck();
+                }}
+              >
+                나가기
+              </button>
             </div>
-            <div className={style.settings}>
-              <img src={Mike} alt="" />
-              <img src={Headset} alt="" />
-            </div>
           </div>
-          <div className={style.btn_div}>
-            <button
-              className={style.setting_btn}
-              onClick={() => {
-                setIsModal(true);
-                setUpdate(0);
-              }}
-            >
-              설정
-            </button>
-            <button
-              className={style.start_btn}
-              onClick={() => {
-                setGetReady(true);
-              }}
-            >
-              시작
-            </button>
-            <button
-              className={style.out_btn}
-              onClick={() => {
-                if (userType === 0) getOut();
-                else {
-                  setParticipant(participant - 1);
-                  onChange();
-                  navigate(`/simulation-list/`);
-                }
-              }}
-            >
-              나가기
-            </button>
-          </div>
-        </>
+        </div>
       )}
       {getReady && (
-        <>
-          <div className={style.role}>
+        <div className={style.simul_container}>
             <div className={style.simul_type}>
               <img
                 className={style.contents_first}
@@ -287,34 +263,39 @@ export default function WaitingRoom() {
               />
               <p>{info[location.state.typeId].type}</p>
             </div>
-            <div className={style.simul_call}>
-              {info[location.state.typeId].type === "대출 사칭형"
-                ? "1301"
-                : info[location.state.typeId].type === "기관 사칭형"
-                ? "1599-9999"
-                : "지인"}
-            </div>
-            <div className={style.simul_timer}>00:21</div>
-            <div className={style.simul_profile}>
-              <img className={style.simul_role} src={Criminal} alt="" />
-            </div>
-            <div className={style.simul_calloff}>
-              <img
-                className={style.simul_callimg}
-                src={Calloff}
-                alt=""
-                onClick={() => {
-                  navigate(`/simulation-list/`);
-                }}
-              />
+          <div className={style.simul_typerole}>
+            <div className={style.simul_typecall}>
+              <div className={style.simul_call}>
+                {info[location.state.typeId].type === "대출 사칭형"
+                  ? "1301"
+                  : info[location.state.typeId].type === "기관 사칭형"
+                  ? "1599-9999"
+                  : "지인"}
+              </div>
+              <div className={style.simul_timer}>{formatTime(time)}</div>
             </div>
           </div>
-        </>
+          <div className={style.simul_profile}>
+            <img className={style.simul_role} src={Criminal} alt="" />
+          </div>
+          <div className={style.mikesetting}>
+            <div className={style.setting_div}>
+              <img src={Mikemute} alt="mikemute" />
+              <div className={style.setting_text}>소리 끔</div>
+            </div>
+            <div className={style.setting_div}>
+              <img src={Headphonemute} alt="headphonemute" />
+              <div className={style.setting_text}>상대<br />소리 끔</div>
+            </div>
+          </div>
+          <div className={style.simul_calloff}>
+            <img className={style.simul_callimg} src={Calloff} alt="" />
+          </div>
+        </div>
       )}
       {isModal && (
         <UpdataModal
           setIsModal={setIsModal}
-          setUpdate={setUpdate}
           seqInput={seq}
           titleInput={title}
           passwordInput={password}

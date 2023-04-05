@@ -11,6 +11,7 @@ import Loans from "img/type_loans.png";
 
 interface modal_type {
   setIsModal: Dispatch<boolean>;
+  setUpdate: Dispatch<React.SetStateAction<number>>;
   seqInput: number;
   titleInput: string;
   lockedInput: boolean;
@@ -22,6 +23,7 @@ interface modal_type {
 
 export default function UpdataModal({
   setIsModal,
+  setUpdate,
   seqInput,
   titleInput,
   lockedInput,
@@ -74,7 +76,7 @@ export default function UpdataModal({
 
   const { mutate: onChange } = useMutation(res_put, {
     onSuccess: () => {
-      window.location.replace(`/simulation-room/${updateData.link}`);
+      setUpdate(1);
     },
     onError: () => {
       Swal.fire({
