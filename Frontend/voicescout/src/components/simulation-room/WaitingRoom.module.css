@@ -1,3 +1,7 @@
+button {
+  cursor: pointer;
+}
+
 /** 통화 시작 전 레이아웃 css*/
 
 .header {
@@ -114,6 +118,7 @@
   height: 30px;
   margin-top: 1vh;
   margin-left: 0;
+  cursor: pointer;
 }
 
 .btn_div {
