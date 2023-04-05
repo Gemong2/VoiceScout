@@ -14,11 +14,11 @@ function App() {
     <>
       <Routes>
         <Route element={<HeaderFooterPage />}>
-          <Route path="/" element={<Main target1={4482700000000} target2={227126} target3={143421} duration={5000} />} />
+          <Route path="/" element={<Main target1={4482700000000} target2={227126} target3={143421} duration={4000} />} />
           <Route path="/crime-type/*" element={<CrimeType />} />
         </Route>
         <Route element={<HeaderPage />}>
-          <Route path="/" element={<Main target1={4482700000000} target2={227126} target3={143421} duration={5000} />} />
+          <Route path="/" element={<Main target1={4482700000000} target2={227126} target3={143421} duration={4000} />} />
           <Route path="/simulation-list/*" element={<SimulationList />} />
           <Route path="/quiz/*" element={<Quiz />} />
         </Route>
