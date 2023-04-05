@@ -19,4 +19,4 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 # Django 애플리케이션 실행
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["/app/manage.py", "runserver", "0.0.0.0:8000"]
