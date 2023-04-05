@@ -21,7 +21,7 @@ public class AiServiceImpl implements AiService {
 
     @Override
     public AiResDto checkMessage(AiReqDto msg) {
-        String apiUrl = "http://localhost:8000/classification/";
+        String apiUrl = "http://ai-app:8000/classification/";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String jsonString = "{\"msg\":\"" + msg + "\"}";
