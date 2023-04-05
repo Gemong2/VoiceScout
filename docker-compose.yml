@@ -10,6 +10,12 @@ services:
                 restart: always
                 ports:
                         - 4433:4433
+        ai-app:
+                image: ai
+                container_name: ai-app
+                restart: always
+                ports: 
+                        - 8000:8000
         front-app:
                 image: front
                 container_name: front-app
