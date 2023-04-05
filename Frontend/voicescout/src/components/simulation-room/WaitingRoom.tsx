@@ -13,7 +13,7 @@ import Criminal from "img/criminal.png";
 import Mike from "img/mike.png";
 import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
-import CreateModal from "components/common/CreateModal";
+import UpdataModal from "components/common/UpdataModal";
 
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
@@ -112,13 +112,15 @@ export default function WaitingRoom() {
   };
 
   useEffect(() => {
+    window.SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
     const socket = new SockJS(`http://localhost:4433/api/webSocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
     });
-    const recognition = new (window.SpeechRecognition ||
-      window.webkitSpeechRecognition)();
+    const recognition = new SpeechRecognition();
 
     recognition.interimResults = true;
     recognition.lang = "ko-KR";
@@ -126,6 +128,7 @@ export default function WaitingRoom() {
     recognition.maxAlternatives = 10000;
 
     recognition.addEventListener("result", (e) => {
+      console.log("음성인식 테스트중");
       for (let i = e.resultIndex; i < e.results.length; i++) {
         let transcript = e.results[i][0].transcript;
         if (e.results[i].isFinal) {
@@ -252,7 +255,7 @@ export default function WaitingRoom() {
         </>
       )}
       {isModal && (
-        <CreateModal
+        <UpdataModal
           setIsModal={setIsModal}
           seqInput={seq}
           titleInput={title}
@@ -261,7 +264,6 @@ export default function WaitingRoom() {
           linkInput={link}
           participantInput={participant}
           lockedInput={locked}
-          createInput={false}
         />
       )}
     </>
