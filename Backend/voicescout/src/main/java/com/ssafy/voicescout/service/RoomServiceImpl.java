@@ -52,7 +52,7 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
   public List<RoomDto> getRooms() {
     List<Room> rooms = roomRepository.findAll();
     List<RoomDto> roomsDto = new ArrayList<>();
@@ -73,6 +73,7 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public RoomDto getRoom(long roomSeq) {
     Room room = roomRepository.findById(roomSeq).get();
     RoomDto roomDto = RoomDto.builder()

@@ -16,6 +16,14 @@ import Calloff from "img/calloff2.png";
 import CreateModal from "components/common/CreateModal";
 
 export default function WaitingRoom() {
+  const { isLoading, data, refetch } = useQuery(
+    ["Room"],
+    () => $.get(`/rooms/${location.state.seq}`),
+    {
+      refetchOnMount: "always",
+    }
+  );
+
   const navigate = useNavigate();
   const location = useLocation();
   let { params } = useParams();
@@ -60,7 +68,7 @@ export default function WaitingRoom() {
   interface datas_type {
     seq: number;
     title: string;
-    password: string | null;
+    password: string;
     typeId: number;
     link: string;
     participant: number;
@@ -77,15 +85,13 @@ export default function WaitingRoom() {
     locked: locked,
   };
 
-  const { isLoading, data, refetch } = useQuery(["Room"], () =>
-    $.get(`/rooms/${location.state.seq}`)
-  );
-
-  const res_put = () => {
-    return $.put(`/rooms`, data);
+  const init = (arr: datas_type) => {
+    setTitle(arr.title);
+    setLocked(arr.locked);
+    setParticipant(arr.participant);
+    setPassword(arr.password);
+    setTypeId(arr.typeId);
   };
-
-  const { mutate: onEnter } = useMutation(res_put);
 
   const res_delete = () => {
     return $.delete(`/rooms/${location.state.seq}`);
@@ -126,7 +132,11 @@ export default function WaitingRoom() {
           setSpeechToText(() => {
             const message = transcript;
             console.log(`Sending "${message}" to server via WebSocket`);
-            stompClient.send("/ai", {}, message);
+            stompClient.send(
+              "/ai",
+              {},
+              JSON.stringify({ message: message, link: link })
+            );
             return message;
           });
         }
@@ -139,50 +149,38 @@ export default function WaitingRoom() {
     recognitionRef.current = recognition;
 
     return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      if (stompClientRef.current) {
-        stompClientRef.current.disconnect(() => {
-          console.log("Disconnected from WebSocket server");
-        });
-      }
+      recognition.stop();
+      stompClient.disconnect(() => {
+        console.log("Disconnected from WebSocket server");
+      });
     };
   }, []);
 
   useEffect(() => {
-    onEnter();
-  }, []);
-
-  useEffect(() => {
-    setTitle(title);
-    setLocked(locked);
-    setParticipant(participant);
-    setPassword(password);
-    setTypeId(typeId);
-  }, [title, locked, participant, password, typeId]);
+    if (isLoading) return;
+    refetch();
+    init(data && data.data);
+  }, [isLoading]);
 
   return (
     <>
-      {!getReady && (
+      {!getReady && !isLoading && (
         <>
-          <div className={style.header}>{datas.title}</div>
+          <div className={style.header}>{title}</div>
           <div className={style.header_guide}>역할을 선택하십시오</div>
           <div className={style.contents}>
             <img
               className={style.contents_first}
-              src={info[location.state.typeId].img}
+              src={info[typeId].img}
               alt=""
             />
             <div className={style.contents_second}>
-              <p>{info[location.state.typeId].type}</p>
+              <p>{info[typeId].type}</p>
               <div className={style.locked}>
-                {datas.locked ? <span>비공개</span> : <span>공개</span>}
+                {locked ? <span>비공개</span> : <span>공개</span>}
               </div>
             </div>
-            <div className={style.contents_third}>
-              {info[location.state.typeId].describe}
-            </div>
+            <div className={style.contents_third}>{info[typeId].describe}</div>
           </div>
           <div className={style.information}>
             <div className={style.blank}></div>
@@ -256,13 +254,13 @@ export default function WaitingRoom() {
       {isModal && (
         <CreateModal
           setIsModal={setIsModal}
-          seqInput={location.state.seq}
-          titleInput={location.state.title}
-          passwordInput={location.state.password}
-          typeIdInput={location.state.typeId}
-          linkInput={location.state.link}
-          participantInput={location.state.participant}
-          lockedInput={location.state.locked}
+          seqInput={seq}
+          titleInput={title}
+          passwordInput={password}
+          typeIdInput={typeId}
+          linkInput={link}
+          participantInput={participant}
+          lockedInput={locked}
           createInput={false}
         />
       )}
