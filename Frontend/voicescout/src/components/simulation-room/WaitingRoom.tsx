@@ -112,10 +112,8 @@ export default function WaitingRoom() {
   };
 
   useEffect(() => {
-    window.SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+    // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+    const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
