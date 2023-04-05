@@ -153,41 +153,116 @@
 
 /** 통화 시작 시 레이아웃 css*/
 
-.role {
+.simul_container {
+  background-image: url(img/phone_wallpaper.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
+}
+.simul_typerole {
+  text-align: center;
+}
+
+.simul_type {
+  border: 2px solid #fff;
+  width: 28%;
+  max-height: 100px;
+  border-radius: 20px;
+  margin-top: 3%;
+  margin-left: 3%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.simul_type img {
+  width: 110px;
+  height: 90px;
+  padding: 1px;
+  margin-left: 2%;
+}
+
+.simul_type p {
+  font-size: 2em;
+  text-align: center;
+  align-items: center;
+  margin-top: 10%;
+  font-family: "Pretendard-Semibold";
+  font-style: italic;
+  color: #fff;
+}
+
+.simul_typecall {
+  margin-top: 2%;
 }
 
 .simul_call {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard-Semibold";
   color: #ffffff;
-  display: flex;
-  justify-content: center;
-  font-size: 3em;
+  font-size: 5em;
 }
 
 .simul_timer {
   font-family: "Pretendard-Light";
   color: #ffffff;
-  display: flex;
-  justify-content: center;
   font-size: 3em;
+  text-align: center;
+}
+
+.simul_profile {
+  text-align: center;
 }
 
 .simul_profile img {
-  width: 100px;
+  width: 180px;
   border-radius: 1000px;
 }
 
 .simul_role {
-  background-color: #f7b52c;
+  margin-top: 2%;
+  background: linear-gradient(-200deg, #ffba0d, #1a105dbe);
+  border: 5px solid #fff;
+}
+.mikesetting {
+  display: flex;
+  margin-top: 30px;
+  text-align: center;
+  justify-content: center;
+}
+
+.mikesetting img {
+  justify-content: center;
+  width: 80px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.setting_div {
+  margin: 0 15px 5px 15px;
+}
+
+.setting_text {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.simul_calloff {
+  text-align: center;
+  margin-top: 10px;
 }
 
 .simul_calloff img {
   width: 100px;
-  border-radius: 1000px;
+  height: 100px;
+  border-radius: 50%;
 }
 
 .simul_callimg {
-  background-color: #F94646;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-color: #f94646;
+  cursor: pointer;
 }
