@@ -17,7 +17,7 @@ import Calloff from "img/calloff2.png";
 import UpdataModal from "components/common/UpdataModal";
 
 // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
+const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
 
 export default function WaitingRoom() {
@@ -38,6 +38,7 @@ export default function WaitingRoom() {
   const [userType, setUserType] = useState(location.state.userType);
   const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
+  const [update, setUpdate] = useState(0);
 
   const [seq, setSeq] = useState<number>(location.state.seq);
   const [title, setTitle] = useState<string>(location.state.title);
@@ -48,7 +49,6 @@ export default function WaitingRoom() {
     location.state.participant
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
-  const [update, setUpdate] = useState<number>(0);
 
   // OpenVIdu용 변수
   const [session, setSession] = useState<any>(null);

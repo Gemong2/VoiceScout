@@ -11,7 +11,7 @@ import Loans from "img/type_loans.png";
 
 interface modal_type {
   setIsModal: Dispatch<boolean>;
-  setUpdate: Dispatch<number>;
+  setUpdate: Dispatch<React.SetStateAction<number>>;
   seqInput: number;
   titleInput: string;
   lockedInput: boolean;
