@@ -48,7 +48,7 @@ export default function WaitingRoom() {
     location.state.participant
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
-  const [update, setUpdate] = useState<boolean>(false);
+  const [update, setUpdate] = useState<number>(0);
 
   // OpenVIdu용 변수
   const [session, setSession] = useState<any>(null);
@@ -187,13 +187,18 @@ export default function WaitingRoom() {
   };
 
   // 방 정보 변경시 방에있는 사람 모두 새로고침
-  useEffect(() => {
+  const updateRoom = () => {
     stompClient.send(
       "/ai",
       {},
       JSON.stringify({ message: "update-room", link: link })
     );
-  }, [update]);
+  };
+
+  if (update === 1) {
+    updateRoom();
+    setUpdate(0);
+  }
 
   // OpenVidu 셋팅
 
@@ -242,6 +247,7 @@ export default function WaitingRoom() {
               className={style.setting_btn}
               onClick={() => {
                 setIsModal(true);
+                setUpdate(0);
               }}
             >
               설정
