@@ -17,3 +17,6 @@ RUN pip install -r requirements.txt
 
 # 프로젝트 파일들을 이미지에 복사
 COPY . /app/
+
+# Django 애플리케이션 실행
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
