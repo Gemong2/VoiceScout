@@ -40,7 +40,7 @@ export default function WaitingRoom() {
   const [userType, setUserType] = useState(location.state.userType);
   const [getReady, setGetReady] = useState(false);
   const [isModal, setIsModal] = useState(false);
-  const [update, setUpdate] = useState(0);
+  const [update, setUpdate] = useState<number>(0);
   const [time, setTime] = useState(0);
 
   const [seq, setSeq] = useState<number>(location.state.seq);
@@ -348,7 +348,14 @@ export default function WaitingRoom() {
             </div>
           </div>
           <div className={style.simul_calloff}>
-            <img className={style.simul_callimg} src={Calloff} alt="" />
+            <img
+              className={style.simul_callimg}
+              src={Calloff}
+              alt=""
+              onClick={() => {
+                getOut();
+              }}
+            />
           </div>
         </div>
       )}
