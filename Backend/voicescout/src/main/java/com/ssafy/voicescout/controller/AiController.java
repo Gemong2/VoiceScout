@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AiController {
   private final SimpMessagingTemplate simpMessagingTemplate;
   private final AiServiceImpl aiService;
+  private static String OUT_KEY = "get-out";
 
-  //    채팅
   @MessageMapping("/ai")
   //@SendTo("topic") 구독자들에게 보내기
   public void sendAi(@RequestBody InteractionDto interactionDto, SimpMessageHeaderAccessor accessor) {
@@ -31,20 +31,14 @@ public class AiController {
     AiReqDto aiReqDto = AiReqDto.builder()
         .msg(interactionDto.getMessage())
         .build();
-    AiResDto aiResDto = aiService.checkMessage(aiReqDto);
-    log.info("[sendAi] : predition 수신 성공, predition : {}", aiResDto.getPrediction());
-//    simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), interactionDto);
-//    simpMessagingTemplate.convertAndSend("/ai/" + interactionReqDto.getChannelId(), interactionReqDto);
-//    simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
-  }
-
-  @PostMapping("/testAi")
-  public ResponseEntity<Integer> testAi(@RequestBody AiReqDto msg) {
-    // Process the GET request as needed
-
-    // Return a response with some JSON data
-    AiResDto result = aiService.checkMessage(msg);
-    log.info("[testAi] : 테스트 완료, result : {}", result);
-    return new ResponseEntity<>(result.getPrediction(), HttpStatus.OK);
+    if(OUT_KEY.equals(aiReqDto.getMsg())) {
+      AiResDto aiResDto = AiResDto.builder().prediction(2).build();
+      log.info("[sendAi] : 방삭제 수신, predition : {}", aiResDto.getPrediction());
+      simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), aiResDto);
+    } else {
+      AiResDto aiResDto = aiService.checkMessage(aiReqDto);
+      log.info("[sendAi] : predition 수신 성공, predition : {}", aiResDto.getPrediction());
+      simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), aiResDto);
+    }
   }
 }
