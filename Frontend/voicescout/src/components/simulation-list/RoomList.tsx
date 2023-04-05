@@ -12,7 +12,6 @@ import Refresh from "img/refresh.png";
 import Question from "img/question.png";
 import Lock from "img/lock.png";
 import UnLock from "img/unlock.png";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 export default function RoomList() {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -172,19 +171,7 @@ export default function RoomList() {
               방 만들기
             </button>
           </div>
-          {isModal && (
-            <CreateModal
-              seqInput={-1}
-              setIsModal={setIsModal}
-              titleInput=""
-              lockedInput={false}
-              passwordInput=""
-              typeIdInput={0}
-              participantInput={0}
-              linkInput={""}
-              createInput={true}
-            />
-          )}
+          {isModal && <CreateModal setIsModal={setIsModal} />}
         </div>
       </div>
     </>

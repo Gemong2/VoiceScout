@@ -11,32 +11,52 @@ import Loans from "img/type_loans.png";
 
 interface modal_type {
   setIsModal: Dispatch<boolean>;
+  seqInput: number;
+  titleInput: string;
+  lockedInput: boolean;
+  passwordInput: string | undefined;
+  typeIdInput: number;
+  participantInput: number;
+  linkInput: string;
 }
 
-export default function CreateModal({ setIsModal }: modal_type) {
+export default function UpdataModal({
+  setIsModal,
+  seqInput,
+  titleInput,
+  lockedInput,
+  passwordInput,
+  typeIdInput,
+  participantInput,
+  linkInput,
+}: modal_type) {
   const navigate = useNavigate();
-  const roomLink = uuidv4();
 
-  const [title, setTitle] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [typeId, setType] = useState<number>(0);
-  const [locked, setLocked] = useState<boolean>(false);
+  const [seq, setSeq] = useState<number>(seqInput);
+  const [title, setTitle] = useState<string>(titleInput);
+  const [password, setPassword] = useState<string | undefined>(passwordInput);
+  const [typeId, setTypeId] = useState<number>(typeIdInput);
+  const [link, setLink] = useState<string>(linkInput);
+  const [participant, setParticipant] = useState<number>(participantInput);
+  const [locked, setLocked] = useState<boolean>(lockedInput);
 
-  interface newData_type {
+  interface updateData_type {
+    seq: number;
     title: string;
-    password: string;
+    password: string | undefined;
     typeId: number;
-    link: string;
     participant: number;
+    link: string | undefined;
     locked: boolean;
   }
 
-  const newData: newData_type = {
+  const updateData: updateData_type = {
+    seq: seq,
     title: title,
     password: password,
     typeId: typeId,
-    link: roomLink,
-    participant: 1,
+    participant: participant,
+    link: link,
     locked: locked,
   };
 
@@ -47,34 +67,22 @@ export default function CreateModal({ setIsModal }: modal_type) {
     setPassword(e.target.value);
   };
 
-  const res_post = () => $.post(`/rooms`, newData);
-  const { mutate: onCreate } = useMutation(res_post, {
-    onSuccess: (data) => {
-      // 방 생성관련 API 통신 성공 시 해당 방에 대한 데이터를 불러와서
-      //navigate를 통해 state 데이터 전송하는 코드
-      navigate(`/simulation-room/${data.data.link}`, {
-        state: {
-          seq: data.data.seq,
-          title: data.data.title,
-          password: data.data.password,
-          typeId: data.data.typeId,
-          link: data.data.link,
-          participant: data.data.participant,
-          locked: data.data.locked,
-          userType: 0,
-        },
-      });
-      window.location.replace(`/simulation-room/${data.data.link}`);
-    },
+  // 방 수정 시 사용되는 API 함수
+  const res_put = () => {
+    return $.put(`/rooms`, updateData);
+  };
 
-    onError: (err) => {
+  const { mutate: onChange } = useMutation(res_put, {
+    onSuccess: () => {
+      window.location.replace(`/simulation-room/${updateData.link}`);
+    },
+    onError: () => {
       Swal.fire({
         icon: "error",
         title: "",
         text: "실패했습니다.",
         confirmButtonText: "닫기",
       });
-      console.log(err);
     },
   });
 
@@ -101,12 +109,12 @@ export default function CreateModal({ setIsModal }: modal_type) {
       alert("방의 유형을 선택해야 합니다.");
       return;
     }
-    onCreate();
+    onChange();
   };
 
   return (
     <div className={style.container}>
-      <div className={style.modal_header}>방 설정 변경</div>
+      <div className={style.modal_header}>방 만들기</div>
       <div className={style.modal_contents}>
         <div className={style.title}>
           <input
@@ -153,7 +161,7 @@ export default function CreateModal({ setIsModal }: modal_type) {
               className={typeId === 0 ? style.img_selected : style.img}
               src={Loans}
               alt=""
-              onClick={() => setType(0)}
+              onClick={() => setTypeId(0)}
             />
             <p>대출 사칭형</p>
           </div>
@@ -162,7 +170,7 @@ export default function CreateModal({ setIsModal }: modal_type) {
               className={typeId === 1 ? style.img_selected : style.img}
               src={Agency}
               alt=""
-              onClick={() => setType(1)}
+              onClick={() => setTypeId(1)}
             />
             <p>기관 사칭형</p>
           </div>
@@ -171,7 +179,7 @@ export default function CreateModal({ setIsModal }: modal_type) {
               className={typeId === 2 ? style.img_selected : style.img}
               src={Acquaintance}
               alt=""
-              onClick={() => setType(2)}
+              onClick={() => setTypeId(2)}
             />
             <p>지인 사칭형</p>
           </div>
@@ -183,7 +191,7 @@ export default function CreateModal({ setIsModal }: modal_type) {
               setIsModal(false);
             }}
           >
-            생성
+            확인
           </button>
           <button
             onClick={() => {
