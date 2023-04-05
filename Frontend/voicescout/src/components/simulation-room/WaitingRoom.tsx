@@ -5,6 +5,7 @@ import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import { OpenVidu } from "openvidu-browser";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
@@ -43,6 +44,10 @@ export default function WaitingRoom() {
     location.state.participant
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
+
+  // OpenVIdu용 변수
+  const [session, setSession] = useState<any>(null);
+  const [publisher, setPublisher] = useState<any>(null);
 
   const info = [
     {
@@ -102,21 +107,26 @@ export default function WaitingRoom() {
     },
   });
 
-  const cntCheck = () => {
-    if (userType === 0) {
-      onDelete();
-    } else {
-      setParticipant(participant - 1);
-      navigate(`/simulation-list/`);
-    }
+  const res_put = () => {
+    return $.put(`/rooms`, datas);
   };
 
+  // 방에 남아있는 사람 0명이면 자동으로 방 삭제
+  const { mutate: onChange } = useMutation(res_put, {
+    onSuccess: (data) => {
+      if (data.data.participant === 0) {
+        onDelete();
+      } else navigate(`/simulation-list/`);
+    },
+  });
+
+  // 웹소켓와 음성인식 이벤트
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-    const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
+    const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+    // const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
@@ -153,13 +163,15 @@ export default function WaitingRoom() {
     recognitionRef.current = recognition;
 
     return () => {
-      recognition.stop();
       stompClient.disconnect(() => {
         console.log("Disconnected from WebSocket server");
       });
     };
   }, []);
 
+  // OpenVidu 셋팅
+
+  // GET요청 성공 시 데이터 로드
   useEffect(() => {
     if (isLoading) return;
     refetch();
@@ -219,7 +231,8 @@ export default function WaitingRoom() {
             <button
               className={style.out_btn}
               onClick={() => {
-                cntCheck();
+                setParticipant(participant - 1);
+                onChange();
               }}
             >
               나가기
@@ -250,7 +263,14 @@ export default function WaitingRoom() {
               <img className={style.simul_role} src={Criminal} alt="" />
             </div>
             <div className={style.simul_calloff}>
-              <img className={style.simul_callimg} src={Calloff} alt="" />
+              <img
+                className={style.simul_callimg}
+                src={Calloff}
+                alt=""
+                onClick={() => {
+                  navigate(`/simulation-list/`);
+                }}
+              />
             </div>
           </div>
         </>
