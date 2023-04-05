@@ -18,5 +18,8 @@ RUN pip install -r requirements.txt
 # 프로젝트 파일들을 이미지에 복사
 COPY . /app/
 
+# manage.py 파일 권한 변경
+RUN chmod +x /app/manage.py
+
 # Django 애플리케이션 실행
 CMD ["/app/manage.py", "runserver", "0.0.0.0:8000"]
