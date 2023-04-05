@@ -16,8 +16,8 @@ import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
 import UpdataModal from "components/common/UpdataModal";
 
-const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-// const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
+// const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+const socket = new SockJS(`https://j8a404.p.ssafy.io/webSocket`);
 const stompClient = Stomp.over(socket);
 
 export default function WaitingRoom() {
