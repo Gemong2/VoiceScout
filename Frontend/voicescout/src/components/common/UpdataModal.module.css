@@ -1,0 +1,147 @@
+.container {
+  width: auto;
+  height: auto;
+  border: 3px solid #ffac00;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+}
+
+.modal_header {
+  width: 100%;
+  height: 50px;
+  border-bottom: solid #ffac00;
+  border-radius: 8px 8px 0px 0px;
+  background-color: #ffda00;
+  font-family: "Pretendard-Bold";
+  font-size: 1.5em;
+  padding-left: 20px;
+  padding-top: 1vh;
+}
+
+.modal_contents {
+  text-align: center;
+}
+
+.title {
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.title input {
+  width: 100%;
+  height: 50px;
+  border: 2px solid #ffac00;
+  border-radius: 10px;
+  background-color: #ffda00;
+  font-family: "Pretendard-Bold";
+  font-size: 1.5em;
+  margin-top: 3vh;
+  padding-left: 20px;
+}
+
+.title input::placeholder {
+  color: #ffffffa6;
+}
+
+.title_check {
+  color: #000000;
+  text-align: left;
+  font-family: "Pretendard-Light";
+  font-size: 0.8em;
+}
+
+.passwd_grid {
+  display: grid;
+  grid-template-columns: 47% 3% 10% 25%;
+  text-align: left;
+  align-items: center;
+  margin-top: 1vh;
+}
+
+.passwd_check {
+  color: #000000;
+  text-align: left;
+  font-family: "Pretendard-Light";
+  font-size: 0.8em;
+}
+
+.locked {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #f8d99b;
+  border-radius: 10px;
+  background-color: #fbefa9d4;
+  font-family: "Pretendard-Bold";
+  font-size: 1.1em;
+  padding-left: 20px;
+}
+
+.unlocked {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #f8d99b;
+  border-radius: 10px;
+  background-color: #ffda00;
+  font-family: "Pretendard-Bold";
+  font-size: 1.1em;
+  padding-left: 20px;
+}
+
+.passwd_grid p {
+  font-family: "Pretendard-Bold";
+}
+
+input[type="password"]::placeholder {
+  color: #ffffffa6;
+}
+
+.room_type {
+  display: flex;
+  justify-content: center;
+  margin-top: 2vh;
+}
+
+.img_selected {
+  width: 250px;
+  height: 170px;
+  border: 0.5px solid #000000;
+  border-radius: 10px;
+  background-color: #ffe600;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.img {
+  width: 250px;
+  height: 170px;
+  border: 0.5px solid #000000;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.btn_div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3vh;
+}
+
+.btn_div button {
+  width: 13%;
+  height: 30px;
+  border: 2px solid #ffac00;
+  border-radius: 10px;
+  background-color: #ffda00;
+  font-family: "Pretendard-Bold";
+  font-size: 1.2em;
+  margin-left: 5vh;
+  margin-right: 5vh;
+  color: #ffffff;
+  padding-bottom: 5px;
+}
