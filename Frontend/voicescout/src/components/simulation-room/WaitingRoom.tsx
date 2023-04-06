@@ -39,11 +39,12 @@ const Button = styled.button<ButtonProps>`
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 180px;
   border-radius: 10px;
   border: none;
-  margin-right: 10px;
+  margin-left: 42px;
+  text-align: center;
   cursor: pointer;
   color: ${props => props.color};
   font-size: 18px;
@@ -82,6 +83,11 @@ export default function WaitingRoom() {
     location.state.participant
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
+
+  // 역할 선택 버튼  
+  const [myButtonState, setMyButtonState] = useState<ButtonState>(0);
+  const [opponentButtonState, setOpponentButtonState] = useState<ButtonState>(0);
+
 
   // OpenVIdu용 변수
   const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
@@ -255,6 +261,39 @@ export default function WaitingRoom() {
     }`;
   };
 
+
+  //역할 버튼 선택시 이벤트
+  const handleButtonClick = (buttonId: ButtonState) => {
+    if (myButtonState === 0) {
+      setMyButtonState(buttonId);
+      stompClient.send("/button", {}, JSON.stringify({ buttonId: buttonId }));
+      
+      if (opponentButtonState === buttonId) {
+        alert("다른 사용자가 이미 해당 역할을 선택했습니다.");
+        setOpponentButtonState(0);
+        stompClient.send("/button", {}, JSON.stringify({ buttonId: 0 }));
+      }
+    } else if (myButtonState === buttonId) {
+      setMyButtonState(0);
+      stompClient.send("/button", {}, JSON.stringify({ buttonId: 0 }));
+    } else {
+      setMyButtonState(buttonId);
+      stompClient.send("/button", {}, JSON.stringify({ buttonId: buttonId }));
+      
+    }
+  };
+
+  // 소켓에서 보이스피싱 알람ㅇ르 주는 것
+
+  // socket.addEventListener("message",(event) => {
+  //   const data = JSON.parse(event.data);
+  //   const { variable } = data; // 변수값 읽기
+
+  //   if (variable>=10){
+  //     alert("보이스 피싱 위험")
+  //   }
+  // })
+
   // OpenVidu 셋팅
 
   //OpenVidu에서 얻은 세션, 토큰
@@ -345,32 +384,10 @@ export default function WaitingRoom() {
     };
   }, [getReady]);
 
-  const [myButtonState, setMyButtonState] = useState<ButtonState>(0);
-  const [opponentButtonState, setOpponentButtonState] = useState<ButtonState>(0);
-
-  const handleButtonClick = (buttonId: ButtonState) => {
-    if (myButtonState === 0) {
-      setMyButtonState(buttonId);
-      stompClient.send("/button", {}, JSON.stringify({ buttonId: buttonId }));
-      
-      if (opponentButtonState === buttonId) {
-        alert("다른 사용자가 이미 해당 역할을 선택했습니다.");
-        setOpponentButtonState(0);
-        stompClient.send("/button", {}, JSON.stringify({ buttonId: 0 }));
-      }
-    } else if (myButtonState === buttonId) {
-      setMyButtonState(0);
-      stompClient.send("/button", {}, JSON.stringify({ buttonId: 0 }));
-    } else {
-      setMyButtonState(buttonId);
-      stompClient.send("/button", {}, JSON.stringify({ buttonId: buttonId }));
-      
-    }
-  };
-
   return (
     <>
       {!getReady && !isLoading && (
+        <div className={style.ready_container}>
         <div className={style.container}>
           <div className={style.inner_container}>
             <div className={style.header}>{title}</div>
@@ -464,6 +481,7 @@ export default function WaitingRoom() {
             </div>
           </div>
         </div>
+      </div>
       )}
       {getReady && (myButtonState === 1) &&(
         <div className={style.simul_container}>
@@ -532,6 +550,17 @@ export default function WaitingRoom() {
                 피해자
               </div>
               <div className={style.simul_timer}>{formatTime(time)}</div>
+            </div>
+          </div>
+          <div className={style.script}>
+          <div className={style.victim_script}>
+            <div className={style.victim_scripttext}>
+            {info[typeId].type === "대출 사칭형"
+              ? "서울중앙지방검찰청 첨단범죄 수사팀 팀장을 맡고 있는 김정수 검사입니다. 대포통장 관련 수사 과정에서 금융사기단을 검거하여 조사중인데, 본인 명의 계좌가 범죄에 이용되고 있습니다. 계좌번호 00-0-0 맞으시죠? 금융사기단과 공범인지 아닌지 확인해야 합니다. 공동 불법행위자로서 손해 배상 책임이 있기 때문에 본인이 연루되지 않았다는 사실을 증명해주셔야 합니다. 금융감독원에서 확인 전화가 갈 예정입니다. 동의하십니까?"
+              : info[typeId].type === "기관 사칭형"
+              ? "안녕하세요. KB국민은행입니다."
+              : "엄마 나야."}
+              </div>
             </div>
           </div>
           <div className={style.simul_calloff}>

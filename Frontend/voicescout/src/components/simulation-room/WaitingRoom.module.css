@@ -3,7 +3,8 @@ button {
 }
 
 /** 통화 시작 전 레이아웃 css*/
-/* .container {
+
+.ready_container {
   max-width: 2000px;
   height: 100vh;
   margin-left: 0 auto;
@@ -11,12 +12,18 @@ button {
   font-size: 1em;
   background-color: #ececec;
 }
-.inner_container {
-  margin-left: 0;
-  margin-right: 0;
-  max-width: 1000px;
+.container {
+  margin: 0 auto;
+  max-width: 90vw;
   height: 70vh;
-} */
+  padding: 0 auto;
+}
+
+
+.inner_container {
+  justify-content: center;
+  padding: 0 auto;
+}
 
 .header {
   padding-top: 5vh;
@@ -73,7 +80,10 @@ button {
 
 .information {
   display: flex;
+  height: 30vh;
   margin-top: 5vh;
+  margin-right:0 auto;
+  align-items: center;
 }
 
 .blank {
@@ -81,8 +91,8 @@ button {
 }
 
 .information_button {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 20px;
   margin-left: 3vh;
   margin-right: 3vh;
@@ -94,6 +104,7 @@ button {
 .subrole_position {
   position: absolute;
   width: 100px;
+  top: -9vh;
   font-size: 2em;
   font-style: italic;
   z-index: 1;
@@ -102,7 +113,7 @@ button {
 .mainrole_position {
   position: absolute;
   left: 2vh;
-  top: 3vh;
+  top: -6vh;
   z-index: 0;
   width: 100px;
   font-size: 2em;
@@ -284,4 +295,30 @@ button {
   margin-bottom: 2%;
   background-color: #f94646;
   cursor: pointer;
+}
+
+/* script div */
+
+.script {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.victim_script {
+  width:60vw;
+  background-color: #fff;
+  border-radius: 20px;
+  height: 50vh;
+  text-align: center;
+  margin: 1%;
+  padding: 3%;
+}
+
+.victim_scripttext {
+  align-items: center;
+  font-family:"Pretendard-Regular";
+  letter-spacing: 2px;
+  line-height: 200%;
+  overflow-y: auto;
 }
