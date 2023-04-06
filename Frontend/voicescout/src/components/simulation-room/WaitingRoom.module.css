@@ -15,6 +15,8 @@ button:disabled {
   margin-right: 0 auto;
   font-size: 1em;
   background-color: #ececec;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 .container {
   margin: 0 auto;
@@ -85,7 +87,8 @@ button:disabled {
   display: flex;
   height: 30vh;
   margin-top: 5vh;
-  margin-right: 0 auto;
+  justify-content: center;
+  margin-left: -20%;
   align-items: center;
 }
 
@@ -94,11 +97,9 @@ button:disabled {
 }
 
 .information_button {
-  width: 200px;
-  height: 200px;
   border-radius: 20px;
-  margin-left: 3vh;
-  margin-right: 3vh;
+  margin-left: 2%;
+  margin-right: 3%;
 }
 
 .roles {
@@ -108,6 +109,7 @@ button:disabled {
 .subrole_position {
   position: absolute;
   width: 100px;
+  top: -11vh;
   font-size: 2em;
   font-style: italic;
   z-index: 1;
@@ -116,7 +118,7 @@ button:disabled {
 .mainrole_position {
   position: absolute;
   left: 2vh;
-  top: -6vh;
+  top: -8vh;
   z-index: 0;
   width: 100px;
   font-size: 2em;
@@ -192,9 +194,10 @@ button:disabled {
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
-  width: 100vw;
   height: 100vh;
   flex-direction: column;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 .simul_typerole {
   text-align: center;
@@ -316,13 +319,14 @@ button:disabled {
   height: 50vh;
   text-align: center;
   margin: 1%;
-  padding: 3%;
+  padding: 1%;
 }
 
 .victim_scripttext {
-  align-items: center;
+  margin: 1%;
+  text-align: justify;
   font-family: "Pretendard-Regular";
-  letter-spacing: 2px;
   line-height: 200%;
+  height: 45vh;
   overflow-y: auto;
 }
