@@ -15,6 +15,8 @@ button:disabled {
   margin-right: 0 auto;
   font-size: 1em;
   background-color: #ececec;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 .container {
   margin: 0 auto;
