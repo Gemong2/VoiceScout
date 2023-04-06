@@ -32,6 +32,7 @@
   border-radius: 5px;
   padding-top: 20px;
   padding-bottom: 20px;
+  min-height: 460px;
   max-height: 460px;
   overflow-y: auto;
 }

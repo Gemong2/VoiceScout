@@ -8,8 +8,8 @@ import h5py
 @csrf_exempt
 def classification(request):
     # Load the saved model
-    # model = keras.models.load_model('cer01.h5')
-    with h5py.File('cer01.h5', 'r') as f:
+    # model = keras.models.load_model('cer03.h5')
+    with h5py.File('cer03.h5', 'r') as f:
         model = keras.models.load_model(f)
     # print('-------------------------------------------------pass 01')
 
