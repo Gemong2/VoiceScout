@@ -12,8 +12,11 @@ import Refresh from "img/refresh.png";
 import Question from "img/question.png";
 import Lock from "img/lock.png";
 import UnLock from "img/unlock.png";
+import { v4 as uuidv4 } from "uuid";
 
 export default function RoomList() {
+  // 토큰 생성
+  sessionStorage.setItem("access-token", uuidv4());
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const info = [

@@ -24,7 +24,6 @@ import { v4 as uuidv4 } from "uuid";
 // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
 const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
-
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
     ["Room"],
@@ -323,7 +322,18 @@ export default function WaitingRoom() {
           <div className={style.container}>
             <div className={style.inner_container}>
               <div className={style.header}>{title}</div>
-              <div className={style.header_guide}>역할을 선택하십시오</div>
+              <div className={style.header_guide}>
+                <div>역할을 선택하십시오</div>
+                <div className={style.video}>
+                  <VideoCam
+                    isVideo={false}
+                    isMic={isMic}
+                    isIn={isIn}
+                    sessionId={link}
+                    name={uuidv4()}
+                  />
+                </div>
+              </div>
               <div className={style.contents}>
                 <img
                   className={style.contents_first}
@@ -534,13 +544,6 @@ export default function WaitingRoom() {
           lockedInput={locked}
         />
       )}
-      <VideoCam
-        isVideo={false}
-        isMic={isMic}
-        isIn={isIn}
-        sessionId={link}
-        name={uuidv4()}
-      />
     </>
   );
 }

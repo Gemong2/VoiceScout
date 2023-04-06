@@ -40,6 +40,7 @@ button:disabled {
   font-family: "Pretendard-Regular";
   font-size: 1.3em;
   color: #959595;
+  display: flex;
 }
 
 .contents {
@@ -133,6 +134,7 @@ button:disabled {
 .sub_role {
   z-index: 0;
   font-family: "Pretendard-ExtraBold";
+  top: -9vh;
   color: #d9d9d9;
   transition: 0.5s;
 }
@@ -325,4 +327,9 @@ button:disabled {
   letter-spacing: 2px;
   line-height: 200%;
   overflow-y: auto;
+}
+
+.video {
+  width: 20px;
+  height: 20px;
 }
