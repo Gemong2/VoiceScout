@@ -45,9 +45,9 @@
 - [시연연상](#시연연상)
 - [서비스 소개](#📼-서비스-소개)
   - [1. 메인페이지](#1-메인페이지)
-  - [2. 상담신청](#2-상담신청)
-  - [3. 화상상담](#3-화상상담)
-  - [4. 환자 회원가입](#4-환자-회원가입)
+  - [2. 범죄수단 소개 및 예방 안내](#2-범죄수단-소개-및-예방-안내)
+  - [3. 통화체험실](#3-통화체험실)
+  - [4. O/X 퀴즈](#4-O/X-퀴즈)
 
 - [저자](#-저자)
 
@@ -133,49 +133,49 @@
 
 ```
    events {
+    worker_connections  1024;
+}
 
-		}
 
-		http {
-		        client_max_body_size 50M;
+http {
+    include       /etc/nginx/mime.types;
 
-		        include mime.types;
+    upstream front {
+        server front-app:9443;
+    }
 
-		        upstream front {
-		                server front-app:9443;
-		        }
-		        upstream back {
-		                server back-app:4433;
-		        }
+    upstream back {
+        server back-app:4433;
+    }
 
-		        server {
-		                listen 80;
+    server {
+        listen 80;
 
-		                location /.well-known/acme-challenge/ {
-		                        root /var/www/certbot;
-		                }
-		                location / {
-		                        return 301 https://$host$request_uri;
-		                }
+        location /.well-known/acme-challenge/ {
+                root /var/www/certbot;
+        }
 
-		        }
+        location / {
+                return 301 https://$host$request_uri;
+        }
+    }
 
-		        server {
-		                listen 443 ssl;
+    server {
+        listen 443 ssl;
+        server_name j8a404.p.ssafy.io;
 
-		                ssl_certificate /etc/letsencrypt/live/i8a304.p.ssafy.io/fullchain.pem;
-		                ssl_certificate_key /etc/letsencrypt/live/i8a304.p.ssafy.io/privkey.pem;
-		                include /etc/letsencrypt/options-ssl-nginx.conf;
-		                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+        ssl_certificate /etc/letsencrypt/live/j8a404.p.ssafy.io/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/j8a404.p.ssafy.io/privkey.pem;
 
-		                location / {
-		                        proxy_pass https://front;
-		                }
-		                location /api {
-		                        proxy_pass https://back;
-		                }
-		        }
-		}
+        location / {
+                proxy_pass https://front;
+        }
+
+        location /api {
+                proxy_pass https://back;
+        }
+    }
+}
 ```
 
 4. JDK 설치 (환경변수 설정)
@@ -290,7 +290,7 @@
 - **[통화방 생성] :**  사기범, 피해자 역할을 정하고 범죄유형을 선택하여 방을 생성합니다. 범죄유형에 따라 대본이 주어지고, 통화방에서 나누는 대화는 STT API를 통해 서버로 전송됩니다. 
 - **[보이스피싱 알림] :**  AI 이진분류 모델을 통해 보이스피싱 여부를 판단하고, 판단여부를 피해자에게 전달합니다. 
 
-### 4. O/X 퀴즈 기능 
+### 4. O/X 퀴즈
 
 <!-- <img src="./exec/Docs/gif/consult.gif" width=450> -->
 
