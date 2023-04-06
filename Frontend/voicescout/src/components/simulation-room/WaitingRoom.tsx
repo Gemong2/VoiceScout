@@ -22,8 +22,8 @@ import UpdataModal from "components/common/UpdataModal";
 import VideoCam from "./WebRTC/VideoCam";
 import { v4 as uuidv4 } from "uuid";
 
-// const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
+const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+// const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
 
 type ButtonProps = {
@@ -164,19 +164,18 @@ export default function WaitingRoom() {
   const { mutate: onChange } = useMutation(res_put);
 
   // 웹소켓과 음성인식 이벤트
-  let count = 0;
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
-
+      let count = 0;
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
         const newMsg = JSON.parse(data.body);
-        console.log(newMsg.prediction, getReady);
-        if (newMsg.prediction === 1 && getReady) {
+        console.log(count, getReady);
+        if (newMsg.prediction === 1) {
           count += 1;
           if (count >= 5) {
             console.log("보이스피싱입니다.");
@@ -188,20 +187,7 @@ export default function WaitingRoom() {
         } else if (newMsg.prediction === 3) {
           window.location.replace(`/simulation-room/${link}`);
         } else if (newMsg.prediction === 4) {
-          console.log(myButtonState, opponentButtonState);
-          if (myButtonState === 0 && opponentButtonState === 0)
-            setGetReady(true);
-          else {
-            if (userType === 0) {
-              Swal.fire({
-                icon: "error",
-                title: "",
-                text: "모든 인원의 역할이 확정되어야 합니다.",
-                confirmButtonText: "닫기",
-              });
-              return;
-            }
-          }
+          setGetReady(true);
         }
       });
 
@@ -213,15 +199,18 @@ export default function WaitingRoom() {
           if (Msg.userType === userType) {
             console.log("내버튼");
             setMyButtonState(Msg.button);
+            console.log(myButtonState);
           } else {
             console.log("니버튼");
             setOpponentButtonState(Msg.button);
+            console.log(setOpponentButtonState);
           }
 
           // 범인 역할 설정
           if (Msg.button === 2) {
             setIsCriminal(Msg.userType);
           }
+          console.log(myButtonState, setOpponentButtonState);
         }
       });
     });
@@ -283,11 +272,23 @@ export default function WaitingRoom() {
 
   // 시작 누르면 같이 시작하는 함수
   const startCall = () => {
-    stompClient.send(
-      "/ai",
-      {},
-      JSON.stringify({ message: "start-call", link: link, button: 3 })
-    );
+    if (myButtonState !== 0 && opponentButtonState !== 0)
+      stompClient.send(
+        "/ai",
+        {},
+        JSON.stringify({ message: "start-call", link: link, button: 3 })
+      );
+    else {
+      if (userType === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "",
+          text: "모든 인원의 역할이 확정되어야 합니다.",
+          confirmButtonText: "닫기",
+        });
+        return;
+      }
+    }
   };
 
   if (update === 1) {
@@ -351,6 +352,10 @@ export default function WaitingRoom() {
     };
   }, [getReady]);
 
+  const check = () => {
+    console.log(myButtonState, opponentButtonState);
+  };
+
   return (
     <>
       <div className={style.video}>
@@ -375,7 +380,13 @@ export default function WaitingRoom() {
                   alt=""
                 />
                 <div className={style.contents_second}>
-                  <p>{info[typeId].type}</p>
+                  <p
+                    onClick={() => {
+                      check();
+                    }}
+                  >
+                    {info[typeId].type}
+                  </p>
                   <div className={style.locked}>
                     {locked ? <span>비공개</span> : <span>공개</span>}
                   </div>
