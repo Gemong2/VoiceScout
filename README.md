@@ -5,7 +5,7 @@
 # AI 음성인식을 통한 보이스피싱 예방 프로젝트
 <!-- # <center>🏃‍♂️ VoiceScout 🏃‍♀️</center> -->
 
-![Github](https://img.shields.io/badge/react-18.2.0-%234FC08D?style=plastic&logo=React)![Github](https://img.shields.io/badge/spring_boot-2.7.6-%236DB33F?style=plastic&logo=Spring)![Github](https://img.shields.io/badge/django-18.2.0-%234FC08D?style=plastic&logo=django)
+![Github](https://img.shields.io/badge/react-18.2.0-%234FC08D?style=plastic&logo=React)![Github](https://img.shields.io/badge/spring_boot-2.7.6-%236DB33F?style=plastic&logo=Spring)![Github](https://img.shields.io/badge/django-4.1.7-%234FC08D?style=plastic&logo=django)
 ![Github](https://img.shields.io/badge/MySQL-8.0.31-%234479A1?style=plastic&logo=mysql)
 - ### 프로젝트 개요
 
@@ -19,7 +19,7 @@
 
     > -  통화방을 생성하고 사기범, 피해자로 역할을 나누어 통화를 진행합니다.
     > -  보이스피싱 범죄 유형에 따라 대본이 주어집니다.
-    > -  사기범의 음성데이터를 통해 보이스피싱 여부를 판단하고, 판단여부는 알림을 통해 확인할 수 있습니다 .
+    > -  사기범의 음성데이터를 통해 보이스피싱 의심여부를 판단하고, 판단여부는 알림을 통해 확인할 수 있습니다 .
 
   - **O/X 퀴즈**
 
@@ -205,6 +205,7 @@ http {
 - Npm 8.19.2
 - Spring boot 2.7.6
 - Gradle 7.6
+- Django 4.1.7
 - IDE: Visual Studio Code 1.48, IntelliJ IDEA 2022.3.1
 
 ## 🖥️ 사용된 기술
@@ -234,7 +235,7 @@ http {
 - **Nginx** : 요청 uri를 분기하고, 웹 서버 및 리버스 프록시 서버를 구축
 - **Openvidu** : openvidu에서 제공하는 docker container를 생성하고, WebRTC를 통해 통화방 기능 구현
 - **WebSocket** : 웹 상에서 쉽게 소켓 통신을 하게 해주는 라이브러리를 활용하여 음성텍스트 송신, 보이스피싱 알림 기능을 구현.
-
+- **Django** : 이진분류 AI모델을 통해 음성데이터를 이진분류하여 보이시피싱 의심여부를 반환
 **[ FRONT END ]**
 
 - **React** : 프로젝트 레이아웃 작성을 위한 front-end framework
@@ -288,7 +289,7 @@ http {
 <!-- <img src="./exec/Docs/gif/consult.gif" width=450> -->
 
 - **[통화방 생성] :**  사기범, 피해자 역할을 정하고 범죄유형을 선택하여 방을 생성합니다. 범죄유형에 따라 대본이 주어지고, 통화방에서 나누는 대화는 STT API를 통해 서버로 전송됩니다. 
-- **[보이스피싱 알림] :**  AI 이진분류 모델을 통해 보이스피싱 여부를 판단하고, 판단여부를 피해자에게 전달합니다. 
+- **[보이스피싱 알림] :**  AI 이진분류 모델을 통해 보이스피싱 의심여부를 판단하고, 판단여부를 피해자에게 전달합니다. 
 
 ### 4. O/X 퀴즈
 
