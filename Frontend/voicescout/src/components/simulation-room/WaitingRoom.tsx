@@ -175,18 +175,21 @@ export default function WaitingRoom() {
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
         const newMsg = JSON.parse(data.body);
+        console.log(newMsg.prediction, getReady);
         if (newMsg.prediction === 1 && getReady) {
           count += 1;
           if (count >= 5) {
             console.log("보이스피싱입니다.");
           }
         } else if (newMsg.prediction === 2) {
+          console.log("나가기");
           if (userType === 1) navigate(`/simulation-list/`);
           else onDelete();
         } else if (newMsg.prediction === 3) {
           window.location.replace(`/simulation-room/${link}`);
         } else if (newMsg.prediction === 4) {
-          if (myButtonState !== 0 && opponentButtonState !== 0)
+          console.log(myButtonState, opponentButtonState);
+          if (myButtonState === 0 && opponentButtonState === 0)
             setGetReady(true);
           else {
             if (userType === 0) {
@@ -203,18 +206,22 @@ export default function WaitingRoom() {
       });
 
       // 버튼 이벤트
-      stompClient.subscribe(`/button/${link}`, (data) => {
+      stompClient.subscribe(`/ai/${link}`, (data) => {
         const Msg = JSON.parse(data.body);
         // 버튼 누른사람이 본인일 경우
-        if (Msg.userType === userType) {
-          setMyButtonState(Msg.buttonId);
-        } else {
-          setOpponentButtonState(Msg.button);
-        }
+        if (Msg.button === 0 || Msg.button === 1 || Msg.button === 2) {
+          if (Msg.userType === userType) {
+            console.log("내버튼");
+            setMyButtonState(Msg.button);
+          } else {
+            console.log("니버튼");
+            setOpponentButtonState(Msg.button);
+          }
 
-        // 범인 역할 설정
-        if (Msg.buttonId === 2) {
-          setIsCriminal(Msg.userType);
+          // 범인 역할 설정
+          if (Msg.button === 2) {
+            setIsCriminal(Msg.userType);
+          }
         }
       });
     });
@@ -237,7 +244,7 @@ export default function WaitingRoom() {
             stompClient.send(
               "/ai",
               {},
-              JSON.stringify({ message: message, link: link })
+              JSON.stringify({ message: message, link: link, button: 3 })
             );
             return message;
           });
@@ -261,7 +268,7 @@ export default function WaitingRoom() {
     stompClient.send(
       "/ai",
       {},
-      JSON.stringify({ message: "get-out", link: link })
+      JSON.stringify({ message: "get-out", link: link, button: 3 })
     );
   };
 
@@ -270,7 +277,7 @@ export default function WaitingRoom() {
     stompClient.send(
       "/ai",
       {},
-      JSON.stringify({ message: "update-room", link: link })
+      JSON.stringify({ message: "update-room", link: link, button: 3 })
     );
   };
 
@@ -279,7 +286,7 @@ export default function WaitingRoom() {
     stompClient.send(
       "/ai",
       {},
-      JSON.stringify({ message: "start-call", link: link })
+      JSON.stringify({ message: "start-call", link: link, button: 3 })
     );
   };
 
@@ -301,31 +308,22 @@ export default function WaitingRoom() {
   const handleButtonClick = (buttonId: ButtonState) => {
     if (myButtonState === 0) {
       stompClient.send(
-        "/button",
+        "/ai",
         {},
         JSON.stringify({ button: buttonId, userType: userType, link: link })
       );
     } else if (myButtonState === buttonId) {
       stompClient.send(
-        "/button",
+        "/ai",
         {},
         JSON.stringify({ button: 0, userType: userType, link: link })
       );
     } else {
       stompClient.send(
-        "/button",
+        "/ai",
         {},
         JSON.stringify({ button: buttonId, userType: userType, link: link })
       );
-    }
-  };
-
-  //opponentbuttonstate update
-  const handleWebSocketMessage = (message: MessageEvent) => {
-    const data = JSON.parse(message.data);
-
-    if (data.userType !== userType) {
-      setOpponentButtonState(data.buttonId);
     }
   };
 
@@ -334,6 +332,7 @@ export default function WaitingRoom() {
     if (isLoading) return;
     refetch();
     init(data && data.data);
+    console.log(participant);
   }, [isLoading]);
 
   useEffect(() => {
