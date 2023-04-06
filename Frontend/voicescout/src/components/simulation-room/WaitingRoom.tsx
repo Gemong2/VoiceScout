@@ -18,13 +18,40 @@ import Headphonemute from "img/headphone.png";
 import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
 import UpdataModal from "components/common/UpdataModal";
+import styled from "styled-components";
 
 // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
 const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
 
 const OV = new OpenVidu();
+type ButtonState = 0 | 1 | 2;
 
+type ButtonProps = {
+  color: string;
+  selected: boolean;
+  opponentSelected: boolean;
+  backgroundImage: string;
+}
+
+const Button = styled.button<ButtonProps>`
+  background-image: ${props => `url(${props.backgroundImage})`};
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+  color: ${props => props.color};
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  opacity: ${props => (props.disabled ? '0.5' : '1')};
+  background-color: ${props => (props.selected ? '#f7b52c' : props.opponentSelected ? '#4287f5' : '#787878')};
+`;
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
     ["Room"],
@@ -126,6 +153,7 @@ export default function WaitingRoom() {
   const { mutate: onChange } = useMutation(res_put);
 
   // 웹소켓와 음성인식 이벤트
+
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -144,6 +172,7 @@ export default function WaitingRoom() {
         } else if (newMsg.prediction === 4) {
           setGetReady(true);
         }
+        
       });
     });
 
@@ -184,7 +213,7 @@ export default function WaitingRoom() {
       });
     };
   }, []);
-
+  
   // 방 나갈때 보내는 통신
   const getOut = () => {
     stompClient.send(
@@ -316,6 +345,29 @@ export default function WaitingRoom() {
     };
   }, [getReady]);
 
+  const [myButtonState, setMyButtonState] = useState<ButtonState>(0);
+  const [opponentButtonState, setOpponentButtonState] = useState<ButtonState>(0);
+
+  const handleButtonClick = (buttonId: ButtonState) => {
+    if (myButtonState === 0) {
+      setMyButtonState(buttonId);
+      stompClient.send("/button", {}, JSON.stringify({ buttonId: buttonId }));
+      
+      if (opponentButtonState === buttonId) {
+        alert("다른 사용자가 이미 해당 역할을 선택했습니다.");
+        setOpponentButtonState(0);
+        stompClient.send("/button", {}, JSON.stringify({ buttonId: 0 }));
+      }
+    } else if (myButtonState === buttonId) {
+      setMyButtonState(0);
+      stompClient.send("/button", {}, JSON.stringify({ buttonId: 0 }));
+    } else {
+      setMyButtonState(buttonId);
+      stompClient.send("/button", {}, JSON.stringify({ buttonId: buttonId }));
+      
+    }
+  };
+
   return (
     <>
       {!getReady && !isLoading && (
@@ -341,11 +393,35 @@ export default function WaitingRoom() {
             </div>
             <div className={style.information}>
               <div className={style.blank}></div>
-              <img className={style.my_img} src={Victim} alt="" />
-              <img className={style.your_img} src={Criminal} alt="" />
+              <Button className={style.information_button}
+                color="gray"
+                disabled={opponentButtonState === 1}
+                onClick={() => handleButtonClick(1)}
+                selected={myButtonState === 1}
+                backgroundImage={Victim}
+                opponentSelected={opponentButtonState === 1}
+              >
+              </Button>
+              <Button className={style.information_button}
+                color="gray"
+                disabled={opponentButtonState === 2}
+                onClick={() => handleButtonClick(2)}
+                selected={myButtonState === 2}
+                backgroundImage={Criminal}
+                opponentSelected={opponentButtonState === 2}
+              >
+              </Button> 
               <div className={style.roles}>
-                <div className={style.main_role}>피해자</div>
-                <div className={style.sub_role}>피싱범</div>
+                <div className={style.mainrole_position}>
+                  <div className={myButtonState === 1 ? style.main_role : myButtonState === 0 ? style.sub_role : style.sub_role}>
+                    피해자
+                  </div>
+                </div>
+                <div className={style.subrole_position}>
+                  <div className={myButtonState === 2 ? style.main_role : myButtonState === 0 ? style.sub_role : style.sub_role}>
+                    피싱범
+                  </div>
+                </div>
               </div>
               <div className={style.settings}>
                 <img src={mute ? Mic : MicMute} alt="" onClick={handleMute} />
@@ -389,7 +465,7 @@ export default function WaitingRoom() {
           </div>
         </div>
       )}
-      {getReady && (
+      {getReady && (myButtonState === 1) &&(
         <div className={style.simul_container}>
           <div className={style.simul_type}>
             <img
@@ -426,6 +502,36 @@ export default function WaitingRoom() {
                 <br />
                 소리 끔
               </div>
+            </div>
+          </div>
+          <div className={style.simul_calloff}>
+            <img
+              className={style.simul_callimg}
+              src={Calloff}
+              alt=""
+              onClick={() => {
+                getOut();
+              }}
+            />
+          </div>
+        </div>
+      )}
+      {getReady && (myButtonState === 2) &&(
+        <div className={style.simul_container}>
+          <div className={style.simul_type}>
+            <img
+              className={style.contents_first}
+              src={info[typeId].img}
+              alt=""
+            />
+            <p>{info[typeId].type}</p>
+          </div>
+          <div className={style.simul_typerole}>
+            <div className={style.simul_typecall}>
+              <div className={style.simul_call}>
+                피해자
+              </div>
+              <div className={style.simul_timer}>{formatTime(time)}</div>
             </div>
           </div>
           <div className={style.simul_calloff}>
