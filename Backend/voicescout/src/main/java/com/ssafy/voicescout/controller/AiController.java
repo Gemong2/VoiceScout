@@ -24,26 +24,35 @@ public class AiController {
   private static final String START_KEY = "start-call";
 
   @MessageMapping("/ai")
-  //@SendTo("topic") 구독자들에게 보내기
   public void sendAi(@RequestBody InteractionDto interactionDto, SimpMessageHeaderAccessor accessor) {
-    log.info("[sendAi] : 메세시 수신 성공, message : {}, link : {}", interactionDto.getMessage(), interactionDto.getLink());
-    AiReqDto aiReqDto = AiReqDto.builder()
-        .msg(interactionDto.getMessage())
-        .build();
-    AiResDto aiResDto;
-    if(OUT_KEY.equals(aiReqDto.getMsg())) {
-      aiResDto = AiResDto.builder().prediction(2).build();
-      log.info("[sendAi] : 방삭제 수신, prediction : {}", aiResDto.getPrediction());
-    } else if(UPDATE_KEY.equals(aiReqDto.getMsg())){
-      aiResDto = AiResDto.builder().prediction(3).build();
-      log.info("[sendAi] : 방수정 수신, prediction : {}", aiResDto.getPrediction());
-    } else if(START_KEY.equals(aiReqDto.getMsg())) {
-      aiResDto = AiResDto.builder().prediction(4).build();
-      log.info("[sendAi] : 통화시작 수신, prediction : {}", aiResDto.getPrediction());
-    }else {
-      aiResDto = aiService.checkMessage(aiReqDto);
-      log.info("[sendAi] : prediction 수신 성공, prediction : {}", aiResDto.getPrediction());
+    if(interactionDto.getButton()==3) {
+      AiReqDto aiReqDto = AiReqDto.builder()
+              .msg(interactionDto.getMessage())
+              .build();
+      AiResDto aiResDto;
+      log.info("[sendAi] : 메세시 수신 성공, message : {}, link : {}", interactionDto.getMessage(), interactionDto.getLink());
+      if(OUT_KEY.equals(aiReqDto.getMsg())) {
+        aiResDto = AiResDto.builder().prediction(2).build();
+        log.info("[sendAi] : 방삭제 수신, prediction : {}", aiResDto.getPrediction());
+      } else if(UPDATE_KEY.equals(aiReqDto.getMsg())){
+        aiResDto = AiResDto.builder().prediction(3).build();
+        log.info("[sendAi] : 방수정 수신, prediction : {}", aiResDto.getPrediction());
+      } else if(START_KEY.equals(aiReqDto.getMsg())) {
+        aiResDto = AiResDto.builder().prediction(4).build();
+        log.info("[sendAi] : 통화시작 수신, prediction : {}", aiResDto.getPrediction());
+      }else {
+        aiResDto = aiService.checkMessage(aiReqDto);
+        log.info("[sendAi] : prediction 수신 성공, prediction : {}", aiResDto.getPrediction());
+      }
+      simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), aiResDto);
+    } else {
+      log.info("[sendAi] : 버튼 수신 성공, button : {}, userType : {}", interactionDto.getButton(), interactionDto.getUserType());
+      simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), interactionDto);
     }
-    simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), aiResDto);
   }
+//  @MessageMapping("/button")
+//  public void sendButton(@RequestBody ButtonDto buttonDto, SimpMessageHeaderAccessor accessor) {
+//    log.info("[sendButton] : 버튼 수신 성공, button : {}, link : {}", buttonDto.getButton(), buttonDto.getLink());
+//    simpMessagingTemplate.convertAndSend("/button/" + buttonDto.getLink(), buttonDto);
+//  }
 }
