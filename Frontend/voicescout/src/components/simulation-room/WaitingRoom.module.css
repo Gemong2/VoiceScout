@@ -2,6 +2,10 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: default;
+}
+
 /** 통화 시작 전 레이아웃 css*/
 
 .header {

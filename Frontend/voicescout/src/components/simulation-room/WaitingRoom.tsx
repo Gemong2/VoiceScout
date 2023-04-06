@@ -5,7 +5,6 @@ import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { OpenVidu, Publisher, Session, Subscriber } from "openvidu-browser";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
@@ -18,12 +17,12 @@ import Headphonemute from "img/headphone.png";
 import Headset from "img/headset.png";
 import Calloff from "img/calloff2.png";
 import UpdataModal from "components/common/UpdataModal";
+import VideoCam from "./WebRTC/VideoCam";
+import { v4 as uuidv4 } from "uuid";
 
-// const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
+const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+// const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
-
-const OV = new OpenVidu();
 
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
@@ -45,6 +44,7 @@ export default function WaitingRoom() {
   const [isModal, setIsModal] = useState(false);
   const [update, setUpdate] = useState<number>(0);
   const [time, setTime] = useState(0);
+  const [mute, setMute] = useState(false);
 
   const [seq, setSeq] = useState<number>(location.state.seq);
   const [title, setTitle] = useState<string>(location.state.title);
@@ -56,9 +56,9 @@ export default function WaitingRoom() {
   );
   const [locked, setLocked] = useState<boolean>(location.state.locked);
 
-  // OpenVIdu용 변수
-  const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
-  const [mute, setMute] = useState(false);
+  // OpenVidu 변수
+  const [isMic, setIsMic] = useState(true);
+  const [isIn, setIsIn] = useState(true);
 
   const info = [
     {
@@ -151,8 +151,8 @@ export default function WaitingRoom() {
 
     recognition.interimResults = true;
     recognition.lang = "ko-KR";
-    recognition.continuous = true;
-    recognition.maxAlternatives = 10000;
+    recognition.continuous = false;
+    recognition.maxAlternatives = 1000;
 
     recognition.addEventListener("result", (e) => {
       console.log("음성인식 테스트중");
@@ -176,7 +176,6 @@ export default function WaitingRoom() {
     recognition.addEventListener("end", recognition.start);
 
     recognition.start();
-    recognitionRef.current = recognition;
 
     return () => {
       stompClient.disconnect(() => {
@@ -225,73 +224,6 @@ export default function WaitingRoom() {
       seconds < 10 ? "0" + seconds : seconds
     }`;
   };
-
-  // OpenVidu 셋팅
-
-  //OpenVidu에서 얻은 세션, 토큰
-  // const { sessionId, token } = await createSessionAndToken();
-
-  //OpenVidu에서 세션 토큰 생성
-  // const createSessionAndToken = async (): Promise<{ sessionId: string, token: string }> => {
-  //   try {
-  //     // Make a POST request to create a new session
-  //     const sessionResponse = await axios.post('https://your.openvidu.server/api/sessions', {}, {
-  //       auth: {
-  //         username: 'YOUR_OPENVIDU_SERVER_SECRET',
-  //         password: ''
-  //       }
-  //     });
-
-  //     // Get the session ID from the response
-  //     const sessionId = sessionResponse.data.id;
-
-  //     // Make a POST request to generate a token for the session
-  //     const tokenResponse = await axios.post(`https://your.openvidu.server/api/sessions/${sessionId}/connection`, {}, {
-  //       auth: {
-  //         username: 'YOUR_OPENVIDU_SERVER_SECRET',
-  //         password: ''
-  //       }
-  //     });
-
-  //     // Get the token from the response
-  //     const token = tokenResponse.data.token;
-
-  //     // Return the session ID and token
-  //     return { sessionId, token };
-  //   } catch (error) {
-  //     console.error(error);
-  //     return { sessionId: '', token: '' };
-  //   }
-  // };
-
-  const handleMute = () => {
-    if (publisher) {
-      const audioTrack = publisher?.stream
-        ?.getMediaStream()
-        .getAudioTracks()[0];
-      if (audioTrack) {
-        audioTrack.enabled = !mute;
-        setMute(!mute);
-      }
-    }
-  };
-
-  // OpenVidu 연결
-  // useEffect(() => {
-  //   const session = OV.initSession();
-  //   session.connect(link).then(() => {
-  //     const publisher = OV.initPublisher("publisher", {
-  //       audioSource: undefined, // set to undefined to allow both mic and screen share audio
-  //       videoSource: false, // set to false to disable video publishing
-  //       publishAudio: true, // enable audio publishing
-  //       publishVideo: false, // disable video publishing
-  //       insertMode: "APPEND", // insert the video into the DOM
-  //     });
-
-  //     session.publish(publisher);
-  //     setPublisher(publisher);
-  //   });
-  // }, []);
 
   // GET요청 성공 시 데이터 로드
   useEffect(() => {
@@ -348,7 +280,7 @@ export default function WaitingRoom() {
                 <div className={style.sub_role}>피싱범</div>
               </div>
               <div className={style.settings}>
-                <img src={mute ? Mic : MicMute} alt="" onClick={handleMute} />
+                <img src={mute ? MicMute : Mic} alt="" />
                 <img src={Headset} alt="" />
               </div>
             </div>
@@ -453,6 +385,13 @@ export default function WaitingRoom() {
           lockedInput={locked}
         />
       )}
+      <VideoCam
+        isVideo={false}
+        isMic={isMic}
+        isIn={isIn}
+        sessionId={link}
+        name={uuidv4()}
+      />
     </>
   );
 }
