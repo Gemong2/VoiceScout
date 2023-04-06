@@ -5,8 +5,8 @@ import axios from "axios";
 import UserVideoComponent from "./UserVideoComponent";
 import style from "./VideoCam.moduel.css";
 
-// const APPLICATION_SERVER_URL = "https://j8a404.p.ssafy.io/";
-const APPLICATION_SERVER_URL = "http://localhost:4433/";
+const APPLICATION_SERVER_URL = "https://j8a404.p.ssafy.io/";
+// const APPLICATION_SERVER_URL = "http://localhost:4433/";
 
 class VideoCam extends Component {
   constructor(props) {
