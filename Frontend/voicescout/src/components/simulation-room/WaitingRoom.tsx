@@ -22,8 +22,8 @@ import UpdataModal from "components/common/UpdataModal";
 import VideoCam from "./WebRTC/VideoCam";
 import { v4 as uuidv4 } from "uuid";
 
-const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-// const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
+// const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
 
 type ButtonProps = {
