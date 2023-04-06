@@ -20,7 +20,6 @@ public class AiServiceImpl implements AiService {
     @Autowired
     private final RestTemplate restTemplate;
 
-
     @Override
     public AiResDto checkMessage(AiReqDto msg) {
         String apiUrl = "https://j8a404.p.ssafy.io/ai/classification/";
