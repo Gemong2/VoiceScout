@@ -14,7 +14,6 @@ import Lock from "img/lock.png";
 import UnLock from "img/unlock.png";
 
 export default function RoomList() {
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const info = [
