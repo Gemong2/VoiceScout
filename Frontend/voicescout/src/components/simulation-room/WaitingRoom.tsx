@@ -189,32 +189,34 @@ export default function WaitingRoom() {
           if (myButtonState !== 0 && opponentButtonState !== 0)
             setGetReady(true);
           else {
-            Swal.fire({
-              icon: "error",
-              title: "",
-              text: "모든 인원의 역할이 확정되어야 합니다.",
-              confirmButtonText: "닫기",
-            });
-            return;
+            if (userType === 0) {
+              Swal.fire({
+                icon: "error",
+                title: "",
+                text: "모든 인원의 역할이 확정되어야 합니다.",
+                confirmButtonText: "닫기",
+              });
+              return;
+            }
           }
         }
       });
-    });
 
-    // 버튼 이벤트
-    stompClient.subscribe(`/button/${link}`, (data) => {
-      const Msg = JSON.parse(data.body);
-      // 버튼 누른사람이 본인일 경우
-      if (Msg.userType === userType) {
-        setMyButtonState(Msg.buttonId);
-      } else {
-        setOpponentButtonState(Msg.button);
-      }
+      // 버튼 이벤트
+      stompClient.subscribe(`/button/${link}`, (data) => {
+        const Msg = JSON.parse(data.body);
+        // 버튼 누른사람이 본인일 경우
+        if (Msg.userType === userType) {
+          setMyButtonState(Msg.buttonId);
+        } else {
+          setOpponentButtonState(Msg.button);
+        }
 
-      // 범인 역할 설정
-      if (Msg.buttonId === 2) {
-        setIsCriminal(Msg.userType);
-      }
+        // 범인 역할 설정
+        if (Msg.buttonId === 2) {
+          setIsCriminal(Msg.userType);
+        }
+      });
     });
 
     const recognition = new SpeechRecognition();
@@ -301,19 +303,19 @@ export default function WaitingRoom() {
       stompClient.send(
         "/button",
         {},
-        JSON.stringify({ buttonId: buttonId, userType: userType, link: link })
+        JSON.stringify({ button: buttonId, userType: userType, link: link })
       );
     } else if (myButtonState === buttonId) {
       stompClient.send(
         "/button",
         {},
-        JSON.stringify({ buttonId: 0, userType: userType, link: link })
+        JSON.stringify({ button: 0, userType: userType, link: link })
       );
     } else {
       stompClient.send(
         "/button",
         {},
-        JSON.stringify({ buttonId: buttonId, userType: userType, link: link })
+        JSON.stringify({ button: buttonId, userType: userType, link: link })
       );
     }
   };
