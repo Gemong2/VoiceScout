@@ -317,23 +317,21 @@ export default function WaitingRoom() {
 
   return (
     <>
+      <div className={style.video}>
+        <VideoCam
+          isVideo={false}
+          isMic={isMic}
+          isIn={isIn}
+          sessionId={link}
+          name={uuidv4()}
+        />
+      </div>
       {!getReady && !isLoading && (
         <div className={style.ready_container}>
           <div className={style.container}>
             <div className={style.inner_container}>
               <div className={style.header}>{title}</div>
-              <div className={style.header_guide}>
-                <div>역할을 선택하십시오</div>
-                <div className={style.video}>
-                  <VideoCam
-                    isVideo={false}
-                    isMic={isMic}
-                    isIn={isIn}
-                    sessionId={link}
-                    name={uuidv4()}
-                  />
-                </div>
-              </div>
+              <div className={style.header_guide}>역할을 선택하십시오</div>
               <div className={style.contents}>
                 <img
                   className={style.contents_first}
