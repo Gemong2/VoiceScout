@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { $ } from "util/axios";
-import { v4 as uuidv4 } from "uuid";
 import style from "./CreateModal.module.css";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
