@@ -14,7 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedOrigins("http://localhost:3000",  "http://localhost:4433", "https://j8a404.p.ssafy.io")
         .allowedMethods("*")
         .allowCredentials(true) // 자격증명 허용
-        .exposedHeaders("*");
+        .allowedHeaders("*")
+        .exposedHeaders("*")
+        .maxAge(3600);
   }
 }
 
