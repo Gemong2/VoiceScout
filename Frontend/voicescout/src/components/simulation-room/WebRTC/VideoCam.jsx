@@ -2,6 +2,8 @@ import { OpenVidu } from "openvidu-browser";
 import { Component } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import UserVideoComponent from "./UserVideoComponent";
+import style from "./VideoCam.moduel.css";
 
 // const APPLICATION_SERVER_URL = "https://j8a404.p.ssafy.io/";
 const APPLICATION_SERVER_URL = "http://localhost:4433/";
@@ -95,8 +97,6 @@ class VideoCam extends Component {
           console.warn(exception);
         });
         this.getToken().then((token) => {
-          console.log(this.state.mySessionId);
-          console.log(this.state.myUserName);
           mySession
             .connect(token, { clientData: this.state.myUserName })
             .then(async () => {
@@ -105,10 +105,10 @@ class VideoCam extends Component {
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: !this.props.onlyConsult ? "560x600" : "560x400", // The resolution of your video
+                resolution: !this.props.onlyConsult ? "50x50" : "50x50", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-                mirror: false, // Whether to mirror your local video or not
+                mirror: true, // Whether to mirror your local video or not
               });
               mySession.publish(publisher);
               var devices = await this.OV.getDevices();
@@ -158,7 +158,62 @@ class VideoCam extends Component {
   }
 
   render() {
-    return <div></div>;
+    return (
+      <div>
+        {this.state.session !== undefined && !this.props.onlyConsult ? (
+          <div>
+            {/* 상대방 커다란 화면 */}
+            {this.state.mainStreamManager !== undefined ? (
+              <div className={style.main_video} style={{ display: "none" }}>
+                <UserVideoComponent
+                  streamManager={this.state.subscribers[0]}
+                  type={"you"}
+                />
+              </div>
+            ) : null}
+            {/* 나의 작은 화면 */}
+            <div>
+              <div className={style.sub_video} style={{ display: "none" }}>
+                <UserVideoComponent
+                  streamManager={this.state.mainStreamManager}
+                  type={"me"}
+                />
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {this.state.session !== undefined && this.props.onlyConsult ? (
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "wrap",
+              marginLeft: "145px",
+              position: "relative",
+              top: "-30px",
+            }}
+          >
+            <div>
+              <div className={style.sub_video} style={{ width: "auto" }}>
+                <UserVideoComponent
+                  streamManager={this.state.mainStreamManager}
+                  type={"multi"}
+                />
+              </div>
+            </div>
+            {this.state.subscribers.map((data, i) => {
+              return (
+                <div>
+                  <div key={i} style={{ width: "auto" }}>
+                    <UserVideoComponent streamManager={data} type={"multi"} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+      </div>
+    );
   }
 
   /**
@@ -192,19 +247,12 @@ class VideoCam extends Component {
         },
       }
     );
-    console.log(response.data);
-    console.log(response.data);
-    console.log(localStorage.getItem("historySeq"));
-    console.log("!!!!!!!!!!!!!!!!!!!!!");
 
     return response.data; // The sessionId
   }
 
   async createToken(sessionId) {
-    console.log(sessionId);
-    console.log(sessionId);
     let temp = localStorage.getItem("historySeq");
-    console.log(temp);
 
     const response = await axios
       .post(
@@ -236,11 +284,6 @@ class VideoCam extends Component {
       .finally(() => {
         localStorage.clear("historySeq");
       });
-
-    console.log("@@@@@@@@@@@@@@@@@@@");
-    console.log(response.data);
-    console.log(response.data);
-    console.log(response.data);
     return response.data; // The token
   }
 }
