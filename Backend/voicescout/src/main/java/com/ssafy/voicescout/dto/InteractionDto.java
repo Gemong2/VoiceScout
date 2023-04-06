@@ -16,4 +16,6 @@ import lombok.ToString;
 public class InteractionDto {
     private String link;
     private String message;
+    private int button;
+    private int userType;
 }
