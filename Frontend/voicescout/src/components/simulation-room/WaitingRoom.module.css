@@ -3,6 +3,20 @@ button {
 }
 
 /** 통화 시작 전 레이아웃 css*/
+/* .container {
+  max-width: 2000px;
+  height: 100vh;
+  margin-left: 0 auto;
+  margin-right: 0 auto;
+  font-size: 1em;
+  background-color: #ececec;
+}
+.inner_container {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 1000px;
+  height: 70vh;
+} */
 
 .header {
   padding-top: 5vh;
@@ -66,44 +80,44 @@ button {
   width: 25vh;
 }
 
-.information img {
-  width: 200px;
+.information_button {
+  width: 150px;
+  height: 150px;
   border-radius: 20px;
   margin-left: 3vh;
   margin-right: 3vh;
 }
 
-.my_img {
-  background-color: #f7b52c;
-}
-
-.your_img {
-  background-color: #787878;
-}
-
 .roles {
   position: relative;
 }
-
-.main_role {
+.subrole_position {
   position: absolute;
   width: 100px;
-  z-index: 1;
-  font-family: "Pretendard-ExtraBold";
   font-size: 2em;
   font-style: italic;
+  z-index: 1;
+}
+
+.mainrole_position {
+  position: absolute;
+  left: 2vh;
+  top: 3vh;
+  z-index: 0;
+  width: 100px;
+  font-size: 2em;
+  font-style: italic;
+}
+.main_role {
+  z-index: 1;
+  font-family: "Pretendard-ExtraBold";
   color: #000000;
   transition: 0.5s;
 }
 
 .sub_role {
-  position: absolute;
-  left: 2vh;
-  top: 3vh;
-  width: 100px;
+  z-index: 0;
   font-family: "Pretendard-ExtraBold";
-  font-size: 2em;
-  font-style: italic;
   color: #d9d9d9;
   transition: 0.5s;
 }
