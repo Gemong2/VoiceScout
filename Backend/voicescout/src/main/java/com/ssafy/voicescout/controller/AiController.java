@@ -25,8 +25,9 @@ public class AiController {
   private static final String START_KEY = "start-call";
 
   @MessageMapping("/ai")
-  public void sendAi(@RequestBody InteractionDto interactionDto, SimpMessageHeaderAccessor accessor) {
+  public void sendAi(@RequestBody InteractionDto interactionDto,@RequestBody ButtonDto buttonDto, SimpMessageHeaderAccessor accessor) {
     log.info("[sendAi] : 메세시 수신 성공, message : {}, link : {}", interactionDto.getMessage(), interactionDto.getLink());
+    log.info("[sendButton] : 버튼 수신 성공, button : {}, link : {}", buttonDto.getButton(), buttonDto.getLink());
     AiReqDto aiReqDto = AiReqDto.builder()
         .msg(interactionDto.getMessage())
         .build();

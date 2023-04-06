@@ -11,5 +11,5 @@ import lombok.*;
 public class ButtonDto {
     int button;
     int userType;
-    String link;
+//    String link;
 }
