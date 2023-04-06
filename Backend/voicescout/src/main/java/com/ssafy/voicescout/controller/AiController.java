@@ -2,6 +2,7 @@ package com.ssafy.voicescout.controller;
 
 import com.ssafy.voicescout.dto.AiReqDto;
 import com.ssafy.voicescout.dto.AiResDto;
+import com.ssafy.voicescout.dto.ButtonDto;
 import com.ssafy.voicescout.dto.InteractionDto;
 
 import com.ssafy.voicescout.service.AiServiceImpl;
@@ -24,7 +25,6 @@ public class AiController {
   private static final String START_KEY = "start-call";
 
   @MessageMapping("/ai")
-  //@SendTo("topic") 구독자들에게 보내기
   public void sendAi(@RequestBody InteractionDto interactionDto, SimpMessageHeaderAccessor accessor) {
     log.info("[sendAi] : 메세시 수신 성공, message : {}, link : {}", interactionDto.getMessage(), interactionDto.getLink());
     AiReqDto aiReqDto = AiReqDto.builder()
@@ -45,5 +45,10 @@ public class AiController {
       log.info("[sendAi] : prediction 수신 성공, prediction : {}", aiResDto.getPrediction());
     }
     simpMessagingTemplate.convertAndSend("/ai/" + interactionDto.getLink(), aiResDto);
+  }
+  @MessageMapping("/button")
+  public void sendButton(@RequestBody ButtonDto buttonDto, SimpMessageHeaderAccessor accessor) {
+    log.info("[sendButton] : 버튼 수신 성공, button : {}, link : {}", buttonDto.getButton(), buttonDto.getLink());
+    simpMessagingTemplate.convertAndSend("/button/" + buttonDto.getLink(), buttonDto);
   }
 }

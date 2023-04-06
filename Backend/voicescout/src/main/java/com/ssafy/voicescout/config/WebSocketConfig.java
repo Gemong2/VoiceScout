@@ -21,7 +21,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   public void configureMessageBroker(MessageBrokerRegistry registry) {
 //메시지브로커가 바로 구독자들에게 보냄
 // 통상적으로 queue는 일대일 topic은 브로드캐스트
-    registry.enableSimpleBroker("/topic", "/ai");
+    registry.enableSimpleBroker("/ai", "/button");
 //메시지 핸들러로 라우팅됨
     registry.setApplicationDestinationPrefixes("/");
   }
