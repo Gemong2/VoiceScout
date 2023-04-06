@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @ToString
 public class ButtonDto {
-    int button;
-    int userType;
+    private int button;
+    private int userType;
 //    String link;
 }

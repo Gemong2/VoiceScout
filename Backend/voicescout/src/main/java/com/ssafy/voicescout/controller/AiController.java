@@ -49,7 +49,7 @@ public class AiController {
   }
   @MessageMapping("/button")
   public void sendButton(@RequestBody ButtonDto buttonDto, SimpMessageHeaderAccessor accessor) {
-    log.info("[sendButton] : 버튼 수신 성공, button : {}, link : {}", buttonDto.getButton(), buttonDto.getLink());
-    simpMessagingTemplate.convertAndSend("/button/" + buttonDto.getLink(), buttonDto);
+//    log.info("[sendButton] : 버튼 수신 성공, button : {}, link : {}", buttonDto.getButton(), buttonDto.getLink());
+//    simpMessagingTemplate.convertAndSend("/button/" + buttonDto.getLink(), buttonDto);
   }
 }
