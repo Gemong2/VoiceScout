@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
 import style from "./WaitingRoom.module.css";
 import styled from "styled-components";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import Swal from "sweetalert2";
 import Acquaintance from "img/type_acquaintance.png";
 import Agency from "img/type_agency.png";
 import Loans from "img/type_loans.png";
@@ -24,6 +25,38 @@ import { v4 as uuidv4 } from "uuid";
 // const socket = new SockJS(`http://localhost:4433/api/webSocket`);
 const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
+
+type ButtonProps = {
+  color: string;
+  selected: boolean;
+  opponentSelected: boolean;
+  backgroundImage: string;
+};
+
+const Button = styled.button<ButtonProps>`
+  background-image: ${(props) => `url(${props.backgroundImage})`};
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+  color: ${(props) => props.color};
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+  background-color: ${(props) =>
+    props.selected
+      ? "#f7b52c"
+      : props.opponentSelected
+      ? "#4287f5"
+      : "#787878"};
+`;
+
 export default function WaitingRoom() {
   const { isLoading, data, refetch } = useQuery(
     ["Room"],
@@ -35,9 +68,6 @@ export default function WaitingRoom() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  let { params } = useParams();
-  const stompClientRef = useRef<Stomp.Client | null>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [speechToText, setSpeechToText] = useState("");
   const [userType, setUserType] = useState(location.state.userType);
   const [getReady, setGetReady] = useState(false);
@@ -45,6 +75,8 @@ export default function WaitingRoom() {
   const [update, setUpdate] = useState<number>(0);
   const [time, setTime] = useState(0);
   const [mute, setMute] = useState(false);
+  // 범인 여부
+  const [isCriminal, setIsCriminal] = useState(-1);
 
   const [seq, setSeq] = useState<number>(location.state.seq);
   const [title, setTitle] = useState<string>(location.state.title);
@@ -115,37 +147,6 @@ export default function WaitingRoom() {
 
   type ButtonState = 0 | 1 | 2;
 
-  type ButtonProps = {
-    color: string;
-    selected: boolean;
-    opponentSelected: boolean;
-    backgroundImage: string;
-  };
-
-  const Button = styled.button<ButtonProps>`
-    background-image: ${(props) => `url(${props.backgroundImage})`};
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
-    border: none;
-    margin-right: 10px;
-    cursor: pointer;
-    color: ${(props) => props.color};
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    opacity: ${(props) => (props.disabled ? "0.5" : "1")};
-    background-color: ${(props) =>
-      props.selected
-        ? "#f7b52c"
-        : props.opponentSelected
-        ? "#4287f5"
-        : "#787878"};
-  `;
-
   const res_delete = () => {
     return $.delete(`/rooms/${location.state.seq}`);
   };
@@ -163,6 +164,7 @@ export default function WaitingRoom() {
   const { mutate: onChange } = useMutation(res_put);
 
   // 웹소켓과 음성인식 이벤트
+  let count = 0;
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -173,15 +175,46 @@ export default function WaitingRoom() {
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
         const newMsg = JSON.parse(data.body);
-        if (newMsg.prediction === 2) {
+        if (newMsg.prediction === 1 && getReady) {
+          count += 1;
+          if (count >= 5) {
+            console.log("보이스피싱입니다.");
+          }
+        } else if (newMsg.prediction === 2) {
           if (userType === 1) navigate(`/simulation-list/`);
           else onDelete();
         } else if (newMsg.prediction === 3) {
           window.location.replace(`/simulation-room/${link}`);
         } else if (newMsg.prediction === 4) {
-          setGetReady(true);
+          if (myButtonState !== 0 && opponentButtonState !== 0)
+            setGetReady(true);
+          else {
+            Swal.fire({
+              icon: "error",
+              title: "",
+              text: "모든 인원의 역할이 확정되어야 합니다.",
+              confirmButtonText: "닫기",
+            });
+            return;
+          }
         }
       });
+    });
+
+    // 버튼 이벤트
+    stompClient.subscribe(`/button/${link}`, (data) => {
+      const Msg = JSON.parse(data.body);
+      // 버튼 누른사람이 본인일 경우
+      if (Msg.userType === userType) {
+        setMyButtonState(Msg.buttonId);
+      } else {
+        setOpponentButtonState(Msg.button);
+      }
+
+      // 범인 역할 설정
+      if (Msg.buttonId === 2) {
+        setIsCriminal(Msg.userType);
+      }
     });
 
     const recognition = new SpeechRecognition();
@@ -265,40 +298,22 @@ export default function WaitingRoom() {
   //역할 버튼 선택시 이벤트
   const handleButtonClick = (buttonId: ButtonState) => {
     if (myButtonState === 0) {
-      setMyButtonState(buttonId);
       stompClient.send(
         "/button",
         {},
-        JSON.stringify({ buttonId: buttonId, userType: userType })
+        JSON.stringify({ buttonId: buttonId, userType: userType, link: link })
       );
-
-      if (opponentButtonState === buttonId) {
-        alert(
-          "다른 사용자가 이미 해당 역할을 선택했습니다.\n 다른 역할을 선택해주십시오."
-        );
-        setOpponentButtonState(0);
-        stompClient.send(
-          "/button",
-          {},
-          JSON.stringify({
-            buttonId: 0,
-            userType: userType === "host" ? "player" : "host",
-          })
-        );
-      }
     } else if (myButtonState === buttonId) {
-      setMyButtonState(0);
       stompClient.send(
         "/button",
         {},
-        JSON.stringify({ buttonId: 0, userType: userType })
+        JSON.stringify({ buttonId: 0, userType: userType, link: link })
       );
     } else {
-      setMyButtonState(buttonId);
       stompClient.send(
         "/button",
         {},
-        JSON.stringify({ buttonId: buttonId, userType: userType })
+        JSON.stringify({ buttonId: buttonId, userType: userType, link: link })
       );
     }
   };
