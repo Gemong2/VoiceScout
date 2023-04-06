@@ -3,8 +3,8 @@ import { Component } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-// const APPLICATION_SERVER_URL = "https://j8a404.p.ssafy.io/";
-const APPLICATION_SERVER_URL = "http://localhost:4433/";
+const APPLICATION_SERVER_URL = "https://j8a404.p.ssafy.io/";
+// const APPLICATION_SERVER_URL = "http://localhost:4433/";
 
 class VideoCam extends Component {
   constructor(props) {
