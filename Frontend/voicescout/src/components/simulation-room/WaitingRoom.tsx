@@ -254,44 +254,43 @@ export default function WaitingRoom() {
         }
       });
     });
-
-    const recognition = new SpeechRecognition();
-
-    recognition.interimResults = true;
-    recognition.lang = "ko-KR";
-    recognition.continuous = false;
-    recognition.maxAlternatives = 1000;
-
-    recognition.addEventListener("result", (e) => {
-      console.log("음성인식 테스트중");
-      console.log(criminal_type, userType, start);
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        let transcript = e.results[i][0].transcript;
-        if (e.results[i].isFinal && criminal_type === userType && start) {
-          setSpeechToText(() => {
-            const message = transcript;
-            console.log(`Sending "${message}" to server via WebSocket`);
-            stompClient.send(
-              "/ai",
-              {},
-              JSON.stringify({ message: message, link: link, button: 3 })
-            );
-            return message;
-          });
-        }
-      }
-    });
-
-    recognition.addEventListener("end", recognition.start);
-
-    recognition.start();
-
     return () => {
       stompClient.disconnect(() => {
         console.log("Disconnected from WebSocket server");
       });
     };
   }, []);
+
+  const recognition = new SpeechRecognition();
+
+  recognition.interimResults = true;
+  recognition.lang = "ko-KR";
+  recognition.continuous = false;
+  recognition.maxAlternatives = 1000;
+
+  recognition.addEventListener("result", (e) => {
+    console.log("음성인식 테스트중");
+    console.log(criminal_type, userType, start);
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      let transcript = e.results[i][0].transcript;
+      if (e.results[i].isFinal && criminal_type === userType && start) {
+        setSpeechToText(() => {
+          const message = transcript;
+          console.log(`Sending "${message}" to server via WebSocket`);
+          stompClient.send(
+            "/ai",
+            {},
+            JSON.stringify({ message: message, link: link, button: 3 })
+          );
+          return message;
+        });
+      }
+    }
+  });
+
+  recognition.addEventListener("end", recognition.start);
+
+  recognition.start();
 
   // 방 나갈때 보내는 통신
   const getOut = () => {
