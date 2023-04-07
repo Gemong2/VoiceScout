@@ -180,13 +180,43 @@ export default function WaitingRoom() {
         if (newMsg.prediction === 0 && start) {
           total += 1;
           if (total < 10 && cnt / total > 0.4) {
-            console.log("보이스피싱입니다.");
+            Swal.fire({
+              icon: "warning",
+              title: "보이스 피싱 감지",
+              text: `통화를 종료하시겠습니까??`,
+              showCancelButton: true,
+              confirmButtonText: "종료",
+              cancelButtonText: "취소",
+            }).then((res) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (res.isConfirmed) {
+                getOut();
+              } else {
+                //취소
+                return;
+              }
+            });
           }
         } else if (newMsg.prediction === 1 && start) {
           cnt += 1;
           total += 1;
           if (cnt >= 5 && total < 10) {
-            console.log("보이스피싱입니다.");
+            Swal.fire({
+              icon: "warning",
+              title: "보이스 피싱 감지",
+              text: `통화를 종료하시겠습니까??`,
+              showCancelButton: true,
+              confirmButtonText: "종료",
+              cancelButtonText: "취소",
+            }).then((res) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (res.isConfirmed) {
+                getOut();
+              } else {
+                //취소
+                return;
+              }
+            });
           }
         } else if (newMsg.prediction === 2) {
           console.log("나가기");
