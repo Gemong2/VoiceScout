@@ -180,7 +180,7 @@ export default function WaitingRoom() {
         const newMsg = JSON.parse(data.body);
         if (newMsg.prediction === 0) {
           total += 1;
-          if (total < 10 && cnt / total > 0.4) {
+          if (total > 30 && cnt / total > 0.5) {
             Swal.fire({
               icon: "warning",
               title: "보이스 피싱 감지",
@@ -201,7 +201,7 @@ export default function WaitingRoom() {
         } else if (newMsg.prediction === 1) {
           cnt += 1;
           total += 1;
-          if (cnt >= 5 && total < 10) {
+          if (cnt >= 15 && total < 30) {
             Swal.fire({
               icon: "warning",
               title: "보이스 피싱 감지",
@@ -267,11 +267,7 @@ export default function WaitingRoom() {
       console.log(criminal_type, callMyrole(), callReady);
       for (let i = e.resultIndex; i < e.results.length; i++) {
         let transcript = e.results[i][0].transcript;
-        if (
-          e.results[i].isFinal &&
-          isCriminal === callMyrole() &&
-          callReady()
-        ) {
+        if (e.results[i].isFinal) {
           setSpeechToText(() => {
             const message = transcript;
             console.log(`Sending "${message}" to server via WebSocket`);
