@@ -264,10 +264,10 @@ export default function WaitingRoom() {
 
     recognition.addEventListener("result", (e) => {
       console.log("음성인식 테스트중");
-      console.log(isCriminal, userType, start);
+      console.log(criminal_type, userType, start);
       for (let i = e.resultIndex; i < e.results.length; i++) {
         let transcript = e.results[i][0].transcript;
-        if (e.results[i].isFinal && isCriminal === userType && start) {
+        if (e.results[i].isFinal && criminal_type === userType && start) {
           setSpeechToText(() => {
             const message = transcript;
             console.log(`Sending "${message}" to server via WebSocket`);
