@@ -608,9 +608,9 @@ export default function WaitingRoom() {
           </div>
           <div className={style.script}>
             <div className={style.victim_script}>
-              <div className={style.victim_scripttext}>
+              <div>
                 {info[typeId].type === "대출 사칭형" ? (
-                  <div>
+                  <div className={style.victim_scripttext}>
                     네 ㅇㅇ고객님 되시죠?
                     <br />
                     ㅁㅁ 캐피탈입니다 고객님~
@@ -654,7 +654,7 @@ export default function WaitingRoom() {
                     대로 공문서 보내드릴게요.
                   </div>
                 ) : info[typeId].type === "기관 사칭형" ? (
-                  <div>
+                  <div className={style.victim_scripttext}>
                     서울 중앙 지검 ㅇㅇㅇ 수사관입니다. ㅇㅇㅇ님 맞으십니까?
                     <br />
                     본인 앞으로 연결된 사건 때문에 몇가지 확인 차 전화
@@ -738,7 +738,7 @@ export default function WaitingRoom() {
                     대기해주세요. 전화 끊으셔도 됩니다.
                   </div>
                 ) : (
-                  <div>
+                  <div className={style.victim_scripttext}>
                     아빠/엄마 지금 바빠?
                     <br />
                     나 지금 핸드폰이 망가져서 주변 사람한테 빌려서 통화중이야.
