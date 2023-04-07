@@ -176,9 +176,9 @@ export default function WaitingRoom() {
       console.log("Connected to WebSocket server");
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
-        console.log(cnt, total, criminal_type, userType);
+        console.log(cnt, total, isCriminal, userType);
         const newMsg = JSON.parse(data.body);
-        if (newMsg.prediction === 0 && start && criminal_type === userType) {
+        if (newMsg.prediction === 0 && start && isCriminal === userType) {
           total += 1;
           if (total < 10 && cnt / total > 0.4) {
             Swal.fire({
@@ -201,7 +201,7 @@ export default function WaitingRoom() {
         } else if (
           newMsg.prediction === 1 &&
           start &&
-          criminal_type === userType
+          isCriminal === userType
         ) {
           cnt += 1;
           total += 1;
@@ -398,7 +398,7 @@ export default function WaitingRoom() {
   }, [getReady]);
 
   const check = () => {
-    console.log(isCriminal);
+    console.log(criminal_type, isCriminal);
   };
 
   // 범인 정해지면 변수 바꿈
