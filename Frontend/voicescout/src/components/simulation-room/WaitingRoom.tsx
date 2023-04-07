@@ -177,7 +177,7 @@ export default function WaitingRoom() {
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
         const newMsg = JSON.parse(data.body);
-        if (newMsg.prediction === 0 && start) {
+        if (newMsg.prediction === 0 && start && criminal_type === userType) {
           total += 1;
           if (total < 10 && cnt / total > 0.4) {
             Swal.fire({
@@ -197,7 +197,11 @@ export default function WaitingRoom() {
               }
             });
           }
-        } else if (newMsg.prediction === 1 && start) {
+        } else if (
+          newMsg.prediction === 1 &&
+          start &&
+          criminal_type === userType
+        ) {
           cnt += 1;
           total += 1;
           if (cnt >= 5 && total < 10) {
@@ -226,6 +230,7 @@ export default function WaitingRoom() {
           window.location.replace(`/simulation-room/${link}`);
         } else if (newMsg.prediction === 4) {
           setGetReady(true);
+        } else if (newMsg.prediction === 5) {
         }
       });
 
@@ -394,13 +399,24 @@ export default function WaitingRoom() {
 
   // 시작 준비되면 변수 바꿈
   useEffect(() => {
-    start = true;
+    if (getReady) start = true;
   }, [getReady]);
 
   // 범인 정해지면 변수 바꿈
   useEffect(() => {
     criminal_type = isCriminal;
   }, [isCriminal]);
+
+  // 인원이 증가하면 참여 알림
+  useEffect(() => {
+    if (participant === 2) {
+      stompClient.send(
+        "/ai",
+        {},
+        JSON.stringify({ message: "increase", link: link, button: 3 })
+      );
+    }
+  }, [participant]);
 
   return (
     <>
@@ -418,7 +434,9 @@ export default function WaitingRoom() {
           <div className={style.container}>
             <div className={style.inner_container}>
               <div className={style.header}>{title}</div>
-              <div className={style.header_guide}>역할을 선택하십시오</div>
+              <div className={style.header_guide}>
+                역할을 선택하십시오 ({participant} / 2)
+              </div>
               <div className={style.contents}>
                 <img
                   className={style.contents_first}
