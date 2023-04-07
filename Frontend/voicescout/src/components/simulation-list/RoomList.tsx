@@ -112,17 +112,16 @@ export default function RoomList() {
   return (
     <>
       <div className={style.container}>
+        <div className={style.guide_refresh_div}>
+          <img
+            src={Refresh}
+            alt=""
+            onClick={() => {
+              refetch();
+            }}
+          />
+        </div>
         <div className={style.inner_container}>
-          <div className={style.guide_refresh_div}>
-            <img src={Question} alt="" />
-            <img
-              src={Refresh}
-              alt=""
-              onClick={() => {
-                refetch();
-              }}
-            />
-          </div>
           <div className={style.room_list}>
             {!isLoading &&
               data &&
@@ -165,6 +164,8 @@ export default function RoomList() {
                 );
               })}
           </div>
+          {isModal && <CreateModal setIsModal={setIsModal} />}
+        </div>
           <div className={style.btn}>
             <button
               onClick={() => {
@@ -174,8 +175,6 @@ export default function RoomList() {
               방 만들기
             </button>
           </div>
-          {isModal && <CreateModal setIsModal={setIsModal} />}
-        </div>
       </div>
     </>
   );

@@ -3,6 +3,8 @@ import style from "./Main.module.css";
 import Phone from "img/phone.png";
 import Logo from "img/logo.png";
 import Top from "img/Arrow.png";
+import CallRoom from "img/room_capture.png";
+import WaitingRoom from "img/waiting_room.png";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import {
@@ -46,6 +48,11 @@ export default function Main({ target1, target2, target3, duration }: Props) {
   const FadeUp = batch(Fade(), Move(), Sticky());
 
   const texts = ["아는 만큼 예방할 수 있습니다."]; // 다양한 글자들의 배열
+  const forthtext1 = ["통화 체험실을 누른 후 방 생성을 할 수 있습니다."]
+  const forthtext2 = ["방 목록 중 원하는 방을 선택하여 들어갑니다."]
+  const forthtext3 = ["체험해보고 싶은 역할을 선택합니다."]
+  const forthtext4 = ["피싱범 역할을 맡았다면 스크립트가 제공됩니다."]
+  const forthtext5 = ["피해자 역할을 맡았다면 통화 중 보이스 피싱 의심되면 알림을 제공합니다."]
   const [animatedText, setAnimatedText] = useState("");
 
   const handleScroll = () => {
@@ -187,13 +194,13 @@ export default function Main({ target1, target2, target3, duration }: Props) {
           <div className={style.guy_img}>
             <div className={style.main_second + " " + style.main_column}>
               <div className={style.guy_text}>
-                <Animator animation={batch(FadeIn(100, 0))}>
+                <Animator animation={batch(FadeOut(50, 0))}>
                   모의 체험을 통해
                 </Animator>
-                <Animator animation={batch(FadeIn(100, 0))}>
+                <Animator animation={batch(FadeOut(100, 0))}>
                   실제 상황에서
                 </Animator>
-                <Animator animation={batch(FadeIn(200, 0))}>
+                <Animator animation={batch(FadeOut(200, 0))}>
                   대처할 수 있습니다.
                 </Animator>
               </div>
@@ -248,8 +255,23 @@ export default function Main({ target1, target2, target3, duration }: Props) {
         </Animator>
       </ScrollPage>
       <ScrollPage page={3}>
-        <Animator animation={batch(Fade(), MoveOut(0, -200))}>
-          <div className={style.forth}>통화 체험실이란...</div>
+        <Animator animation={batch(Fade())}>
+            <div className={style.forth}>
+              <img className={style.forth_img1} src={CallRoom} alt="통화체험실" />
+              <img className={style.forth_img2} src={WaitingRoom} alt="통화대기방" />
+              <div className={style.forth_information}>
+                통화 체험실을 누른 후 방 생성을 할 수 있습니다.
+                <br />
+                방 목록 중 원하는 방을 선택하여 들어갑니다.
+                <br />
+                체험해보고 싶은 역할을 선택합니다.
+                <br />
+                피싱범 역할을 맡았다면 스크립트가 제공됩니다.
+                <br />
+                피해자 역할을 맡았다면 통화 중 보이스 피싱 의심되면 알림을 제공합니다.
+              </div>
+            </div>
+          </Animator>
           {toggleBtn ? (
             <img
               className={style.tothetop}
@@ -258,7 +280,6 @@ export default function Main({ target1, target2, target3, duration }: Props) {
               onClick={goToTop}
             />
           ) : null}
-        </Animator>
       </ScrollPage>
     </ScrollContainer>
   );

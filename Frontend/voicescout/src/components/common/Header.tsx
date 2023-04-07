@@ -28,17 +28,17 @@ export default function Header({}: Props) {
           </div>
           <div
             onClick={() => {
-              navigate("/simulation-list");
-            }}
-          >
-            <span className={style.menu}>통화 체험실</span>
-          </div>
-          <div
-            onClick={() => {
               navigate("/quiz");
             }}
           >
             <span className={style.menu}>O/X 퀴즈</span>
+          </div>
+          <div
+            onClick={() => {
+              navigate("/simulation-list");
+            }}
+          >
+            <span className={style.menu}>통화 체험실</span>
           </div>
         </div>
       </div>
