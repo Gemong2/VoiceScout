@@ -178,7 +178,7 @@ export default function WaitingRoom() {
       stompClient.subscribe(`/ai/${link}`, (data) => {
         console.log(cnt, total, isCriminal, userType);
         const newMsg = JSON.parse(data.body);
-        if (newMsg.prediction === 0 && start && isCriminal === userType) {
+        if (newMsg.prediction === 0) {
           total += 1;
           if (total < 10 && cnt / total > 0.4) {
             Swal.fire({
@@ -198,11 +198,7 @@ export default function WaitingRoom() {
               }
             });
           }
-        } else if (
-          newMsg.prediction === 1 &&
-          start &&
-          isCriminal === userType
-        ) {
+        } else if (newMsg.prediction === 1) {
           cnt += 1;
           total += 1;
           if (cnt >= 5 && total < 10) {
@@ -268,9 +264,10 @@ export default function WaitingRoom() {
 
     recognition.addEventListener("result", (e) => {
       console.log("음성인식 테스트중");
+      console.log(isCriminal, userType, start);
       for (let i = e.resultIndex; i < e.results.length; i++) {
         let transcript = e.results[i][0].transcript;
-        if (e.results[i].isFinal) {
+        if (e.results[i].isFinal && isCriminal === userType && start) {
           setSpeechToText(() => {
             const message = transcript;
             console.log(`Sending "${message}" to server via WebSocket`);
