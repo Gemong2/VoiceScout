@@ -75,6 +75,8 @@ export default function WaitingRoom() {
   const [update, setUpdate] = useState<number>(0);
   const [time, setTime] = useState(0);
   const [mute, setMute] = useState(false);
+  let criminal_type = -1;
+  let start = false;
   // 범인 여부
   const [isCriminal, setIsCriminal] = useState(-1);
 
@@ -170,14 +172,20 @@ export default function WaitingRoom() {
 
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
-      let count = 0;
+      let cnt = 0;
+      let total = 0;
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
         const newMsg = JSON.parse(data.body);
-        console.log(count, getReady);
-        if (newMsg.prediction === 1) {
-          count += 1;
-          if (count >= 5) {
+        if (newMsg.prediction === 0 && start) {
+          total += 1;
+          if (total < 10 && cnt / total > 0.4) {
+            console.log("보이스피싱입니다.");
+          }
+        } else if (newMsg.prediction === 1 && start) {
+          cnt += 1;
+          total += 1;
+          if (cnt >= 5 && total < 10) {
             console.log("보이스피싱입니다.");
           }
         } else if (newMsg.prediction === 2) {
@@ -197,11 +205,9 @@ export default function WaitingRoom() {
         // 버튼 누른사람이 본인일 경우
         if (Msg.button === 0 || Msg.button === 1 || Msg.button === 2) {
           if (Msg.userType === userType) {
-            console.log("내버튼");
             setMyButtonState(Msg.button);
             console.log(myButtonState);
           } else {
-            console.log("니버튼");
             setOpponentButtonState(Msg.button);
             console.log(setOpponentButtonState);
           }
@@ -355,6 +361,16 @@ export default function WaitingRoom() {
   const check = () => {
     console.log(myButtonState, opponentButtonState);
   };
+
+  // 시작 준비되면 변수 바꿈
+  useEffect(() => {
+    start = true;
+  }, [getReady]);
+
+  // 범인 정해지면 변수 바꿈
+  useEffect(() => {
+    criminal_type = isCriminal;
+  }, [isCriminal]);
 
   return (
     <>
