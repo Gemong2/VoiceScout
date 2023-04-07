@@ -387,20 +387,16 @@ export default function WaitingRoom() {
       }, 1000);
     }
 
-    // 컴포넌트가 언마운트되면 타이머를 정리
+    // 컴포넌트가 언마운트되면 타이머를 정리, 시작 준비 감지
     return () => {
       clearInterval(intervalId);
+      if (getReady) start = true;
     };
   }, [getReady]);
 
   const check = () => {
     console.log(myButtonState, opponentButtonState);
   };
-
-  // 시작 준비되면 변수 바꿈
-  useEffect(() => {
-    if (getReady) start = true;
-  }, [getReady]);
 
   // 범인 정해지면 변수 바꿈
   useEffect(() => {
@@ -410,11 +406,13 @@ export default function WaitingRoom() {
   // 인원이 증가하면 참여 알림
   useEffect(() => {
     if (participant === 2) {
-      stompClient.send(
-        "/ai",
-        {},
-        JSON.stringify({ message: "increase", link: link, button: 3 })
-      );
+      setTimeout(() => {
+        stompClient.send(
+          "/ai",
+          {},
+          JSON.stringify({ message: "increase", link: link, button: 3 })
+        );
+      }, 2000);
     }
   }, [participant]);
 
