@@ -152,7 +152,7 @@
 .forth_information{
   font-family: "Pretendard-Bold";
   font-size: 1.5em;
-  width: 80vw;
+  width: 60vw;
   height: 60vh;
   background-color: #fff;
   opacity: 0.9;
@@ -160,10 +160,18 @@
   border: 1px solid #000;
   position: absolute;
   top: 100px;
-  left: 100px;
+  left: 270px;
   text-align: center;
   letter-spacing: 1px;
   padding: 30px;
+  line-height: 40px;
+  padding-top: 100px;
+}
+
+.forthgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 .forth_img1 {
@@ -171,6 +179,14 @@
   filter: blur(3px);
 }
 .forth_img2 {
+  width: 50vw;
+  filter: blur(3px);
+}
+.forth_img3 {
+  width: 50vw;
+  filter: blur(3px);
+}
+.forth_img4 {
   width: 50vw;
   filter: blur(3px);
 }

@@ -496,10 +496,6 @@ export default function WaitingRoom() {
                     </div>
                   </div>
                 </div>
-                <div className={style.settings}>
-                  <img src={mute ? MicMute : Mic} alt="" />
-                  <img src={Headset} alt="" />
-                </div>
               </div>
               <div className={style.btn_div}>
                 <button
@@ -563,20 +559,6 @@ export default function WaitingRoom() {
           </div>
           <div className={style.simul_profile}>
             <img className={style.simul_role} src={Criminal} alt="" />
-          </div>
-          <div className={style.mikesetting}>
-            <div className={style.setting_div}>
-              <img src={Micmute2} alt="" />
-              <div className={style.setting_text}>소리 끔</div>
-            </div>
-            <div className={style.setting_div}>
-              <img src={Headphonemute} alt="" />
-              <div className={style.setting_text}>
-                상대
-                <br />
-                소리 끔
-              </div>
-            </div>
           </div>
           <div className={style.simul_calloff}>
             <img
