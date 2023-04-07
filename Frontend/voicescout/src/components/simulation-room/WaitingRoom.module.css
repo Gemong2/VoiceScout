@@ -327,4 +327,5 @@ button:disabled {
   font-family: "Pretendard-Regular";
   line-height: 200%;
   height: 45vh;
+  overflow-y: scroll;
 }
