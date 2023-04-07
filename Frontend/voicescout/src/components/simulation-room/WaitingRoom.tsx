@@ -22,8 +22,8 @@ import UpdataModal from "components/common/UpdataModal";
 import VideoCam from "./WebRTC/VideoCam";
 import { v4 as uuidv4 } from "uuid";
 
-const socket = new SockJS(`http://localhost:4433/api/webSocket`);
-// const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
+// const socket = new SockJS(`http://localhost:4433/api/webSocket`);
+const socket = new SockJS(`https://j8a404.p.ssafy.io/api/webSocket`);
 const stompClient = Stomp.over(socket);
 
 type ButtonProps = {
@@ -176,7 +176,6 @@ export default function WaitingRoom() {
       console.log("Connected to WebSocket server");
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
-        console.log(cnt, total, isCriminal, userType);
         const newMsg = JSON.parse(data.body);
         if (newMsg.prediction === 0) {
           total += 1;
@@ -238,16 +237,12 @@ export default function WaitingRoom() {
         if (Msg.button === 0 || Msg.button === 1 || Msg.button === 2) {
           if (Msg.userType === userType) {
             setMyButtonState(Msg.button);
-            console.log(myButtonState);
           } else {
             setOpponentButtonState(Msg.button);
-            console.log(setOpponentButtonState);
           }
 
           // 범인 역할 설정
           if (Msg.button === 2) {
-            console.log(Msg.userType);
-            console.log("범인역할입니다.");
             setIsCriminal(Msg.userType);
           }
           console.log(myButtonState, setOpponentButtonState);
@@ -264,7 +259,6 @@ export default function WaitingRoom() {
 
     recognition.addEventListener("result", (e) => {
       console.log("음성인식 테스트중");
-      console.log(criminal_type, callMyrole(), callReady);
       for (let i = e.resultIndex; i < e.results.length; i++) {
         let transcript = e.results[i][0].transcript;
         if (e.results[i].isFinal) {
@@ -384,7 +378,6 @@ export default function WaitingRoom() {
     if (isLoading) return;
     refetch();
     init(data && data.data);
-    console.log(participant);
   }, [isLoading]);
 
   useEffect(() => {
@@ -403,10 +396,6 @@ export default function WaitingRoom() {
       if (getReady) start = true;
     };
   }, [getReady]);
-
-  const check = () => {
-    console.log(criminal_type, isCriminal);
-  };
 
   // 범인 정해지면 변수 바꿈
   useEffect(() => {
@@ -450,13 +439,7 @@ export default function WaitingRoom() {
                   alt=""
                 />
                 <div className={style.contents_second}>
-                  <p
-                    onClick={() => {
-                      check();
-                    }}
-                  >
-                    {info[typeId].type}
-                  </p>
+                  <p>{info[typeId].type}</p>
                   <div className={style.locked}>
                     {locked ? <span>비공개</span> : <span>공개</span>}
                   </div>
