@@ -176,6 +176,7 @@ export default function WaitingRoom() {
       let total = 0;
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
+        console.log(cnt, total, criminal_type, userType);
         const newMsg = JSON.parse(data.body);
         if (newMsg.prediction === 0 && start && criminal_type === userType) {
           total += 1;
