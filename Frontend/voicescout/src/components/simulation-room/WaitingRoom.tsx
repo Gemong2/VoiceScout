@@ -166,14 +166,14 @@ export default function WaitingRoom() {
   const { mutate: onChange } = useMutation(res_put);
 
   // 웹소켓과 음성인식 이벤트
+  let cnt = 0;
+  let total = 0;
   useEffect(() => {
     window.SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     stompClient.connect({}, () => {
       console.log("Connected to WebSocket server");
-      let cnt = 0;
-      let total = 0;
       // get-out send하면 모두 페이지에서 나가기
       stompClient.subscribe(`/ai/${link}`, (data) => {
         console.log(cnt, total, criminal_type, userType);
@@ -250,6 +250,8 @@ export default function WaitingRoom() {
 
           // 범인 역할 설정
           if (Msg.button === 2) {
+            console.log(Msg.userType);
+            console.log("범인역할입니다.");
             setIsCriminal(Msg.userType);
           }
           console.log(myButtonState, setOpponentButtonState);
@@ -396,7 +398,7 @@ export default function WaitingRoom() {
   }, [getReady]);
 
   const check = () => {
-    console.log(myButtonState, opponentButtonState);
+    console.log(isCriminal);
   };
 
   // 범인 정해지면 변수 바꿈
@@ -433,9 +435,7 @@ export default function WaitingRoom() {
           <div className={style.container}>
             <div className={style.inner_container}>
               <div className={style.header}>{title}</div>
-              <div className={style.header_guide}>
-                역할을 선택하십시오 ({participant} / 2)
-              </div>
+              <div className={style.header_guide}>역할을 선택하십시오</div>
               <div className={style.contents}>
                 <img
                   className={style.contents_first}
