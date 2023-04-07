@@ -5,6 +5,8 @@ import Logo from "img/logo.png";
 import Top from "img/Arrow.png";
 import CallRoom from "img/room_capture.png";
 import WaitingRoom from "img/waiting_room.png";
+import Vp from "img/voicephishing1.png"
+import Vpwarning from "img/voicephishing.png"
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import {
@@ -257,8 +259,17 @@ export default function Main({ target1, target2, target3, duration }: Props) {
       <ScrollPage page={3}>
         <Animator animation={batch(Fade())}>
             <div className={style.forth}>
-              <img className={style.forth_img1} src={CallRoom} alt="통화체험실" />
-              <img className={style.forth_img2} src={WaitingRoom} alt="통화대기방" />
+              <div className={style.forthgrid}>
+                <div>
+                  <img className={style.forth_img1} src={CallRoom} alt="통화체험실" />
+                  <img className={style.forth_img2} src={WaitingRoom} alt="통화대기방" />
+                  </div>
+                <div>
+                  <img className={style.forth_img3} src={Vp} alt="보이스피싱방" />
+                  <img className={style.forth_img4} src={Vpwarning} alt="보이스 피싱경고" />
+                </div>
+              </div> 
+            </div>
               <div className={style.forth_information}>
                 통화 체험실을 누른 후 방 생성을 할 수 있습니다.
                 <br />
@@ -268,9 +279,8 @@ export default function Main({ target1, target2, target3, duration }: Props) {
                 <br />
                 피싱범 역할을 맡았다면 스크립트가 제공됩니다.
                 <br />
-                피해자 역할을 맡았다면 통화 중 보이스 피싱 의심되면 알림을 제공합니다.
+                피해자 역할을 맡았다면 통화 중 보이스 피싱 의심될 때, 알림을 제공합니다.
               </div>
-            </div>
           </Animator>
           {toggleBtn ? (
             <img
