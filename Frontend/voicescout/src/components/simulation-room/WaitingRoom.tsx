@@ -496,6 +496,10 @@ export default function WaitingRoom() {
                     </div>
                   </div>
                 </div>
+                <div className={style.settings}>
+                  <img src={mute ? MicMute : Mic} alt="" />
+                  <img src={Headset} alt="" />
+                </div>
               </div>
               <div className={style.btn_div}>
                 <button
@@ -560,6 +564,20 @@ export default function WaitingRoom() {
           <div className={style.simul_profile}>
             <img className={style.simul_role} src={Criminal} alt="" />
           </div>
+          <div className={style.mikesetting}>
+            <div className={style.setting_div}>
+              <img src={Micmute2} alt="" />
+              <div className={style.setting_text}>소리 끔</div>
+            </div>
+            <div className={style.setting_div}>
+              <img src={Headphonemute} alt="" />
+              <div className={style.setting_text}>
+                상대
+                <br />
+                소리 끔
+              </div>
+            </div>
+          </div>
           <div className={style.simul_calloff}>
             <img
               className={style.simul_callimg}
@@ -592,7 +610,7 @@ export default function WaitingRoom() {
             <div className={style.victim_script}>
               <div className={style.victim_scripttext}>
                 {info[typeId].type === "대출 사칭형" ? (
-                  <div className={style.victim_scripttext}>
+                  <div>
                     네 ㅇㅇ고객님 되시죠?
                     <br />
                     ㅁㅁ 캐피탈입니다 고객님~
@@ -636,7 +654,7 @@ export default function WaitingRoom() {
                     대로 공문서 보내드릴게요.
                   </div>
                 ) : info[typeId].type === "기관 사칭형" ? (
-                  <div className={style.victim_scripttext}>
+                  <div>
                     서울 중앙 지검 ㅇㅇㅇ 수사관입니다. ㅇㅇㅇ님 맞으십니까?
                     <br />
                     본인 앞으로 연결된 사건 때문에 몇가지 확인 차 전화
@@ -720,7 +738,7 @@ export default function WaitingRoom() {
                     대기해주세요. 전화 끊으셔도 됩니다.
                   </div>
                 ) : (
-                  <div className={style.victim_scripttext}>
+                  <div>
                     아빠/엄마 지금 바빠?
                     <br />
                     나 지금 핸드폰이 망가져서 주변 사람한테 빌려서 통화중이야.
