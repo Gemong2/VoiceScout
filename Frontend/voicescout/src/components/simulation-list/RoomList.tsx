@@ -12,9 +12,11 @@ import Refresh from "img/refresh.png";
 import Question from "img/question.png";
 import Lock from "img/lock.png";
 import UnLock from "img/unlock.png";
+import { v4 as uuidv4 } from "uuid";
 
 export default function RoomList() {
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  // 토큰 생성
+  sessionStorage.setItem("access-token", uuidv4());
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const info = [
@@ -99,6 +101,7 @@ export default function RoomList() {
           userType: 1,
         },
       });
+      window.location.replace(`/simulation-room/${e.link}`);
     }
   };
 
@@ -109,17 +112,16 @@ export default function RoomList() {
   return (
     <>
       <div className={style.container}>
+        <div className={style.guide_refresh_div}>
+          <img
+            src={Refresh}
+            alt=""
+            onClick={() => {
+              refetch();
+            }}
+          />
+        </div>
         <div className={style.inner_container}>
-          <div className={style.guide_refresh_div}>
-            <img src={Question} alt="" />
-            <img
-              src={Refresh}
-              alt=""
-              onClick={() => {
-                refetch();
-              }}
-            />
-          </div>
           <div className={style.room_list}>
             {!isLoading &&
               data &&
@@ -162,6 +164,8 @@ export default function RoomList() {
                 );
               })}
           </div>
+          {isModal && <CreateModal setIsModal={setIsModal} />}
+        </div>
           <div className={style.btn}>
             <button
               onClick={() => {
@@ -171,8 +175,6 @@ export default function RoomList() {
               방 만들기
             </button>
           </div>
-          {isModal && <CreateModal setIsModal={setIsModal} />}
-        </div>
       </div>
     </>
   );

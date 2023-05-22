@@ -30,7 +30,7 @@ DEBUG = False
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['j8a404.p.ssafy.io']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

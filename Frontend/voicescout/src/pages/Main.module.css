@@ -1,11 +1,10 @@
-
 .main_container {
   width: 100%;
   height: 100%;
   position: relative;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .main_theme {
   background-image: url(img/main_background.png);
@@ -37,7 +36,7 @@
 }
 
 .main_text {
-  font-family: "The_Jamsil_5_Bold" ;
+  font-family: "The_Jamsil_5_Bold";
   font-size: 2.5em;
   margin-top: 10px;
   margin-left: 10%;
@@ -48,9 +47,7 @@
   font-weight: 1000;
 }
 
-
 /* second */
-
 
 .main_second {
   display: flex;
@@ -82,6 +79,7 @@
   margin-left: 22%;
   margin-top: 15%;
   letter-spacing: 1px;
+  font-style: italic;
 }
 
 /* third */
@@ -91,7 +89,6 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  margin-top: 10%;
   height: 800px;
   text-align: center;
 }
@@ -108,7 +105,6 @@
   margin: 0 1rem;
   transition: all 1s ease-in-out;
   letter-spacing: 5px;
-  
 }
 
 .numbers {
@@ -121,17 +117,17 @@
   font-family: "The_Jamsil_5_Bold";
   font-size: 4em;
   margin-bottom: 10%;
-  justify-content:start;
+  justify-content: start;
 }
 
 .third_textlist {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 3%;
-    font-size: 1.2em;
-    justify-items: stretch;
-    text-align: center;
-    padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 3%;
+  font-size: 1.2em;
+  justify-items: stretch;
+  text-align: center;
+  padding: 0;
 }
 
 .third_button {
@@ -146,14 +142,78 @@
   box-shadow: 5px 5px 5px rgb(207, 207, 207);
 }
 
-.tothetop  {
+/* forth */
+
+.forth {
+  width: 100%;
+  height: 100%;
+}
+
+.forth_information{
+  font-family: "Pretendard-Bold";
+  font-size: 1.5em;
+  width: 60vw;
+  height: 60vh;
+  background-color: #fff;
+  opacity: 0.9;
+  border-radius: 10px;
+  border: 1px solid #000;
+  position: absolute;
+  top: 100px;
+  left: 270px;
+  text-align: center;
+  letter-spacing: 1px;
+  padding: 30px;
+  line-height: 40px;
+  padding-top: 100px;
+}
+
+.forthgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.forth_img1 {
+  width: 50vw;
+  filter: blur(3px);
+}
+.forth_img2 {
+  width: 50vw;
+  filter: blur(3px);
+}
+.forth_img3 {
+  width: 50vw;
+  filter: blur(3px);
+}
+.forth_img4 {
+  width: 50vw;
+  filter: blur(3px);
+}
+
+/*상단으로*/
+.tothetop {
+  position: fixed;
+  right: -4rem;
+  bottom: 5%;
   cursor: pointer;
   width: 50px;
   height: 50px;
   /* border: 2px solid #000; */
   margin: 10%;
   margin-left: 60%;
-  display: flex;
+  display: inline-flex;
   rotate: 270deg;
   border-radius: 100px;
+  z-index: 100;
+  background-color: #fff;
+  transition: bottom 0.3s, transfrom 0.3s;
+  box-shadow: 0 4px 12px hsl(207, 24%, 35%, 0.15);
+  padding: 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.tothetop:hover {
+  transform: translateX(0.25rem);
 }
