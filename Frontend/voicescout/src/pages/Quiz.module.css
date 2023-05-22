@@ -1,10 +1,12 @@
 .container {
   max-width: 1600px;
-  height: 86.8vh;
+  height: 86.7vh;
   margin-left: auto;
   margin-right: auto;
   font-size: 1em;
   background-color: #f7b52c;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .inner_container {

@@ -1,4 +1,34 @@
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
 /** 통화 시작 전 레이아웃 css*/
+
+.ready_container {
+  max-width: 2000px;
+  height: 100vh;
+  margin-left: 0 auto;
+  margin-right: 0 auto;
+  font-size: 1em;
+  background-color: #ececec;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.container {
+  margin: 0 auto;
+  max-width: 90vw;
+  height: 70vh;
+  padding: 0 auto;
+}
+
+.inner_container {
+  justify-content: center;
+  padding: 0 auto;
+}
 
 .header {
   padding-top: 5vh;
@@ -55,51 +85,55 @@
 
 .information {
   display: flex;
+  height: 30vh;
   margin-top: 5vh;
+  justify-content: center;
+  margin-left: -20%;
+  align-items: center;
 }
 
 .blank {
   width: 25vh;
 }
 
-.information img {
-  width: 200px;
+.information_button {
   border-radius: 20px;
-  margin-left: 3vh;
-  margin-right: 3vh;
-}
-
-.my_img {
-  background-color: #f7b52c;
-}
-
-.your_img {
-  background-color: #787878;
+  margin-left: 2%;
+  margin-right: 3%;
 }
 
 .roles {
   position: relative;
 }
 
-.main_role {
+.subrole_position {
   position: absolute;
   width: 100px;
-  z-index: 1;
-  font-family: "Pretendard-ExtraBold";
+  top: -11vh;
   font-size: 2em;
   font-style: italic;
+  z-index: 1;
+}
+
+.mainrole_position {
+  position: absolute;
+  left: 2vh;
+  top: -8vh;
+  z-index: 0;
+  width: 100px;
+  font-size: 2em;
+  font-style: italic;
+}
+.main_role {
+  z-index: 1;
+  font-family: "Pretendard-ExtraBold";
   color: #000000;
   transition: 0.5s;
 }
 
 .sub_role {
-  position: absolute;
-  left: 2vh;
-  top: 3vh;
-  width: 100px;
+  z-index: 0;
   font-family: "Pretendard-ExtraBold";
-  font-size: 2em;
-  font-style: italic;
   color: #d9d9d9;
   transition: 0.5s;
 }
@@ -114,6 +148,7 @@
   height: 30px;
   margin-top: 1vh;
   margin-left: 0;
+  cursor: pointer;
 }
 
 .btn_div {
@@ -153,41 +188,144 @@
 
 /** 통화 시작 시 레이아웃 css*/
 
-.role {
+.simul_container {
+  background-image: url(img/phone_wallpaper.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
+  height: 100vh;
   flex-direction: column;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.simul_typerole {
+  text-align: center;
+}
+
+.simul_type {
+  border: 2px solid #fff;
+  width: 28%;
+  max-height: 100px;
+  border-radius: 20px;
+  margin-top: 3%;
+  margin-left: 3%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.simul_type img {
+  width: 110px;
+  height: 90px;
+  padding: 1px;
+  margin-left: 2%;
+}
+
+.simul_type p {
+  font-size: 2em;
+  text-align: center;
+  align-items: center;
+  margin-top: 10%;
+  font-family: "Pretendard-Semibold";
+  font-style: italic;
+  color: #fff;
+}
+
+.simul_typecall {
+  margin-top: 2%;
 }
 
 .simul_call {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard-Semibold";
   color: #ffffff;
-  display: flex;
-  justify-content: center;
-  font-size: 3em;
+  font-size: 5em;
 }
 
 .simul_timer {
   font-family: "Pretendard-Light";
   color: #ffffff;
-  display: flex;
-  justify-content: center;
   font-size: 3em;
+  text-align: center;
+}
+
+.simul_profile {
+  text-align: center;
 }
 
 .simul_profile img {
-  width: 100px;
+  width: 180px;
   border-radius: 1000px;
 }
 
 .simul_role {
-  background-color: #f7b52c;
+  margin-top: 2%;
+  background: linear-gradient(-200deg, #ffba0d, #1a105dbe);
+  border: 5px solid #fff;
+}
+.mikesetting {
+  display: flex;
+  margin-top: 30px;
+  text-align: center;
+  justify-content: center;
+}
+
+.mikesetting img {
+  justify-content: center;
+  width: 80px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.setting_div {
+  margin: 0 15px 5px 15px;
+}
+
+.setting_text {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.simul_calloff {
+  text-align: center;
+  margin-top: 10px;
 }
 
 .simul_calloff img {
   width: 100px;
-  border-radius: 1000px;
+  height: 100px;
+  border-radius: 50%;
 }
 
 .simul_callimg {
-  background-color: #F94646;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-color: #f94646;
+  cursor: pointer;
+}
+
+/* script div */
+
+.script {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.victim_script {
+  width: 60vw;
+  background-color: #fff;
+  border-radius: 20px;
+  height: 50vh;
+  text-align: center;
+  margin: 1%;
+  padding: 1%;
+}
+
+.victim_scripttext {
+  margin: 1%;
+  text-align: justify;
+  font-family: "Pretendard-Regular";
+  line-height: 200%;
+  height: 45vh;
+  overflow-y: scroll;
 }
